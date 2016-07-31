@@ -1,0 +1,25 @@
+{
+	"manifest_version": 2,
+
+	"name": "Transformice Favorites Threads Notifications",
+	"description": "Get notifications everytime your favorite posts has some activity.",
+	"version": "1.0",
+	"icons": {
+		"16": "assets/img/icons/16.png",
+		"48": "assets/img/icons/48.png",
+		"128": "assets/img/icons/128.png"
+	},
+
+	"browser_action": {
+		"default_icon": "assets/img/icons/16.png",
+		"default_popup": "popup.html"
+	},
+	"background":{
+		"scripts":["assets/libs/js/jquery.min.js","assets/js/background.js"],
+		"persistent": true
+	},
+	"permissions": [
+		"*://atelier801.com/*",
+		"notifications"
+  ]
+}

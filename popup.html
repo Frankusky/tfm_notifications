@@ -1,0 +1,59 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+
+	<title>TFM post notifier</title>
+	<link rel="stylesheet" href="assets/libs/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+     -->
+	<script src="assets/libs/js/jquery.min.js"></script>
+	<script src="assets/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container application">
+		<div class="row text-center">
+			<span class="title">TFM post notifier</span>
+		</div>
+<!--
+		<div class="row" id="desktopAlerts">
+			<input type="checkbox"><span>Habilitar avisos de escritorio</span>
+		</div>
+-->
+		<div class="row">
+			<span>Revisar actualizaciones cada</span>
+			<br>
+			<select name="" id="refreshTime">
+				<option value="60000">5 Minutos</option>
+				<option value="900000">15 Minutos</option>
+				<option value="1800000" selected>30 Minutos</option>
+			</select>
+		</div>
+		<div class="row text-center">
+			<ul class="newActivity"></ul>
+			<button class="btn btn-xs btn-primary alreadySaw">Veido</button>
+		</div>
+		<footer>
+			By Frankusky
+		</footer>
+	</div>
+	<div class="errorMessage hiddenElement">
+		<h1>Un error ha ocurrido!</h1> 
+		<div>Asegurate de haber iniciado sesion en el foro de Transformice.</div>
+	</div>
+</body>
+
+</html>
