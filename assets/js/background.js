@@ -4,11 +4,10 @@ baseEl.setAttribute("href", "http://atelier801.com");
 document.getElementsByTagName("head")[0].appendChild(baseEl);
 
 
-function updateNotification(numberOfNews, requestData) {
-	console.log(requestData);
-	if (requestData.hasError) {
+function updateNotification(numberOfNews, hasError) {
+	if (hasError) {
 		chrome.browserAction.setBadgeBackgroundColor({
-			color: [255,223,15,230]
+			color: [255, 223, 15, 230]
 		});
 		chrome.browserAction.setBadgeText({
 			text: "!"
@@ -25,9 +24,6 @@ function updateNotification(numberOfNews, requestData) {
 			text: numberOfNews
 		});
 	}
-	chrome.runtime.sendMessage({
-		data: requestData
-	});
 }
 
 function checkFavorites() {
@@ -36,8 +32,10 @@ function checkFavorites() {
 			hasError: false,
 			favoritesData: []
 		};
-	$(result).load("http://atelier801.com/favorite-topics", function () {
-		if ($("#auth_login_1").length == 0) {
+	$(result).load("http://atelier801.com/favorite-topics", function (response, status, xhr) {
+		if (status != "success" || $("#auth_login_1").length > 0) {
+			requestData.hasError = true;
+		} else {
 			$(result).find(".nombre-messages").each(function () {
 				if (!($(this).hasClass("nombre-messages-lu"))) {
 					let parentDom = $(this).parents(".table-cadre"),
@@ -51,15 +49,16 @@ function checkFavorites() {
 					});
 				}
 			});
-		} else {
-			requestData.hasError = true;
 		}
-		updateNotification("" + requestData["favoritesData"].length, requestData);
+		updateNotification("" + requestData["favoritesData"].length, requestData.hasError);
+
+		chrome.runtime.sendMessage({
+			data: requestData
+		});
 	})
 }
-
+var updateInterval = 0;
 function refreshUpdate(time) {
-	let updateInterval = 0;
 	clearInterval(updateInterval);
 	updateInterval = setInterval(function () {
 		checkFavorites();
@@ -67,5 +66,5 @@ function refreshUpdate(time) {
 }
 
 checkFavorites();
-refreshUpdate(180000);
+//refreshUpdate(180000);
 //});

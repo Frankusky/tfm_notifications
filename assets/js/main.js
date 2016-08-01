@@ -6,7 +6,6 @@
 			};
 
 		chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-			console.log(message.data);
 			if (message.data["hasError"]==true) {
 				$(".application").addClass("hiddenElement");
 				$(".errorMessage").removeClass("hiddenElement")
@@ -88,8 +87,9 @@
 			userConfig.refreshTime = refreshTime;
 			saveConfig();
 			bg.refreshUpdate(refreshTime);
-		})
+		});
 		$(document).on("click", ".newActivity li", function () {
+			bg.updateNotification($(".newActivity li").length-1, false);
 			openWindow($(this).attr("postUrl"));
 		})
 	});

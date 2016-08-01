@@ -2,8 +2,8 @@ html,
 body {
 	font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
 	font-size: 12px;
-	width: 100%;
-	max-width: 400px;
+	width: 350px;
+	/* max-width: 400px; */
 	white-space: nowrap;
 	padding: 5px;
 }
@@ -11,6 +11,11 @@ input[type=text]{
 	box-sizing : border-box;
 	padding: 5px;
 	font-size: 10px;
+}
+
+hr{
+	margin: 5px auto;
+	border: 1px solid black
 }
 @font-face {
 	font-family: "soopafresh";
@@ -35,7 +40,9 @@ input[type=text]{
 .newActivity span{
 	left: -10px;
 	position: relative;
-	text-align: left
+	text-align: left;
+	white-space:normal;
+	text-align: right !important;
 }
 .newActivity:hover{
 	cursor: pointer;

@@ -26,34 +26,35 @@
 <body>
 	<div class="container application">
 		<div class="row text-center">
-			<span class="title">TFM post notifier</span>
+			<div class="title">TFM post notifier</div>
+			<div class="subtitle">By Frankusky</div>
 		</div>
+		<hr>
 <!--
 		<div class="row" id="desktopAlerts">
 			<input type="checkbox"><span>Habilitar avisos de escritorio</span>
 		</div>
 -->
-		<div class="row">
+		<div class="row text-center">
 			<span>Revisar actualizaciones cada</span>
 			<br>
 			<select name="" id="refreshTime">
-				<option value="60000">5 Minutos</option>
+				<option value="300000">5 Minutos</option>
 				<option value="900000">15 Minutos</option>
 				<option value="1800000" selected>30 Minutos</option>
 			</select>
 		</div>
 		<div class="row text-center">
-			<ul class="newActivity"></ul>
-			<button class="btn btn-xs btn-primary alreadySaw">Veido</button>
+			<ul class="newActivity text-left"></ul>
+<!--			<button class="btn btn-xs btn-success goToFavorites"><span class="glyphicon glyphicon-star"></span> Ir a hilos favoritos</button>-->
+			<button class="btn btn-xs btn-primary alreadySaw"><span class="glyphicon glyphicon-ok"></span><span class="glyphicon glyphicon-ok"></span> Veido</button>
 		</div>
-		<footer>
-			By Frankusky
-		</footer>
 	</div>
 	<div class="errorMessage hiddenElement">
-		<h1>Un error ha ocurrido!</h1> 
+		<div class="title">Ha ocurrido un error!</div>
 		<div>Asegurate de haber iniciado sesion en el foro de Transformice.</div>
 	</div>
+	<audio src="assets/sounds/cheese_sound.mp3" preload="none"></audio>
 </body>
 
 </html>
