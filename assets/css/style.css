@@ -44,7 +44,7 @@ hr{
 	white-space:normal;
 	text-align: right !important;
 }
-.newActivity:hover{
+.newActivity li:hover{
 	cursor: pointer;
 	font-style: italic;
 	text-decoration:underline
