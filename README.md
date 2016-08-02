@@ -6,6 +6,11 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+ - Version 1.2 1/08/2016:
+	 - CSS Hover fix
+	 - Fix when multiple post are displayed
+
+	 
  - Version 1.1 31/07/2016:
 	 - Fix refresh in select time 
 	 - Fix refresh time
