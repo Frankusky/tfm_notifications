@@ -89,7 +89,7 @@
 			bg.refreshUpdate(refreshTime);
 		});
 		$(document).on("click", ".newActivity li", function () {
-			bg.updateNotification($(".newActivity li").length-1, false);
+			bg.updateNotification(""+($(".newActivity li").length-1), false);
 			openWindow($(this).attr("postUrl"));
 		})
 	});
