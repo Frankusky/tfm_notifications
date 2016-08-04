@@ -1,28 +1,6 @@
 (function () {
 	$(document).ready(function () {
-		let bg = chrome.extension.getBackgroundPage(),
-			userConfig = {
-				refreshTime: 900000
-			};
-
-		chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-			if (message.data["hasError"]==true) {
-				$(".application").addClass("hiddenElement");
-				$(".errorMessage").removeClass("hiddenElement")
-			} else {
-				$(".application").removeClass("hiddenElement");
-				$(".errorMessage").addClass("hiddenElement")
-				$(".newActivity").empty();
-				var response = message.data.favoritesData;
-				for (index in response) {
-					$(".newActivity").append("<li postUrl='" + response[index]["postUrl"] + "'><span>" + response[index]["postTitle"] + " by " + response[index]["lastPostUser"] + "</span></li>")
-				}
-			}
-		});
-
-		function saveConfig() {
-			localStorage["tfm_notifier"] = JSON.stringify(userConfig);
-		}
+		let bg = chrome.extension.getBackgroundPage();
 
 		function openWindow(newURL) {
 			newURL = "http://atelier801.com/" + newURL
@@ -30,66 +8,79 @@
 				url: newURL
 			});
 		}
-		bg.checkFavorites();
-		bg.refreshUpdate(1800000);
 
-		if (localStorage["tfm_notifier"]) {
-			userConfig = JSON.parse(localStorage["tfm_notifier"]);
-			bg.refreshUpdate(userConfig.refreshTime);
-			$("select option").each(function () {
-				if (Number($(this).val()) == Number(userConfig.refreshTime)) {
-					$(this).attr("selected", true)
+		function showUserPosts(userNewData) {
+			if (userNewData["hasError"] == true) {
+				$(".application").addClass("hiddenElement");
+				$(".errorMessage").removeClass("hiddenElement")
+			} else {
+				$(".application").removeClass("hiddenElement");
+				$(".errorMessage").addClass("hiddenElement")
+				$(".newActivity").empty();
+				var response = userNewData.forumActivity;
+				for (index in response) {
+					$(".newActivity").append("<li postUrl='" + response[index]["postUrl"] + "' lastPostUser='"+response[index]["lastPostUser"]+"'><span>" + response[index]["postTitle"] + " by " + response[index]["lastPostUser"] + "</span></li>")
 				}
-			});
+			}
 		}
-		$(".alreadySaw").click(function () {
-				chrome.browserAction.setBadgeText({
-					text: ""
+
+		chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+			showUserPosts(message.tfm_notify_data);
+		});
+
+		bg.getData(function (response) {
+			if ($.isEmptyObject(response)) {
+				bg.saveData(userData);
+			} else {
+				let elementNotFound = true;
+				$("select option").each(function () {
+					if (Number($(this).val()) == Number(response.tfm_notify_data.refreshTime)) {
+						$(this).attr("selected", true);
+						elementNotFound = false;
+					}
 				});
-				window.close();
-			})
-			//		$("#desktopAlerts").click(function(){
-			//			// Let's check if the browser supports notifications
-			//			if (!("Notification" in window)) {
-			//				alert("This browser does not support desktop notification");
-			//			}
-			//
-			//			// Let's check if the user is okay to get some notification
-			//			else if (Notification.permission === "granted") {
-			//				// If it's okay let's create a notification
-			//				var notification = new Notification("Hi there!");
-			//			}
-			//
-			//			// Otherwise, we need to ask the user for permission
-			//			// Note, Chrome does not implement the permission static property
-			//			// So we have to check for NOT 'denied' instead of 'default'
-			//			else if (Notification.permission !== 'denied') {
-			//				Notification.requestPermission(function (permission) {
-			//
-			//					// Whatever the user answers, we make sure we store the information
-			//					if(!('permission' in Notification)) {
-			//						Notification.permission = permission;
-			//					}
-			//
-			//					// If the user is okay, let's create a notification
-			//					if (permission === "granted") {
-			//						var notification = new Notification("Hi there!");
-			//					}
-			//				});
-			//			}
-			//
-			//			// At last, if the user already denied any notification, and you 
-			//			// want to be respectful there is no need to bother him any more.
-			//		});
-			//		
+				if (elementNotFound) {
+					$("select option:last").attr("selected", true)
+				}
+				showUserPosts(response.tfm_notify_data);
+			};
+		});
+
 		$("#refreshTime").on("change", function () {
 			let refreshTime = $("select option:selected").val();
-			userConfig.refreshTime = refreshTime;
-			saveConfig();
-			bg.refreshUpdate(refreshTime);
+			bg.userData.tfm_notify_data.refreshTime = refreshTime;
+			bg.saveData(bg.userData);
 		});
+
+		/*Removes badge, will appear again after making refresh*/
+		$(".alreadySaw").click(function () {
+			chrome.browserAction.setBadgeText({
+				text: ""
+			});
+			window.close();
+		});
+		$(".goToForum").click(function () {
+			openWindow("");
+		});
+		$(".refresh").click(function () {
+			bg.checkFavorites();
+		});
+		
 		$(document).on("click", ".newActivity li", function () {
 			bg.updateNotification(""+($(".newActivity li").length-1), false);
+			let lastUser = $(this).attr("lastPostUser"),
+				postUrl = $(this).attr("postUrl");
+			bg.getData(function(response){
+				let activityData = response.tfm_notify_data.forumActivity;
+				for(let x=0, activityLength = activityData.length; x<activityLength;x++){
+					if(activityData[x].postUrl==postUrl && activityData[x].lastPostUser == lastUser){
+						activityData.splice(x,1);
+						response.tfm_notify_data.forumActivity = activityData;
+						bg.saveData(response)
+					}
+				}
+			});
+			$(this).remove();
 			openWindow($(this).attr("postUrl"));
 		})
 	});

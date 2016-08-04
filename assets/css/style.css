@@ -1,32 +1,41 @@
+html{
+	margin: 5px;
+}
+
 html,
 body {
 	font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
 	font-size: 12px;
 	width: 350px;
-	/* max-width: 400px; */
 	white-space: nowrap;
-	padding: 5px;
+	position: relative;
+	display: block;
+	max-width: 100%;
+	padding-bottom: 5px;
 }
-input[type=text]{
-	box-sizing : border-box;
+
+input[type=text] {
+	box-sizing: border-box;
 	padding: 5px;
 	font-size: 10px;
 }
 
-hr{
+hr {
 	margin: 5px auto;
 	border: 1px solid black
 }
+
 @font-face {
 	font-family: "soopafresh";
 	src: url(../fonts/soopafre.ttf);
 }
 
-.title{
+.title {
 	font-size: 16px;
 	font-family: "soopafresh";
 }
-.addSuscription{
+
+.addSuscription {
 	color: #ffffff;
 	font-size: 20px;
 	font-weight: bolder;
@@ -37,34 +46,38 @@ hr{
 	border-radius: 5px;
 	box-shadow: 0px 0px 5px #2c69b5;
 }
-.newActivity span{
+
+.newActivity span {
 	left: -10px;
 	position: relative;
 	text-align: left;
-	white-space:normal;
+	white-space: normal;
 	text-align: right !important;
 }
-.newActivity li:hover{
+
+.newActivity li:hover {
 	cursor: pointer;
 	font-style: italic;
-	text-decoration:underline
+	text-decoration: underline
 }
 
-.addSuscription:hover{
+.addSuscription:hover {
 	cursor: pointer;
 }
 
-.newActivity{
-	left:-20px;
+.newActivity {
+	left: -20px;
 	position: relative;
-	margin:10px 0px;
+	margin: 10px 0px;
 }
 
-.errorMessage{
-	width:200px;
-	max-width:400px;
-	white-space:normal
-}
-.hiddenElement{
+.hiddenElement {
 	display: none
+}
+
+.goToForum{
+	margin-right: 5px;
+}
+.refresh{
+	margin-left: 5px;
 }
