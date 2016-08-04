@@ -6,6 +6,14 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+ - Version 1.3 3/08/2016:
+	 - Introducing chrome storage api
+	 - Fix for repetitive calls
+	 - Now clicking viewed will stay viewed
+	 - Added one more error message
+	 - On error message, you can refresh
+
+
  - Version 1.2 1/08/2016:
 	 - CSS Hover fix
 	 - Fix when multiple post are displayed
