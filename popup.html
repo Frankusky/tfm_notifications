@@ -7,7 +7,7 @@
 <html>
 
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
 
 	<title>TFM post notifier</title>
@@ -20,7 +20,7 @@
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
 	<script src="assets/libs/js/jquery.min.js"></script>
-	<script src="assets/js/main.js"></script>
+	<script src="assets/js/main.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 			<div class="subtitle">By Frankusky</div>
 		</div>
 		<hr>
-<!--
+		<!--
 		<div class="row" id="desktopAlerts">
 			<input type="checkbox"><span>Habilitar avisos de escritorio</span>
 		</div>
@@ -46,15 +46,33 @@
 		</div>
 		<div class="row text-center">
 			<ul class="newActivity text-left"></ul>
-<!--			<button class="btn btn-xs btn-success goToFavorites"><span class="glyphicon glyphicon-star"></span> Ir a hilos favoritos</button>-->
-			<button class="btn btn-xs btn-primary alreadySaw"><span class="glyphicon glyphicon-ok"></span><span class="glyphicon glyphicon-ok"></span> Veido</button>
+			<!--			<button class="btn btn-xs btn-success goToFavorites"><span class="glyphicon glyphicon-star"></span> Ir a hilos favoritos</button>-->
+			<button class="btn btn-xs btn-primary alreadySaw">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span class="glyphicon glyphicon-ok"></span>
+				<span>Veido</span>
+			</button>
+<!--
+			<button class="btn btn-xs btn-success refresh">
+				<span class="glyphicon glyphicon-refresh"></span>
+				<span>Volver a cargar</span>
+				<span class="glyphicon glyphicon-refresh"></span>
+			</button>
+-->
 		</div>
 	</div>
-	<div class="errorMessage hiddenElement">
+	<div class="errorMessage text-center hiddenElement">
 		<div class="title">Ha ocurrido un error!</div>
-		<div>Asegurate de haber iniciado sesion en el foro de Transformice.</div>
+		<div class="text-left">Asegurate de:
+			<ul>
+				<li>Tener la sesión iniciada en el foro de Transformice.</li>
+				<li>Tener conexión a Internet.</li>
+			</ul>
+		</div>
+		<button class="btn btn-xs btn-info goToForum"><span class="glyphicon glyphicon-hand-right"></span>   Ir al foro   <span class="glyphicon glyphicon-hand-left"></span></button>
+		<button class="btn btn-xs btn-success refresh"><span class="glyphicon glyphicon-refresh"></span>   Volver a cargar   <span class="glyphicon glyphicon-refresh"></span></button>
+
 	</div>
-	<audio src="assets/sounds/cheese_sound.mp3" preload="none"></audio>
 </body>
 
 </html>
