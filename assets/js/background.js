@@ -1,7 +1,8 @@
 var userData = {
 	tfm_notify_data: {
 		refreshTime: 1800000,
-		hasError: false
+		hasError: false,
+		forumActivity : []
 	}
 };
 
@@ -81,6 +82,7 @@ function checkFavorites() {
 					});
 				}
 			});
+			debugger;
 			let userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity);
 			if (userUpdateStatus===true) {
 				userData.tfm_notify_data.forumActivity = tempData;
