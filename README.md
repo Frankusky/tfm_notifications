@@ -6,6 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+ - Version 1.33 6/08/2016:
+	 - Fix for not logged in error message
+	 
+	 
  - Version 1.33 5/08/2016:
 	 - Fix for length of undefined bug
 	 - Fixed interval refresh

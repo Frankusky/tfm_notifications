@@ -64,7 +64,7 @@ function checkFavorites() {
 		tempData = [];
 
 	$(result).load("http://atelier801.com/favorite-topics", function (response, status, xhr) {
-		if ((status != "success") || ($("#identification").length > 0)) {
+		if ((status != "success") || ($(result).find("#identification").length > 0)) {
 			userData.tfm_notify_data.hasError = true;
 			userData.tfm_notify_data.forumActivity = [];
 		} else {
