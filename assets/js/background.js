@@ -43,7 +43,7 @@ function updateNotification(numberOfNews, hasError) {
 function hasUpdates(newActivity, lastActivity) {
 	let xi = 0,
 		newActivityLength = newActivity.length,
-		lastActivityLength = lastActivity.length;
+		lastActivityLength = lastActivity ? lastActivity.length : 0;
 	for (let i = 0; i < newActivityLength; i++) {
 		for (let x = 0; x < lastActivityLength; x++) {
 			if ((newActivity[i].lastPostUser == lastActivity[x].lastPostUser) && (newActivity[i].postUrl == lastActivity[x].postUrl)) {
