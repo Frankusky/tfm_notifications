@@ -6,6 +6,11 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+ - Version 1.33 5/08/2016:
+	 - Fix for length of undefined bug
+	 - Fixed interval refresh
+
+
  - Version 1.3 3/08/2016:
 	 - Introducing chrome storage api
 	 - Fix for repetitive calls
