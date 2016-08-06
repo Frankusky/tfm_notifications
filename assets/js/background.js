@@ -51,7 +51,7 @@ function hasUpdates(newActivity, lastActivity) {
 			}
 		}
 	}
-	if(xi==0){
+	if(newActivityLength==0){
 		return "none"
 	}else if(xi == newActivity.length) {
 		return false
@@ -82,7 +82,6 @@ function checkFavorites() {
 					});
 				}
 			});
-			debugger;
 			let userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity);
 			if (userUpdateStatus===true) {
 				userData.tfm_notify_data.forumActivity = tempData;
