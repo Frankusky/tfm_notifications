@@ -67,6 +67,7 @@ function checkFavorites() {
 		if ((status != "success") || ($(result).find("#identification").length > 0)) {
 			userData.tfm_notify_data.hasError = true;
 			userData.tfm_notify_data.forumActivity = [];
+			updateNotification("", userData.tfm_notify_data.hasError);
 		} else {
 			userData.tfm_notify_data.hasError = false;
 			$(result).find(".nombre-messages").each(function () {

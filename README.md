@@ -6,6 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+ - Version 1.35 6/08/2016:
+	 - Fix for not showing error badge
+	 
+
  - Version 1.33 6/08/2016:
 	 - Fix for not logged in error message
 	 
