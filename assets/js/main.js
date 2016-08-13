@@ -51,20 +51,30 @@
 			bg.userData.tfm_notify_data.refreshTime = refreshTime;
 			bg.saveData(bg.userData);
 		});
-
-		/*Removes badge, will appear again after making refresh*/
+		
+		/*************UX THINGS HERE******************/
 		$(".alreadySaw").click(function () {
 			chrome.browserAction.setBadgeText({
 				text: ""
 			});
 			window.close();
 		});
+		
 		$(".goToForum").click(function () {
 			openWindow("");
 		});
+		
 		$(".refresh").click(function () {
 			bg.checkFavorites();
 		});
+		
+		$(".settingsIcon").click(function(){
+			$(".sideBar").addClass("sideBarShow");
+		});
+		
+		$(".closeConfig").click(function(){
+			$(".sideBar").removeClass("sideBarShow");
+		})
 		
 		$(document).on("click", ".newActivity li", function () {
 			bg.updateNotification(""+($(".newActivity li").length-1), false);
