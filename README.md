@@ -6,6 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+ - Version 2.01 13/08/2016:
+	 - Fix: hide configuration when showing error
+	 
+
  - Version 2 13/08/2016:
 	 - New layout: settings are hidden
 	 

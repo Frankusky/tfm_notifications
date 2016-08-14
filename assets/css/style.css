@@ -121,8 +121,8 @@ label{
 	margin-left: 5px;
 }
 
-/*Sidebar*/
-.sideBar{
+/*configSection*/
+.configSection{
 	position: absolute;
 	top: 0;
 	background: white;
@@ -131,7 +131,7 @@ label{
 	left:110%;
 }
 
-.sideBarShow{
+.configSectionShow{
 	left:0;
 	background:
 }

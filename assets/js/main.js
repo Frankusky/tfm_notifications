@@ -11,10 +11,10 @@
 
 		function showUserPosts(userNewData) {
 			if (userNewData["hasError"] == true) {
-				$(".application").addClass("hiddenElement");
+				$(".application, .configSection").addClass("hiddenElement");
 				$(".errorMessage").removeClass("hiddenElement")
 			} else {
-				$(".application").removeClass("hiddenElement");
+				$(".application, .configSection").removeClass("hiddenElement");
 				$(".errorMessage").addClass("hiddenElement")
 				$(".newActivity").empty();
 				var response = userNewData.forumActivity;
@@ -69,11 +69,11 @@
 		});
 		
 		$(".settingsIcon").click(function(){
-			$(".sideBar").addClass("sideBarShow");
+			$(".configSection").addClass("configSectionShow");
 		});
 		
 		$(".closeConfig").click(function(){
-			$(".sideBar").removeClass("sideBarShow");
+			$(".configSection").removeClass("configSectionShow");
 		})
 		
 		$(document).on("click", ".newActivity li", function () {
