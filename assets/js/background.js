@@ -74,7 +74,7 @@ function checkFavorites() {
 				if (!($(this).hasClass("nombre-messages-lu"))) {
 					let parentDom = $(this).parents(".table-cadre"),
 						name = parentDom.find(".table-cadre-cellule-principale:first a:last").text().trim(),
-						lastUser = parentDom.find(".element-sujet a .cadre-type-auteur-joueur").text().trim(),
+						lastUser = parentDom.find(".lien-blanc > span")[0].innerText,
 						url = $(this).attr("href");
 					tempData.push({
 						postTitle: name,
