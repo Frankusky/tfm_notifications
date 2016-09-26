@@ -6,7 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
- - Version 2.01 13/08/2016:
+ - Version 2.2 25/09/2016:
+	 - Fix: not showing non normal user name in posts.
+
+ - Version 2.1 13/08/2016:
 	 - Fix: hide configuration when showing error
 	 
 
