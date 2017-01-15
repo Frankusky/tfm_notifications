@@ -6,6 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 2.02 15/01/2017:
+	 - Introducing Gulp
+	 
+
  - Version 2.01 13/08/2016:
 	 - Fix: hide configuration when showing error
 	 

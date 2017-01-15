@@ -1,0 +1,29 @@
+{
+  "name": "tfm_notifications",
+  "version": "1.0.0",
+  "description": "Transformice Thread Notification Extension for Chrome\r =====================================================",
+  "main": "package.json",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.3.2",
+    "gulp-htmlclean": "^2.7.8",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frankusky/tfm_notifications.git"
+  },
+  "author": "Frank Sam Hu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Frankusky/tfm_notifications/issues"
+  },
+  "homepage": "https://github.com/Frankusky/tfm_notifications#readme"
+}

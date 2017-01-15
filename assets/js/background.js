@@ -1,3 +1,4 @@
+/*Default structure of the stored data*/
 var userData = {
 	tfm_notify_data: {
 		refreshTime: 1800000,
@@ -5,19 +6,19 @@ var userData = {
 		forumActivity : []
 	}
 };
-
-let baseEl = document.createElement("base");
+/*Creates a base element in order to read atelier forum favorites section*/
+var baseEl = document.createElement("base");
 baseEl.setAttribute("href", "http://atelier801.com");
 document.getElementsByTagName("head")[0].appendChild(baseEl);
-
+/*Gets the local storage data*/
 function getData(callback) {
 	chrome.storage.local.get("tfm_notify_data", callback);
 }
-
+/*Saves the data in the local storage*/
 function saveData(data) {
 	chrome.storage.local.set(data);
 }
-
+/*Updates the notification icon*/
 function updateNotification(numberOfNews, hasError) {
 	if (hasError) {
 		chrome.browserAction.setBadgeBackgroundColor({
@@ -39,13 +40,13 @@ function updateNotification(numberOfNews, hasError) {
 		});
 	}
 }
-
+/*Checks if user has new activity*/
 function hasUpdates(newActivity, lastActivity) {
-	let xi = 0,
+	var xi = 0,
 		newActivityLength = newActivity.length,
 		lastActivityLength = lastActivity ? lastActivity.length : 0;
-	for (let i = 0; i < newActivityLength; i++) {
-		for (let x = 0; x < lastActivityLength; x++) {
+	for (var i = 0; i < newActivityLength; i++) {
+		for (var x = 0; x < lastActivityLength; x++) {
 			if ((newActivity[i].lastPostUser == lastActivity[x].lastPostUser) && (newActivity[i].postUrl == lastActivity[x].postUrl)) {
 				xi++;
 			}
@@ -58,9 +59,9 @@ function hasUpdates(newActivity, lastActivity) {
 	}
 	return true
 }
-
+/*Loads favorite topics section and checks for activity*/
 function checkFavorites() {
-	let result = document.createElement("div"),
+	var result = document.createElement("div"),
 		tempData = [];
 
 	$(result).load("http://atelier801.com/favorite-topics", function (response, status, xhr) {
@@ -72,7 +73,7 @@ function checkFavorites() {
 			userData.tfm_notify_data.hasError = false;
 			$(result).find(".nombre-messages").each(function () {
 				if (!($(this).hasClass("nombre-messages-lu"))) {
-					let parentDom = $(this).parents(".table-cadre"),
+					var parentDom = $(this).parents(".table-cadre"),
 						name = parentDom.find(".table-cadre-cellule-principale:first a:last").text().trim(),
 						lastUser = parentDom.find(".lien-blanc > span")[0].innerText,
 						url = $(this).attr("href");
@@ -83,7 +84,7 @@ function checkFavorites() {
 					});
 				}
 			});
-			let userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity);
+			var userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity);
 			if (userUpdateStatus===true) {
 				userData.tfm_notify_data.forumActivity = tempData;
 				updateNotification("" + userData.tfm_notify_data["forumActivity"].length, userData.tfm_notify_data.hasError);
@@ -96,16 +97,16 @@ function checkFavorites() {
 	})
 }
 
-
+/*setInterval variable*/
 var updateInterval = 0;
-
+/*Updates the time that will be refreshed*/
 function refreshUpdate(time) {
 	clearInterval(updateInterval);
 	updateInterval = setInterval(function () {
 		checkFavorites();
 	}, time);
 }
-
+/*Add event listener that listens if the storage data has changed*/
 chrome.storage.onChanged.addListener(function (variableChange, storageArea) {
 	getData(function (response) {
 		refreshUpdate(response.tfm_notify_data.refreshTime);
@@ -113,8 +114,7 @@ chrome.storage.onChanged.addListener(function (variableChange, storageArea) {
 	});
 });
 
-
-
+/*Loads user data*/
 getData(function (response) {
 	if ($.isEmptyObject(response)) {
 		saveData(userData);
@@ -123,5 +123,5 @@ getData(function (response) {
 	}
 	refreshUpdate(response.tfm_notify_data.refreshTime);
 });
-
+/*First time execution*/
 checkFavorites();
