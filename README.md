@@ -6,8 +6,8 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
-- Version 2.02 15/01/2017:
-	 - Introducing Gulp
+ - Version 2.21 15/01/2017:
+	 - Introducing gulp
 	 
 
  - Version 2.2 25/09/2016:
