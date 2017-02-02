@@ -4,7 +4,8 @@ var gulp = require("gulp"),
 	rename = require("gulp-rename"),
 	gutil = require("gulp-util"),
 	cleanCSS = require("gulp-clean-css"),
-	uglify = require("gulp-uglify");
+	uglify = require("gulp-uglify"),
+	zip = require("gulp-zip");
 
 var paths = {
 	html : ["popup.html", "background.html"],
@@ -48,11 +49,23 @@ gulp.task("gen-manifest", function(){
 	return gulp.src(paths.manifest)
 		.pipe(gulp.dest(paths.distProdRoot))
 })
-/*Build proyect*/
-gulp.task("build", ["gen-css", "gen-js", "gen-html", "gen-libs", "gen-manifest"]);
+/*Build proyect for first time*/
+gulp.task("firstBuild", ["gen-css", "gen-js", "gen-html", "gen-libs", "gen-manifest"]);
+/*Delete last zip build*/
+//gulp.task("delete_zip", function(){
+//	return del(["dist/tfm_notifications.zip"])
+//})
+/*Generate zip file*/
+gulp.task("gen-zip", function(){
+	return gulp.src(["dist/**", "!dist/tfm_notifications.zip"])
+	.pipe(zip("tfm_notifications.zip"))
+	.pipe(gulp.dest("dist"));
+});
+/*Create a new zip file*/
+//gulp.task("gen-new-zip", gulpsync.sync([["delete_zip", ["gen-zip"]]]));
 /*DEFAULT TASK*/
 gulp.task("default", function(){
-	gulp.start("build");
+	gulp.start("firstBuild");
 	gulp.watch(paths.html, ["gen-html"]);
 	gulp.watch(paths.js, ["gen-js"]);
 	gulp.watch(paths.css, ["gen-css"]);
