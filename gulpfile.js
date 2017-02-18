@@ -12,10 +12,12 @@ var paths = {
 	js : "assets/js/*",
 	css : "assets/css/*",
 	libs : "assets/libs/**/*",
+	img: "assets/img/**/*",
 	distProdRoot : "dist",
 	distProdJs : "dist/assets/js",
 	distProdCss : "dist/assets/css",
 	distProdLibs : "dist/assets/libs",
+	distProdImgs: "dist/assets/img",
 	manifest : "manifest.json"
 }
 
@@ -49,8 +51,13 @@ gulp.task("gen-manifest", function(){
 	return gulp.src(paths.manifest)
 		.pipe(gulp.dest(paths.distProdRoot))
 })
+/*COPY IMGS*/
+gulp.task("gen-imgs", function(){
+	return gulp.src(paths.img)
+	.pipe(gulp.dest(paths.distProdImgs))
+});
 /*Build proyect for first time*/
-gulp.task("firstBuild", ["gen-css", "gen-js", "gen-html", "gen-libs", "gen-manifest"]);
+gulp.task("firstBuild", ["gen-css", "gen-js", "gen-html", "gen-libs", "gen-manifest", "gen-imgs"]);
 /*Delete last zip build*/
 //gulp.task("delete_zip", function(){
 //	return del(["dist/tfm_notifications.zip"])
