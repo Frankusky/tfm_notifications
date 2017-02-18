@@ -143,6 +143,8 @@ label{
 	color: crimson;
 }
 
+#refreshTime{margin-left: 5px}
+
 /*Animations*/
 .standarAnimation{
 	transition-timing-function: ease-out;
