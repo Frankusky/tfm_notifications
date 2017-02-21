@@ -57,7 +57,13 @@ gulp.task("gen-imgs", function(){
 	.pipe(gulp.dest(paths.distProdImgs))
 });
 /*Build proyect for first time*/
-gulp.task("firstBuild", ["gen-css", "gen-js", "gen-html", "gen-libs", "gen-manifest", "gen-imgs"]);
+gulp.task("firstBuild", ["gen-css", "gen-js", "gen-html", "gen-libs", "gen-manifest", "gen-imgs"], function(){
+	gulp.watch(paths.html, ["gen-html"]);
+	gulp.watch(paths.js, ["gen-js"]);
+	gulp.watch(paths.css, ["gen-css"]);
+	gulp.watch(paths.libs, ["gen-libs"]);
+	gulp.watch(paths.manifest, ["gen-manifest"]);
+});
 /*Delete last zip build*/
 //gulp.task("delete_zip", function(){
 //	return del(["dist/tfm_notifications.zip"])
@@ -73,9 +79,4 @@ gulp.task("gen-zip", function(){
 /*DEFAULT TASK*/
 gulp.task("default", function(){
 	gulp.start("firstBuild");
-	gulp.watch(paths.html, ["gen-html"]);
-	gulp.watch(paths.js, ["gen-js"]);
-	gulp.watch(paths.css, ["gen-css"]);
-	gulp.watch(paths.libs, ["gen-libs"]);
-	gulp.watch(paths.manifest, ["gen-manifest"]);
 })

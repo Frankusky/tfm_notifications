@@ -18,11 +18,12 @@ $(document).ready(function () {
 		} else {
 			$(".application, .configSection").removeClass("hiddenElement");
 			$(".errorMessage").addClass("hiddenElement")
-			$(".newActivity").empty();
+//			$(".newActivity").empty();
 			var response = userNewData.forumActivity;
-			for (var index in response) {
-				$(".newActivity").append("<li postUrl='" + response[index]["postUrl"] + "' lastPostUser='" + response[index]["lastPostUser"] + "'><span>" + response[index]["postTitle"] + " by " + response[index]["lastPostUser"] + "</span></li>")
-			}
+//			for (var index in response) {
+//				$(".newActivity").append("<li postUrl='" + response[index]["postUrl"] + "' lastPostUser='" + response[index]["lastPostUser"] + "'><span>" + response[index]["postTitle"] + " by " + response[index]["lastPostUser"] + "</span></li>")
+//			}
+			renderView(response);
 		}
 	}
 
@@ -33,8 +34,10 @@ $(document).ready(function () {
 
 	/*Gets configuration data*/
 	bg.getData(function (response) {
+		var userData = {};
 		if ($.isEmptyObject(response)) {
-			bg.saveData(userData);
+			userData = bg.userData.tfm_notify_data;
+			bg.saveData(bg.userData);
 		} else {
 			var elementNotFound = true;
 			$("select option").each(function () {
@@ -46,8 +49,9 @@ $(document).ready(function () {
 			if (elementNotFound) {
 				$("select option:last").attr("selected", true)
 			}
-			showUserPosts(response.tfm_notify_data);
+			userData = response.tfm_notify_data;
 		};
+		showUserPosts(userData);
 	});
 
 	/*Updates refresh time*/
@@ -82,21 +86,28 @@ $(document).ready(function () {
 	})
 
 	/*Event listener for clicking new activity*/
-	$(document).on("click", ".newActivity li", function () {
-		bg.updateNotification("" + ($(".newActivity li").length - 1), false);
+	$(document).on("click", ".newActivity .newActivityItem", function () {
 		var lastUser = $(this).attr("lastPostUser"),
 			postUrl = $(this).attr("postUrl");
-		bg.getData(function (response) {
-			var activityData = response.tfm_notify_data.forumActivity;
+		bg.getData(function (getDataResponse) {
+			var activityData = getDataResponse.tfm_notify_data.forumActivity;
 			for (var x = 0, activityLength = activityData.length; x < activityLength; x++) {
 				if (activityData[x].postUrl == postUrl && activityData[x].lastPostUser == lastUser) {
 					activityData.splice(x, 1);
-					response.tfm_notify_data.forumActivity = activityData;
-					bg.saveData(response)
+					getDataResponse.tfm_notify_data.forumActivity = activityData;
+					bg.saveData(getDataResponse)
 				}
 			}
 		});
 		$(this).remove();
-		openWindow($(this).attr("postUrl"));
+		bg.updateNotification("" + ($(".newActivity .newActivityItem").length), false);
+		openWindow(postUrl);
 	})
+	
+	function renderView(data){
+		var template = $("#template").html();
+		var mustacheData = {threadData : data}
+		var render = Mustache.render(template, mustacheData)
+		$("#tfmNotifierArea").html(render);
+	}
 });

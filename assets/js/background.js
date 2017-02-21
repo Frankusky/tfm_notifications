@@ -12,6 +12,7 @@ baseEl.setAttribute("href", "http://atelier801.com");
 document.getElementsByTagName("head")[0].appendChild(baseEl);
 /*Gets the local storage data*/
 function getData(callback) {
+	chrome.storage.local.get("tfm_notify_data", function(res){console.log(res)});
 	chrome.storage.local.get("tfm_notify_data", callback);
 }
 /*Saves the data in the local storage*/
@@ -20,6 +21,7 @@ function saveData(data) {
 }
 /*Updates the notification icon*/
 function updateNotification(numberOfNews, hasError) {
+	console.log(numberOfNews);
 	if (hasError) {
 		chrome.browserAction.setBadgeBackgroundColor({
 			color: [255, 223, 15, 230]

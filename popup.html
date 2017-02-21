@@ -1,89 +1,114 @@
 <!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
 
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-
-
 	<title>TFM post notifier</title>
 	<link rel="stylesheet" href="assets/libs/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/style.css">
-	<!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-     -->
 	<script src="assets/libs/js/jquery.min.js"></script>
+	<script src="assets/libs/js/mustache.min.js"></script>
+	<script src="assets/js/languages.min.js"></script>
 	<script src="assets/js/main.min.js"></script>
 </head>
 
 <body>
-	<div class="container application">
-		<div class="settingsIcon btnStyle"><span class="glyphicon glyphicon-cog"></span></div>
-		<div class="row text-center">
-			<div class="title">TFM post notifier</div>
-			<div class="subtitle">By Frankusky</div>
-		</div>
-		<hr>
-		<div class="row">
-			<span>Hilos con actividad nueva:</span>
-			<ul class="newActivity text-left"></ul>
-			<!--			<button class="btn btn-xs btn-success goToFavorites"><span class="glyphicon glyphicon-star"></span> Ir a hilos favoritos</button>-->
-			<button class="btn btn-xs btn-primary alreadySaw">
-				<span class="glyphicon glyphicon-ok"></span>
-				<span class="glyphicon glyphicon-ok"></span>
-				<span>Veido</span>
-			</button>
-			<!--
-			<button class="btn btn-xs btn-success refresh">
-				<span class="glyphicon glyphicon-refresh"></span>
-				<span>Volver a cargar</span>
-				<span class="glyphicon glyphicon-refresh"></span>
-			</button>
+	<div id="tfmNotifierArea"></div>
+
+	<script type="text/html" id="template">
+		<div class="container application">
+			<div class="settingsIcon btnStyle"><span class="glyphicon glyphicon-cog"></span></div>
+			<div class="row text-center">
+				<div class="title">TFM post notifier</div>
+				<div class="subtitle">By Frankusky</div>
+			</div>
+			<hr>
+			<div class="row">
+				<table class="newActivity">
+					<tr>
+						<th>Titulo del hilo</th>
+						<th>Comentario de</th>
+					</tr>
+					{{#threadData}}
+						{{#.}}
+						<tr postUrl={{postUrl}} lastPostUser={{lastPostUser}} class="newActivityItem">
+							<td>{{postTitle}}</td>
+							<td>{{lastPostUser}}</td>
+						</tr>
+						{{/.}}
+					{{/threadData}}
+				</table>
+<!--
+				<ul class="newActivity text-left">
+					{{#.}}
+					<li postUrl={{postUrl}} lastPostUser={{lastPostUser}} class="newActivityItem">
+						<span> Titulo del post: {{postTitle}} </span>
+						<br>
+						<span> Posteado por: {{lastPostUser}} </span>
+					</li>
+					{{/.}}
+
+				</ul>
 -->
-		</div>
-	</div>
-	<div class="errorMessage text-center hiddenElement">
-		<div class="title">Ha ocurrido un error!</div>
-		<div class="text-left">Asegurate de:
-			<ul>
-				<li>Tener la sesión iniciada en el foro de Transformice.</li>
-				<li>Tener conexión a Internet.</li>
-			</ul>
-		</div>
-		<button class="btn btn-xs btn-info goToForum"><span class="glyphicon glyphicon-hand-right"></span>   Ir a Atelier801   <span class="glyphicon glyphicon-hand-left"></span></button>
-		<button class="btn btn-xs btn-success refresh"><span class="glyphicon glyphicon-refresh"></span>   Volver a cargar   <span class="glyphicon glyphicon-refresh"></span></button>
-	</div>
-	<div class="container configSection standarAnimation">
-		<div class="row text-center">
-			<div class="title">Configuraciones</div>
-		</div>
-		<hr>
-		<div class="closeConfig btnStyle">
-			<span class="glyphicon glyphicon-remove"></span>
-		</div>
-		<div>
-			<form action="">
-				<label for="refreshTime">Revisar actualizaciones cada</label>
-				<select name="" id="refreshTime">
-					<option value="300000">5 Minutos</option>
-					<option value="900000">15 Minutos</option>
-					<option value="1800000" selected>30 Minutos</option>
-				</select>
+				<div class="bottomBtn">
+					<button class="btn btn-xs btn-success goToFavorites"><span class="glyphicon glyphicon-star"></span> Ir a hilos favoritos</button>
+					<button class="btn btn-xs btn-primary alreadySaw">
+						<span class="glyphicon glyphicon-ok"></span>
+						<span class="glyphicon glyphicon-ok"></span>
+						<span>{{viewed}}</span>
+					</button>
+				</div>
 				<!--
-				<br>
-				<input type="checkbox" id="soundNotification">
-				<label for="soundNotification">Habilitar notificaciones por sonido</label>
+<button class="btn btn-xs btn-success refresh">
+<span class="glyphicon glyphicon-refresh"></span>
+<span>Volver a cargar</span>
+<span class="glyphicon glyphicon-refresh"></span>
+		</button>
 -->
-			</form>
+			</div>
 		</div>
-	</div>
+		<div class="errorMessage text-center hiddenElement">
+			<div class="title">Ha ocurrido un error!</div>
+			<div class="text-left">Asegurate de:
+				<ul>
+					<li>Tener la sesión iniciada en el foro de Transformice.</li>
+					<li>Tener conexión a Internet.</li>
+				</ul>
+			</div>
+			<button class="btn btn-xs btn-info goToForum"><span class="glyphicon glyphicon-hand-right"></span>   Ir a Atelier801   <span class="glyphicon glyphicon-hand-left"></span></button>
+			<button class="btn btn-xs btn-success refresh"><span class="glyphicon glyphicon-refresh"></span>   Volver a cargar   <span class="glyphicon glyphicon-refresh"></span></button>
+		</div>
+		<div class="container configSection standarAnimation">
+			<div class="row text-center">
+				<div class="title">Configuraciones</div>
+			</div>
+			<hr>
+			<div class="closeConfig btnStyle">
+				<span class="glyphicon glyphicon-remove"></span>
+			</div>
+			<div>
+				<form action="">
+					<label for="refreshTime">Revisar actualizaciones cada</label>
+					<select name="" id="refreshTime">
+						<option value="300000">5 Minutos</option>
+						<option value="900000">15 Minutos</option>
+						<option value="1800000" selected>30 Minutos</option>
+					</select>
+					<!--
+<br>
+<input type="checkbox" id="soundNotification">
+<label for="soundNotification">Habilitar notificaciones por sonido</label>-->
+					<br>
+					<label for="language">Selecciona tu idioma:</label>
+					<select name="" id="language">
+						<option value="es">Español</option>
+						<option value="en">English</option>
+					</select>
+				</form>
+			</div>
+		</div>
+	</script>
+
 </body>
 
 </html>

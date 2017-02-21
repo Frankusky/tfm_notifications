@@ -14,7 +14,10 @@ body {
 	max-width: 100%;
 	padding-bottom: 5px;
 	-webkit-user-select: none;
-	cursor: default
+	cursor: default;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 
 input[type=text] {
@@ -70,47 +73,73 @@ label{
 	font-family: "soopafresh";
 }
 
-.addSuscription {
-	color: #ffffff;
-	font-size: 20px;
-	font-weight: bolder;
-	vertical-align: middle;
-	padding: 0 5px;
-	background-color: #37ccf8;
-	margin: 0 5px;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px #2c69b5;
-}
-
-.newActivity span {
-	position: relative;
-	text-align: left;
-	white-space: normal;
-	text-align: right !important;
-}
-
-.newActivity li:hover {
-	cursor: pointer;
-	font-style: italic;
-	text-decoration: underline
-}
-
-.addSuscription:hover {
-	cursor: pointer;
+.subtitle{
+	display: inline-block
 }
 
 .newActivity {
-	left: -20px;
 	position: relative;
-	margin: 10px 0px;
+	width: 100%
+}
+
+.newActivity th {
+	text-align: center;
+	padding-bottom: 10px
+}
+
+.newActivity tr {
+	padding-right: 10px;
+/*	border: 1px solid black;*/
+}
+
+.newActivity tr:hover {
+	cursor: pointer;
+	font-style: italic;
+	text-decoration: underline;
+	transition: all 0.5s;
+	color: cornflowerblue
+}
+
+.newActivity tr:first-child:hover {
+	cursor: auto;
+	font-style: normal;
+	text-decoration: none;
+	color:black;
+}
+
+.newActivity tr td {
+	vertical-align: top;
+	padding: 5px 0;
+	border-top: 1px solid black;
+}
+
+.newActivity tr td:first-child {
+	white-space: pre-line;
+	word-break: break-word;
+}
+
+.newActivity tr:nth-child(1):hover {
+	cursor: auto;
+	font-style: normal;
+	text-decoration: none;
+}
+
+.newActivity tr td:nth-child(2) {
+	width: 120px;
+	text-align: center
 }
 
 .hiddenElement {
 	display: none
 }
 
+.bottomBtn{
+	padding-top: 10px;
+	text-align: center
+}
+
 .alreadySaw{
-	display: block;
+	display: inline-block;
 	margin: 0 auto;
 }
 .goToForum {
