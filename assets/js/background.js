@@ -3,7 +3,8 @@ var userData = {
 	tfm_notify_data: {
 		refreshTime: 1800000,
 		hasError: false,
-		forumActivity : []
+		forumActivity : [],
+		language: "es"
 	}
 };
 /*Creates a base element in order to read atelier forum favorites section*/
@@ -21,7 +22,6 @@ function saveData(data) {
 }
 /*Updates the notification icon*/
 function updateNotification(numberOfNews, hasError) {
-	console.log(numberOfNews);
 	if (hasError) {
 		chrome.browserAction.setBadgeBackgroundColor({
 			color: [255, 223, 15, 230]

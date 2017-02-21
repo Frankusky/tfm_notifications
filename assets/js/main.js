@@ -17,12 +17,8 @@ $(document).ready(function () {
 			$(".errorMessage").removeClass("hiddenElement")
 		} else {
 			$(".application, .configSection").removeClass("hiddenElement");
-			$(".errorMessage").addClass("hiddenElement")
-//			$(".newActivity").empty();
+			$(".errorMessage").addClass("hiddenElement");
 			var response = userNewData.forumActivity;
-//			for (var index in response) {
-//				$(".newActivity").append("<li postUrl='" + response[index]["postUrl"] + "' lastPostUser='" + response[index]["lastPostUser"] + "'><span>" + response[index]["postTitle"] + " by " + response[index]["lastPostUser"] + "</span></li>")
-//			}
 			renderView(response);
 		}
 	}
@@ -34,13 +30,14 @@ $(document).ready(function () {
 
 	/*Gets configuration data*/
 	bg.getData(function (response) {
+		console.log(response);
 		var userData = {};
 		if ($.isEmptyObject(response)) {
 			userData = bg.userData.tfm_notify_data;
 			bg.saveData(bg.userData);
 		} else {
 			var elementNotFound = true;
-			$("select option").each(function () {
+			$("#refreshTime option").each(function () {
 				if (Number($(this).val()) == Number(response.tfm_notify_data.refreshTime)) {
 					$(this).attr("selected", true);
 					elementNotFound = false;
@@ -55,33 +52,33 @@ $(document).ready(function () {
 	});
 
 	/*Updates refresh time*/
-	$("#refreshTime").on("change", function () {
+	$(document).on("change", "#refreshTime", function () {
 		var refreshTime = $("select option:selected").val();
 		bg.userData.tfm_notify_data.refreshTime = refreshTime;
 		bg.saveData(bg.userData);
 	});
 
 	/*************UX THINGS HERE******************/
-	$(".alreadySaw").click(function () {
+	$(document).on("click", ".alreadySaw", function () {
 		chrome.browserAction.setBadgeText({
 			text: ""
 		});
 		window.close();
 	});
 
-	$(".goToForum").click(function () {
+	$(document).on("click", ".goToForum", function () {
 		openWindow("");
 	});
 
-	$(".refresh").click(function () {
+	$(document).on("click", ".refresh", function () {
 		bg.checkFavorites();
 	});
 
-	$(".settingsIcon").click(function () {
+	$(document).on("click", ".settingsIcon", function () {
 		$(".configSection").addClass("configSectionShow");
 	});
 
-	$(".closeConfig").click(function () {
+	$(document).on("click", ".closeConfig", function () {
 		$(".configSection").removeClass("configSectionShow");
 	})
 
@@ -103,10 +100,12 @@ $(document).ready(function () {
 		bg.updateNotification("" + ($(".newActivity .newActivityItem").length), false);
 		openWindow(postUrl);
 	})
-	
-	function renderView(data){
+
+	function renderView(data) {
 		var template = $("#template").html();
-		var mustacheData = {threadData : data}
+		var mustacheData = {
+			threadData: data
+		}
 		var render = Mustache.render(template, mustacheData)
 		$("#tfmNotifierArea").html(render);
 	}
