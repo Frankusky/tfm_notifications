@@ -22,42 +22,52 @@ $(document).ready(function () {
 			renderView(response);
 		}
 	}
-
+	function updateSelectsValue(){
+		$("#refreshTime option").each(function () {
+			if (Number($(this).val()) == Number(bg.userData.tfm_notify_data.refreshTime)) {
+				$(this).attr("selected", true);
+			}
+		});
+		$("#language option").each(function () {
+			if ($(this).val().toLowerCase() === bg.userData.tfm_notify_data.language.toLowerCase()) {
+				$(this).attr("selected", true);
+			}
+		});
+	}
 	/*Event listener*/
 	chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 		showUserPosts(message.tfm_notify_data);
 	});
 
-	/*Gets configuration data*/
+	/*Gets configuration data for the first time*/
 	bg.getData(function (response) {
-		console.log(response);
 		var userData = {};
 		if ($.isEmptyObject(response)) {
 			userData = bg.userData.tfm_notify_data;
-			bg.saveData(bg.userData);
 		} else {
-			var elementNotFound = true;
-			$("#refreshTime option").each(function () {
-				if (Number($(this).val()) == Number(response.tfm_notify_data.refreshTime)) {
-					$(this).attr("selected", true);
-					elementNotFound = false;
-				}
-			});
-			if (elementNotFound) {
-				$("select option:last").attr("selected", true)
-			}
+			//Setting new value, since at the start it doesnt exists
+			if(typeof(response.language)==="undefined"){response.tfm_notify_data.language = "en"}
 			userData = response.tfm_notify_data;
 		};
+		bg.saveData(userData);
 		showUserPosts(userData);
+		updateSelectsValue();
 	});
 
 	/*Updates refresh time*/
 	$(document).on("change", "#refreshTime", function () {
-		var refreshTime = $("select option:selected").val();
+		var refreshTime = $("#refreshTime option:selected").val();
 		bg.userData.tfm_notify_data.refreshTime = refreshTime;
 		bg.saveData(bg.userData);
 	});
 
+	/*Updates language*/
+	$(document).on("change", "#language", function () {
+		var language = $("#language option:selected").val();
+		bg.userData.tfm_notify_data.language = language;
+		bg.saveData(bg.userData);
+		renderView(bg.userData.tfm_notify_data.forumActivity)
+	});
 	/*************UX THINGS HERE******************/
 	$(document).on("click", ".alreadySaw", function () {
 		chrome.browserAction.setBadgeText({
@@ -108,5 +118,6 @@ $(document).ready(function () {
 		}
 		var render = Mustache.render(template, mustacheData)
 		$("#tfmNotifierArea").html(render);
+		updateSelectsValue();
 	}
 });
