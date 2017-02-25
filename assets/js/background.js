@@ -1,5 +1,5 @@
 /*Default structure of the stored data*/
-var userData = {
+var userData = userData ? userData : {
 	tfm_notify_data: {
 		refreshTime: 1800000,
 		hasError: false,
@@ -108,6 +108,7 @@ function checkFavorites() {
 				updateNotification("", false);
 			}
 		}
+		refreshUpdate(userData.tfm_notify_data.refreshTime)
 		saveData(userData);
 	})
 }

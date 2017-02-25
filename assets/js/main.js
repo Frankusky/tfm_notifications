@@ -68,6 +68,10 @@ $(document).ready(function () {
 	$(document).on("click", ".goToForum", function () {
 		openWindow("");
 	});
+	
+	$(document).on("click", ".goToFavorites", function () {
+		openWindow("favorite-topics");
+	});
 
 	$(document).on("click", ".refresh", function () {
 		bg.checkFavorites();
@@ -105,7 +109,6 @@ $(document).ready(function () {
 		var render = Mustache.render(template, mustacheData)
 		$("#tfmNotifierArea").html(render);
 		updateSelectsValue();
-		bg.updateNotification($(".newActivity .newActivityItem").length, false);
 	}
 	
 	/*Just for fun*/
