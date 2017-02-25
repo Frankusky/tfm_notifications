@@ -6,6 +6,18 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 3.2 15/01/2017:
+	- Fix not checking new activity
+
+- Version 3.1 25/02/2017:
+	- Added missing image
+
+- Version 3 25/02/2017:
+	- Added language support
+	- Modified icons notification color
+	- Changed display posts style
+	- Added easter egg
+
  - Version 2.21 15/01/2017:
 	 - Introducing gulp
 	 
