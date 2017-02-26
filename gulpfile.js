@@ -5,7 +5,8 @@ var gulp = require("gulp"),
 	gutil = require("gulp-util"),
 	cleanCSS = require("gulp-clean-css"),
 	uglify = require("gulp-uglify"),
-	zip = require("gulp-zip");
+	zip = require("gulp-zip"),
+	plumber = require("gulp-plumber");
 
 var paths = {
 	html : ["popup.html", "background.html"],
@@ -24,12 +25,14 @@ var paths = {
 /*MODIFYING CSS TASK*/
 gulp.task("gen-css",function(){
 	return gulp.src(paths.css)
+		.pipe(plumber())
 		.pipe(cleanCSS())
 		.pipe(gulp.dest(paths.distProdCss))
 })
 /*MODIFYING JS TASK*/
 gulp.task("gen-js", function(){
 	return gulp.src(paths.js)
+		.pipe(plumber())
 		.pipe(uglify().on("error", function(errorLog){console.log(errorLog)}))
 		.pipe(rename({suffix:".min"}))
 		.pipe(gulp.dest(paths.distProdJs));
@@ -37,6 +40,7 @@ gulp.task("gen-js", function(){
 /*MODIFYING HTML TASK*/
 gulp.task("gen-html", function(){
 	return gulp.src(paths.html)
+		.pipe(plumber())
 		.pipe(htmlclean())
 		.pipe(htmlmin({collapseWhitespace: true}))
 		.pipe(gulp.dest(paths.distProdRoot))
@@ -60,6 +64,7 @@ gulp.task("gen-imgs", function(){
 gulp.task("firstBuild", ["gen-css", "gen-js", "gen-html", "gen-libs", "gen-manifest", "gen-imgs"], function(){
 	gulp.watch(paths.html, ["gen-html"]);
 	gulp.watch(paths.js, ["gen-js"]);
+	gulp.watch(paths.img, ["gen-imgs"]);
 	gulp.watch(paths.css, ["gen-css"]);
 	gulp.watch(paths.libs, ["gen-libs"]);
 	gulp.watch(paths.manifest, ["gen-manifest"]);

@@ -3,17 +3,31 @@ var userData = {
 	tfm_notify_data: {
 		refreshTime: 1800000,
 		hasError: false,
-		forumActivity : [],
+		forumActivity: [],
 		language: "en"
-	}
+	},
+	languageData: {}
 };
 /*Creates a base element in order to read atelier forum favorites section*/
 var baseEl = document.createElement("base");
 baseEl.setAttribute("href", "http://atelier801.com");
 document.getElementsByTagName("head")[0].appendChild(baseEl);
 /*Gets the local storage data*/
-function getData(callback) {
-	chrome.storage.local.get("tfm_notify_data", callback);
+function loadData() {
+	chrome.storage.local.get("tfm_notify_data", function (data) {
+		try {
+			if (typeof (data.tfm_notify_data) !== "undefined") {
+				userData = {};
+				userData = data;
+				if (typeof (data.tfm_notify_data.language) === "undefined") {
+					userData.tfm_notify_data.language = "en";
+				}
+			}
+		} catch (err) {} 
+		userData.languageData = languages[userData.tfm_notify_data.language];
+		updateNotification(userData.tfm_notify_data.forumActivity.length, false);
+		saveData(userData);
+	});
 }
 /*Saves the data in the local storage*/
 function saveData(data) {
@@ -23,7 +37,7 @@ function saveData(data) {
 function updateNotification(numberOfNews, hasError) {
 	if (hasError) {
 		chrome.browserAction.setBadgeBackgroundColor({
-			color: [255, 223, 15, 230]
+			color: [90, 90, 90, 1]
 		});
 		chrome.browserAction.setBadgeText({
 			text: "!"
@@ -34,10 +48,10 @@ function updateNotification(numberOfNews, hasError) {
 		});
 	} else {
 		chrome.browserAction.setBadgeBackgroundColor({
-			color: [244, 11, 19, 230]
+			color: [163, 27, 20, 1]
 		});
 		chrome.browserAction.setBadgeText({
-			text: numberOfNews
+			text: numberOfNews.toString()
 		});
 	}
 }
@@ -53,9 +67,9 @@ function hasUpdates(newActivity, lastActivity) {
 			}
 		}
 	}
-	if(newActivityLength==0){
+	if (newActivityLength == 0) {
 		return "none"
-	}else if(xi == newActivity.length) {
+	} else if (xi == newActivity.length) {
 		return false
 	}
 	return true
@@ -86,10 +100,10 @@ function checkFavorites() {
 				}
 			});
 			var userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity);
-			if (userUpdateStatus===true) {
+			if (userUpdateStatus === true) {
 				userData.tfm_notify_data.forumActivity = tempData;
 				updateNotification("" + userData.tfm_notify_data["forumActivity"].length, userData.tfm_notify_data.hasError);
-			}else if(userUpdateStatus==="none"){
+			} else if (userUpdateStatus === "none") {
 				userData.tfm_notify_data.forumActivity = [];
 				updateNotification("", false);
 			}
@@ -109,20 +123,13 @@ function refreshUpdate(time) {
 }
 /*Add event listener that listens if the storage data has changed*/
 chrome.storage.onChanged.addListener(function (variableChange, storageArea) {
-	getData(function (response) {
-		refreshUpdate(response.tfm_notify_data.refreshTime);
-		chrome.runtime.sendMessage(response);
-	});
+	refreshUpdate(userData.tfm_notify_data.refreshTime);
+	userData.languageData = languages[userData.tfm_notify_data.language];
+	saveData(userData);
+	chrome.runtime.sendMessage(userData);
 });
 
-/*Loads user data*/
-getData(function (response) {
-	if ($.isEmptyObject(response)) {
-		saveData(userData);
-	} else {
-		userData = response;
-	}
-	refreshUpdate(response.tfm_notify_data.refreshTime);
-});
+
 /*First time execution*/
+loadData();
 checkFavorites();
