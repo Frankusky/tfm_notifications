@@ -6,7 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
-- Version 3.2 15/01/2017:
+- Version 3.3 26/01/2017:
+	- Fix for clicking first element and don't open tab
+
+- Version 3.2 25/02/2017:
 	- Fix not checking new activity
 
 - Version 3.1 25/02/2017:

@@ -86,15 +86,16 @@ $(document).ready(function () {
 	})
 
 	/*Event listener for clicking new activity*/
-	$(document).on("click", ".newActivity .newActivityItem", function () {
-		var lastUser = $(this).attr("lastPostUser"),
-			postUrl = $(this).attr("postUrl");
+	$(document).on("click", ".newActivity .newActivityItem", function (ev) {
+		var lastUser = $(this).attr("lastpostuser"),
+			postUrl = $(this).attr("posturl");
 		var activityData = bg.userData.tfm_notify_data.forumActivity;
 		for (var x = 0, activityLength = activityData.length; x < activityLength; x++) {
 			if (activityData[x].postUrl == postUrl && activityData[x].lastPostUser == lastUser) {
 				activityData.splice(x, 1);
 				bg.userData.tfm_notify_data.forumActivity = activityData;
-				bg.saveData(bg.userData)
+				bg.saveData(bg.userData);
+				break;
 			}
 		}
 		$(this).remove();
