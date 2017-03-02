@@ -77,22 +77,17 @@ label{
 	display: inline-block
 }
 
-.newActivity {
-	position: relative;
-	width: 100%
-}
-
-.newActivity th {
+.newActivity thead td{
 	text-align: center;
-	padding-bottom: 10px
+	padding-bottom: 10px;
+	font-weight:bolder;
 }
 
-.newActivity tr {
+.newActivity tbody tr {
 	padding-right: 10px;
-/*	border: 1px solid black;*/
 }
 
-.newActivity tr:hover {
+.newActivity tbody tr:hover {
 	cursor: pointer;
 	font-style: italic;
 	text-decoration: underline;
@@ -100,33 +95,19 @@ label{
 	color: cornflowerblue
 }
 
-.newActivity tr:first-child:hover {
-	cursor: auto;
-	font-style: normal;
-	text-decoration: none;
-	color:black;
-}
-
-.newActivity tr td {
-	vertical-align: top;
+.newActivity tbody tr td {
+	vertical-align: middle;
 	padding: 5px 0;
 	border-top: 1px solid black;
 }
 
-.newActivity tr td:first-child {
+.newActivity tr td:nth-child(1) {
+	max-width: 75%;
 	white-space: pre-line;
 	word-break: break-word;
 }
-
-.newActivity tr:nth-child(1):hover {
-	cursor: auto;
-	font-style: normal;
-	text-decoration: none;
-}
-
 .newActivity tr td:nth-child(2) {
-	width: 120px;
-	text-align: center
+	text-align:center
 }
 
 .hiddenElement {

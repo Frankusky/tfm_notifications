@@ -25,18 +25,20 @@
 			<hr>
 			<div class="row">
 				<table class="newActivity">
-					<tr>
-						<th>{{threadTitle}}</th>
-						<th>{{lastCommentBy}}</th>
-					</tr>
-					{{#threadData}}
-						{{#.}}
+					<thead>
+						<tr>
+							<td>{{threadTitle}}</td>
+							<td>{{lastCommentBy}}</td>
+						</tr>
+					</thead>
+					<tbody>
+						{{#threadData}} {{#.}}
 						<tr postUrl={{postUrl}} lastPostUser={{lastPostUser}} class="newActivityItem">
 							<td>{{postTitle}}</td>
 							<td>{{lastPostUser}}</td>
 						</tr>
-						{{/.}}
-					{{/threadData}}
+						{{/.}} {{/threadData}}
+					</tbody>
 				</table>
 				<div class="bottomBtn">
 					<button class="btn btn-xs btn-success goToFavorites"><span class="glyphicon glyphicon-star"></span>{{goToFavThreads}}</button>
