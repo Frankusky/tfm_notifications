@@ -1,4 +1,5 @@
 /*General rules*/
+
 html {
 	margin: 5px;
 }
@@ -25,62 +26,71 @@ input[type=text] {
 	padding: 5px;
 	font-size: 10px;
 }
-input[type=checkbox]{
+
+input[type=checkbox] {
 	cursor: pointer
 }
+
 hr {
 	margin: 10px auto;
 	border: 1px solid black;
 }
 
-label{
+label {
 	font-size: 14px;
 	font-weight: normal
 }
 
-@font-face {
-	font-family: "soopafresh";
-	src: url(../libs/fonts/soopafre.ttf);
-}
-
-.btnStyle{
+.btnStyle {
 	position: absolute;
-	left: 90%;
-	font-size: 15px;
+	font-size: 14px;
 	width: 20px;
 	height: 20px;
 	text-align: center;
-	border: 1px solid black;
+	border: 1px solid #c1c1c1;
 	border-radius: 3px;
-}
-.btnStyle:hover{
-	cursor: pointer;
-	box-shadow: 0px 0px 4px #333;
-	background: gainsboro;
-}
-.btnStyle:active{
-	background-color:#999
-}
-/*Principal page*/
-.settingsIcon:hover span {
-	color: cornflowerblue;
-}
-.settingsIcon span:before{
-	padding: 0 1px 0 2px;
-}
-.title {
-	font-size: 16px;
-	font-family: "soopafresh";
+	background: linear-gradient(to bottom,#ffffff 17%,#a2a2a2 100%)
+	color: white
 }
 
-.subtitle{
+.btnStyle:hover {
+	cursor: pointer;
+	box-shadow: 0px 0px 4px #333;
+}
+
+
+/*Principal page*/
+.settingsIcon span{
+	animation: spin 1s infinite linear;
+}
+.settingsIcon {
+	left: 90%;
+}
+
+.specialThanksIcon span{
+	animation: heartbeat 1s infinite;
+	color: #e21414;
+}
+
+.title {
+	font-size: 16px;
+	font-family: "Verdana";
+	font-weight: bolder;
+	font-style: italic;
+}
+
+.subtitle {
 	display: inline-block
 }
 
-.newActivity thead td{
+.newActivity{
+	width: 100%
+}
+
+.newActivity thead td {
 	text-align: center;
 	padding-bottom: 10px;
-	font-weight:bolder;
+	font-weight: bolder;
 }
 
 .newActivity tbody tr {
@@ -106,23 +116,29 @@ label{
 	white-space: pre-line;
 	word-break: break-word;
 }
+
 .newActivity tr td:nth-child(2) {
-	text-align:center
+	text-align: center
 }
 
 .hiddenElement {
 	display: none
 }
 
-.bottomBtn{
+.bottomBtn {
 	padding-top: 10px;
 	text-align: center
 }
 
-.alreadySaw{
+.alreadySaw {
 	display: inline-block;
 	margin: 0 auto;
 }
+
+.privateMsgs .glyphicon-envelope{
+	margin-left: 5px;
+}
+
 .goToForum {
 	margin-right: 5px;
 }
@@ -131,36 +147,114 @@ label{
 	margin-left: 5px;
 }
 
+
 /*configSection*/
-.configSection{
+
+.configSection {
 	position: absolute;
 	top: 0;
 	background: white;
 	width: 100%;
 	height: 100%;
-	left:110%;
+	left: 110%;
 }
 
-.configSectionShow{
-	left:0;
+.configSectionShow {
+	left: 0;
 	background:
 }
 
-.closeConfig{
+.closeConfig {
 	position: absolute;
 	left: 90%;
 	top: 0;
 	color: crimson;
 }
 
-#refreshTime{margin-left: 5px}
+#refreshTime {
+	margin-left: 5px
+}
 
-.thankYouMsg{
+.thankYouMsg {
 	display: none;
 	background-color: white
 }
+
+/*Special thanks to section*/
+.specialThanks{
+	position:absolute;
+	height: 100%;
+	width:100%;
+	top:0;
+	padding:10px;
+	background:white;
+	display: none;
+}
+
+.specialThanksTitle{
+	font-size: 16px
+}
+
+.specialThanksUsers{
+	text-align: center;
+	margin:0 auto;
+	font-size: 14px;
+	position: absolute;
+	top:25%;
+	width:100%;
+}
+
+.clapping{
+	top:25%;
+	position:absolute;
+	width:100%
+}
+
+.clappingGifLeft, .clappingGifRight{
+	width:50px;
+	height: auto;
+	position: absolute;
+}
+.clappingGifRight{
+	right:10px;
+}
+.clappingGifLeft img, .clappingGifRight img{
+	width: 100%
+}
+
 /*Animations*/
-.standarAnimation{
+
+.standarAnimation {
 	transition-timing-function: ease-out;
 	transition: all 0.5s;
+}
+
+@keyframes heartbeat {
+	0% {
+		transform: scale( .75);
+	}
+	20% {
+		transform: scale( 1);
+	}
+	40% {
+		transform: scale( .75);
+	}
+	60% {
+		transform: scale( 1);
+	}
+	80% {
+		transform: scale( .75);
+	}
+	100% {
+		transform: scale( .75);
+	}
+}
+
+@keyframes spin {
+	from {
+		transform:rotate(0deg);
+	}
+	to {
+		transform:rotate(90deg);
+	}
 }

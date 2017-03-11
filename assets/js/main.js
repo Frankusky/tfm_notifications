@@ -11,9 +11,9 @@ $(document).ready(function () {
 	}
 
 	/*Displays the new posts*/
-	function showUserPosts(userNewData) {
-		renderView(userNewData.forumActivity);
-		if (userNewData["hasError"] == true) {
+	function showUserPosts() {
+		renderView();
+		if (bg.userData.tfm_notify_data["hasError"] == true) {
 			$(".application, .configSection").addClass("hiddenElement");
 			$(".errorMessage").removeClass("hiddenElement")
 		} else {
@@ -36,11 +36,13 @@ $(document).ready(function () {
 	}
 	/*Event listener*/
 	chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-		showUserPosts(message.tfm_notify_data);
+		bg.userData.tfm_notify_data = message.tfm_notify_data;
+		bg.saveData(bg.userData);
+		showUserPosts();
 	});
 
 	/*Gets configuration data for the first time*/
-	showUserPosts(bg.userData.tfm_notify_data);
+	showUserPosts();
 	updateSelectsValue();
 
 	/*Updates refresh time*/
@@ -55,7 +57,7 @@ $(document).ready(function () {
 		var language = $("#language option:selected").val();
 		bg.userData.tfm_notify_data.language = language;
 		bg.saveData(bg.userData);
-		renderView(bg.userData.tfm_notify_data.forumActivity)
+		renderView()
 	});
 	/*************UX THINGS HERE******************/
 	$(document).on("click", ".alreadySaw", function () {
@@ -86,7 +88,7 @@ $(document).ready(function () {
 	})
 
 	/*Event listener for clicking new activity*/
-	$(document).on("click", ".newActivity .newActivityItem", function (ev) {
+	$(document).on("click", ".newActivity .newActivityItem", function () {
 		var lastUser = $(this).attr("lastpostuser"),
 			postUrl = $(this).attr("posturl");
 		var activityData = bg.userData.tfm_notify_data.forumActivity;
@@ -99,25 +101,38 @@ $(document).ready(function () {
 			}
 		}
 		$(this).remove();
-		bg.updateNotification($(".newActivity .newActivityItem").length, false);
+		var newsAmmount = $(".newActivity .newActivityItem").length + Number(bg.userData.privateMsgsNumber);
+		bg.updateNotification(newsAmmount, false);
 		openWindow(postUrl);
 	})
 
-	function renderView(data) {
+	$(document).on("click", ".privateMsgs", function(){
+		openWindow("conversations");
+	});
+	function renderView() {
 		var template = $("#template").html();
 		var mustacheData = bg.userData.languageData;
-		mustacheData["threadData"] = data;
+		mustacheData["threadData"] = bg.userData.tfm_notify_data.forumActivity;
+		mustacheData["privateMsgsNumber"] = bg.userData.privateMsgsNumber;
 		var render = Mustache.render(template, mustacheData)
 		$("#tfmNotifierArea").html(render);
 		updateSelectsValue();
 	}
 	
 	/*Just for fun*/
+	/*Hover over my name :D*/
 	$(document).on("mouseenter", ".subtitle", function(){
 		$("body").css("background-image", "url('assets/img/tumblr_m5mt77UO9E1qecngho1_500.gif')")
 		$(".thankYouMsg").css("display", "block")
 	}).on("mouseleave", ".subtitle", function(){
 		$("body").css("background-image", "none")
 		$(".thankYouMsg").css("display", "none")
+	})
+	/*Clicking heart icon*/
+	$(document).on("click", ".specialThanksIcon", function(){
+		$(".specialThanks").fadeIn();
+		setTimeout(function(){
+			$(".specialThanks").fadeOut();
+		},5000)
 	})
 });

@@ -6,6 +6,13 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 4 11/03/2017:
+	- Removed go to Atelier Forum button
+	- Added private messages checker
+	- Added animations on buttons
+	- Added Romanian language support
+	- Removed soopafresh font in order to show Romanian characters
+
 - Version 3.3 26/01/2017:
 	- Fix for clicking first element and don't open tab
 

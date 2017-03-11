@@ -15,7 +15,8 @@ var languages = {
 		configuration:"Configuraciones",
 		updateTime:"Revisar actualizaciones cada:",
 		minutes: "Minutos",
-		thankYouMsg: "Gracias por descargar mi extension <3"
+		thankYouMsg: "Gracias por descargar mi extension <3",
+		specialThanks: "Un agradecimiento especial para:"
 	},
 	en:{
 		selectLanguage: "Choose your language:",
@@ -33,6 +34,45 @@ var languages = {
 		configuration:"Configurations",
 		updateTime:"Check updates every:",
 		minutes: "Minutes",
-		thankYouMsg: "Thank you for downloading my extension <3"
+		thankYouMsg: "Thank you for downloading my extension <3",
+		specialThanks: "Special thanks to:"
+	},
+	ro:{
+		selectLanguage: "Alege-ți limba:",
+		title:"Notificator de postări TFM",
+		subtitle: "Creat de Frankusky",
+		threadTitle: "Postează titlu",
+		lastCommentBy:"Comentarii noi de la",
+		goToFavThreads: "Mergi la postări favorite",
+		viewed: "Văzut",
+		errorTitle:"A apărut o eroare!",
+		pleaseCheck:"Te rog verifică aceasta:",
+		errorTips: ["Te-ai conectat pe Forumul Transformice.", "Nu ai conexiune la internet."],
+		goToAtelier:"Mergi la Atelier801",
+		reload:"Reîncarcă",
+		configuration:"Configurații",
+		updateTime:"Verifică actualizările la fiecare:",
+		minutes: "Minute",
+		thankYouMsg: "Mulțumesc pentru downloadarea extensiei mele <3",
+		specialThanks: "Mulțumiri speciale pentru:"
 	}
 }
+
+/*
+selectLanguage: "",
+title:"",
+subtitle: "",
+threadTitle: "",
+lastCommentBy:"",
+goToFavThreads: "",
+viewed: "",
+errorTitle:"",
+pleaseCheck:"",
+errorTips: ["", ""],
+goToAtelier:"",
+reload:"",
+configuration:"",
+updateTime:"",
+minutes: "",
+thankYouMsg: ""
+*/

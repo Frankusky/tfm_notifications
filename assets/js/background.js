@@ -6,7 +6,8 @@ var userData = userData ? userData : {
 		forumActivity: [],
 		language: "en"
 	},
-	languageData: {}
+	languageData: {},
+	privateMsgsNumber : "0"
 };
 /*Creates a base element in order to read atelier forum favorites section*/
 var baseEl = document.createElement("base");
@@ -15,12 +16,18 @@ document.getElementsByTagName("head")[0].appendChild(baseEl);
 /*Gets the local storage data*/
 function loadData() {
 	chrome.storage.local.get("tfm_notify_data", function (data) {
+		
 		try {
 			if (typeof (data.tfm_notify_data) !== "undefined") {
 				userData = {};
 				userData = data;
+				/*Updates old user stored data that doesnt have language key*/
 				if (typeof (data.tfm_notify_data.language) === "undefined") {
 					userData.tfm_notify_data.language = "en";
+				}
+				/*Updates old user stored data that doesnt have private messages number*/
+				if(typeof(data.privateMsgsNumber) === "undefined"){
+					userData.privateMsgsNumber = "0";
 				}
 			}
 		} catch (err) {} 
@@ -99,10 +106,13 @@ function checkFavorites() {
 					});
 				}
 			});
-			var userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity);
+			var messagesAmmount = $(result).find(".nav.pull-right.ltr>li>a[href='/conversations']").text().trim();
+			userData.privateMsgsNumber = messagesAmmount != "" ? messagesAmmount : 0;
+			var userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity) || userData.privateMsgsNumber>0;
 			if (userUpdateStatus === true) {
 				userData.tfm_notify_data.forumActivity = tempData;
-				updateNotification("" + userData.tfm_notify_data["forumActivity"].length, userData.tfm_notify_data.hasError);
+				var newsAmmount = Number(userData.tfm_notify_data["forumActivity"].length)+Number(userData.privateMsgsNumber);
+				updateNotification(newsAmmount.toString(), userData.tfm_notify_data.hasError);
 			} else if (userUpdateStatus === "none") {
 				userData.tfm_notify_data.forumActivity = [];
 				updateNotification("", false);
