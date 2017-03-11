@@ -1,7 +1,7 @@
 {
   "name": "tfm_notifications",
   "version": "1.0.0",
-  "description": "Transformice Thread Notification Extension for Chrome\r =====================================================",
+  "description": "Transformice Thread Notification Extension for Chrome",
   "main": "package.json",
   "dependencies": {
     "gulp": "^3.9.1",
