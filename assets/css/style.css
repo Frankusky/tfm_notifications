@@ -99,7 +99,6 @@ label {
 
 .newActivity tbody tr:hover {
 	cursor: pointer;
-	font-style: italic;
 	text-decoration: underline;
 	transition: all 0.5s;
 	color: cornflowerblue

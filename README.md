@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 4.1 11/03/2017:
+	- On hover, removed italic style per some titles can bug
+
 - Version 4 11/03/2017:
 	- Removed go to Atelier Forum button
 	- Added private messages checker
