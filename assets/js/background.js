@@ -107,16 +107,17 @@ function checkFavorites() {
 				}
 			});
 			var messagesAmmount = $(result).find(".nav.pull-right.ltr>li>a[href='/conversations']").text().trim();
-			userData.privateMsgsNumber = messagesAmmount != "" ? messagesAmmount : 0;
-			var userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity) || userData.privateMsgsNumber>0;
+			messagesAmmount = messagesAmmount != "" ? messagesAmmount : 0;
+			var userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity) || userData.privateMsgsNumber!=messagesAmmount;
 			if (userUpdateStatus === true) {
 				userData.tfm_notify_data.forumActivity = tempData;
+				userData.privateMsgsNumber = messagesAmmount;
 				var newsAmmount = Number(userData.tfm_notify_data["forumActivity"].length)+Number(userData.privateMsgsNumber);
 				updateNotification(newsAmmount.toString(), userData.tfm_notify_data.hasError);
 			} else if (userUpdateStatus === "none") {
 				userData.tfm_notify_data.forumActivity = [];
 				updateNotification("", false);
-			}
+			} 
 		}
 		refreshUpdate(userData.tfm_notify_data.refreshTime)
 		saveData(userData);
@@ -144,3 +145,6 @@ chrome.storage.onChanged.addListener(function (variableChange, storageArea) {
 /*First time execution*/
 loadData();
 checkFavorites();
+
+/*HELL START HERE*/
+chrome.tabs.onUpdated.addListener(function(idk, kezezo, thu){console.log(idk,kezezo,thu);})
