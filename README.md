@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 4.4 14/03/2017:
+	- Removed beta functions
+
 - Version 4.3 14/03/2017
 	- Added Russian language support
 

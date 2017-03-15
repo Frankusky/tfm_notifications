@@ -145,6 +145,3 @@ chrome.storage.onChanged.addListener(function (variableChange, storageArea) {
 /*First time execution*/
 loadData();
 checkFavorites();
-
-/*HELL START HERE*/
-chrome.tabs.onUpdated.addListener(function(idk, kezezo, thu){console.log(idk,kezezo,thu);})
