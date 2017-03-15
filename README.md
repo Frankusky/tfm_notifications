@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 4.3 14/03/2017
+	- Added Russian language support
+
 - Version 4.2 12/03/2017:
 	- Fix for reading private message but not updating notification number
 	- Removed notifications permission
