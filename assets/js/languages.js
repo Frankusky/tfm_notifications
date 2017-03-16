@@ -70,6 +70,24 @@ var languages = {
 		minutes: "Минут(ы)",
 		thankYouMsg: "Благодарю за скачивание моего расширения &lt;3",
 		specialThanks: "Особая благодарность:"
+	},
+	pt: {
+		selectLanguage: "Selecione o seu idioma",
+		title: "[Tool] Notificador de posts",
+		subtitle: "Criado por Frankusky",
+		threadTitle: "Titulo do tópico",
+		lastCommentBy: "Novo post de",
+		viewed: "Visto",
+		errorTitle: "Ha acontecido um erro!",
+		pleaseCheck: "Por favor revise",
+		errorTips: ["Ter conectada a sua conta no fórum de Transformice", "Ter conexão a Internet"],
+		goToAtelier: "Ir a Atelier801",
+		reload: "Recarregar",
+		configuration: "Configurações",
+		updateTime: "Revisar as atualizações em:",
+		minutes: "Minutos",
+		thankYouMsg: "Obrigado por descargar meu extensão &alt;3",
+		specialThanks: "Um agradecimiento especial para:"
 	}
 }
 

@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 4.5 15/03/2017:
+	- Added Portuguese language support
+
 - Version 4.4 14/03/2017:
 	- Removed beta functions
 
