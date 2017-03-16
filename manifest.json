@@ -14,11 +14,13 @@
 		"default_popup": "popup.html"
 	},
 	"background":{
-		"scripts":["assets/libs/js/jquery.min.js","assets/js/languages.min.js", "assets/js/background.min.js"],
+		"scripts":["assets/libs/js/jquery.min.js","assets/js/languages.min.js", "assets/js/upgradeForum.min.js", "assets/js/background.min.js"],
 		"persistent": true
 	},
 	"permissions": [
 		"*://atelier801.com/*",
-		"storage"
+		"storage",
+		"tabs",
+		"webNavigation"
   ]
 }
