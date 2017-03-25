@@ -14,7 +14,7 @@ var languages = {
 		configuration: "Configuraciones",
 		updateTime: "Revisar actualizaciones cada:",
 		minutes: "Minutos",
-		thankYouMsg: "Gracias por descargar mi extension &lt;3",
+		thankYouMsg: "Gracias por descargar mi extension <3",
 		specialThanks: "Un agradecimiento especial para:"
 	},
 	en: {
@@ -32,7 +32,7 @@ var languages = {
 		configuration: "Configurations",
 		updateTime: "Check updates every:",
 		minutes: "Minutes",
-		thankYouMsg: "Thank you for downloading my extension &lt;3",
+		thankYouMsg: "Thank you for downloading my extension <3",
 		specialThanks: "Special thanks to:"
 	},
 	ro: {
@@ -50,7 +50,7 @@ var languages = {
 		configuration: "Configurații",
 		updateTime: "Verifică actualizările la fiecare:",
 		minutes: "Minute",
-		thankYouMsg: "Mulțumesc pentru downloadarea extensiei mele &lt;3",
+		thankYouMsg: "Mulțumesc pentru downloadarea extensiei mele <3",
 		specialThanks: "Mulțumiri speciale pentru:"
 	},
 	ru: {
@@ -68,8 +68,44 @@ var languages = {
 		configuration: "Настройки",
 		updateTime: "Проверять обновления каждые:",
 		minutes: "Минут(ы)",
-		thankYouMsg: "Благодарю за скачивание моего расширения &lt;3",
+		thankYouMsg: "Благодарю за скачивание моего расширения <3",
 		specialThanks: "Особая благодарность:"
+	},
+	pt: {
+		selectLanguage: "Selecione o seu idioma",
+		title: "[Tool] Notificador de posts",
+		subtitle: "Criado por Frankusky",
+		threadTitle: "Título do tópico",
+		lastCommentBy: "Novo post de",
+		viewed: "Visualizado",
+		errorTitle: "Aconteceu um erro!",
+		pleaseCheck: "Por favor revise",
+		errorTips: ["Ter conectado a sua conta no fórum de Transformice", "Ter conexão a Internet"],
+		goToAtelier: "Ir à Atelier801",
+		reload: "Recarregar",
+		configuration: "Configurações",
+		updateTime: "Verificar as atualizações em:",
+		minutes: "Minutos",
+		thankYouMsg: "Obrigado por baixar a minha extensão <3",
+		specialThanks: "Um agradecimento especial para:"
+	},
+	lv: {
+		selectLanguage: "Izvēlēties valodu:",
+		title: "TFM ziņu atgādne",
+		subtitle: "Veidoja Frankusky",
+		threadTitle: "Ziņojuma virsraksts",
+		lastCommentBy: "Jauns komentārs no spēlētāja",
+		viewed: "Skatīts",
+		errorTitle: "Notikusi kļūda!",
+		pleaseCheck: "Lūdzu, pārbaudi to:",
+		errorTips: ["Tu esi ienācis Transformice forumā.", "Tev ir interneta savienojums."],
+		goToAtelier: "Doties uz Atelier801",
+		reload: "Pārlādēt",
+		configuration: "Konfigurācija",
+		updateTime: "Pārbaudīt atjauninājumus katras:",
+		minutes: "Minūtes",
+		thankYouMsg: "Paldies, ka lejupielādēji manu paplašinājumu! <3",
+		specialThanks: "Īpaša pateicība šiem spēlētājiem:"
 	}
 }
 
