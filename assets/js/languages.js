@@ -14,7 +14,7 @@ var languages = {
 		configuration: "Configuraciones",
 		updateTime: "Revisar actualizaciones cada:",
 		minutes: "Minutos",
-		thankYouMsg: "Gracias por descargar mi extension &lt;3",
+		thankYouMsg: "Gracias por descargar mi extension <3",
 		specialThanks: "Un agradecimiento especial para:"
 	},
 	en: {
@@ -32,7 +32,7 @@ var languages = {
 		configuration: "Configurations",
 		updateTime: "Check updates every:",
 		minutes: "Minutes",
-		thankYouMsg: "Thank you for downloading my extension &lt;3",
+		thankYouMsg: "Thank you for downloading my extension <3",
 		specialThanks: "Special thanks to:"
 	},
 	ro: {
@@ -50,7 +50,7 @@ var languages = {
 		configuration: "Configurații",
 		updateTime: "Verifică actualizările la fiecare:",
 		minutes: "Minute",
-		thankYouMsg: "Mulțumesc pentru downloadarea extensiei mele &lt;3",
+		thankYouMsg: "Mulțumesc pentru downloadarea extensiei mele <3",
 		specialThanks: "Mulțumiri speciale pentru:"
 	},
 	ru: {
@@ -68,7 +68,7 @@ var languages = {
 		configuration: "Настройки",
 		updateTime: "Проверять обновления каждые:",
 		minutes: "Минут(ы)",
-		thankYouMsg: "Благодарю за скачивание моего расширения &lt;3",
+		thankYouMsg: "Благодарю за скачивание моего расширения <3",
 		specialThanks: "Особая благодарность:"
 	},
 	pt: {

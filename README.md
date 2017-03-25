@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 4.7 24/03/2017:
+	- Encoding fix
+
 - Version 4.6 16/03/2017:
 	- Added Latvian language support
 	- Typo errors fixes at Portuguese language
