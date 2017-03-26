@@ -13,8 +13,8 @@
 		"default_icon": "assets/img/icons/16.png",
 		"default_popup": "popup.html"
 	},
-	"background":{
-		"scripts":["assets/libs/js/jquery.min.js","assets/js/languages.min.js", "assets/js/upgradeForum.min.js", "assets/js/background.min.js"],
+	"background": {
+		"scripts": ["assets/libs/js/jquery.min.js", "assets/js/languages.min.js", "assets/js/background.min.js"],
 		"persistent": true
 	},
 	"permissions": [
@@ -22,5 +22,16 @@
 		"storage",
 		"tabs",
 		"webNavigation"
-  ]
+	],
+	"content_scripts": [
+		{
+			"matches": ["*://atelier801.com/*"],
+			"js": ["assets/libs/js/jquery.min.js","assets/js/upgradeForum.min.js"],
+			"css": ["assets/css/webInterface.css"],
+			"run_at": "document_end"
+		}
+	],
+	"web_accessible_resources" : [
+		"assets/img/webInterfaceIcons/*"
+	]
 }

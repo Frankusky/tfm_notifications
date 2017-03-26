@@ -1,0 +1,14 @@
+.emojisDropdown .cellule-dropdown li{
+	padding:3px;
+}
+
+.emojisDropdown .cellule-dropdown li:hover{
+	background-color: #496266;
+	border-radius: 3px;
+	cursor: pointer
+}
+
+.emojiFooter{
+	text-align: center
+}
+

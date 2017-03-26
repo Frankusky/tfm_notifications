@@ -13,7 +13,7 @@ var paths = {
 	js : "assets/js/*",
 	css : "assets/css/*",
 	libs : "assets/libs/**/*",
-	img: "assets/img/**/*",
+	img: ["assets/img/**/*", "!assets/img/defaultEmojis/**"],
 	distProdRoot : "dist",
 	distProdJs : "dist/assets/js",
 	distProdCss : "dist/assets/css",
