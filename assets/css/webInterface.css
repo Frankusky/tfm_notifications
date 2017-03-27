@@ -14,34 +14,29 @@
 	padding-top:5px;
 }
 
-.emojisDropdown .cellule-dropdown li{
+.emojisDropdown .emojisDropdownContainer{
+	white-space: normal;
+	max-height: 100px;
+	overflow-y: scroll
+}
+
+.emojisDropdown .emojisDropdownContainer .emojisDropdownItems{
 	padding:3px;
 }
 
-.emojisDropdown .cellule-dropdown li:hover{
+.emojisDropdown .emojisDropdownContainer .emojisDropdownItems:hover{
 	background-color: #496266;
 	border-radius: 3px;
 	cursor: pointer
 }
-
-.emojisDropdown tbody{
-	display: block;
-	max-height: 70px;
-	overflow-y: scroll;
-}
-
-.emojisDropdown td{
-	padding:0;
-}
-
 
 .emojisDropdown td img{
 	max-width:50px;
 	width:100%;
 }
 
-.emojisDropdown tr{
-	display: table;
+.emojisDropdown .emojisDropdownItems{
+	display: inline-block;
 }
 
 .emojisDropdown .emojiFooter{
