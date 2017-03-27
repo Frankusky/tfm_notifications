@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 5 26/03/2017:
+	- Added emoji functionality
+
 - Version 4.7 24/03/2017:
 	- Encoding fix
 

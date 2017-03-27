@@ -3,7 +3,7 @@
 	"name": "Transformice Favorites Threads Notifications",
 	"short_name": "TFM Forum Pro Tool",
 	"description": "Get notifications everytime your favorite posts has some activity.",
-	"version": "4.7",
+	"version": "5",
 	"icons": {
 		"16": "assets/img/icons/16.png",
 		"48": "assets/img/icons/48.png",
@@ -20,8 +20,7 @@
 	"permissions": [
 		"*://atelier801.com/*",
 		"storage",
-		"tabs",
-		"webNavigation"
+		"tabs"
 	],
 	"content_scripts": [
 		{
