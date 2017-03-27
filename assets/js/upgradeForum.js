@@ -4,16 +4,22 @@
 			start: 0,
 			end: 0
 		};
-		
-		this.tfmEmojis = ["http://i.imgur.com/UWRr0GJ.png", "http://i.imgur.com/8vcM6SC.png", "http://i.imgur.com/1W100Wq.png", "http://i.imgur.com/p6AInvY.png", "http://i.imgur.com/aTwU9Kt.png", "http://i.imgur.com/cQh0ouT.png", "http://i.imgur.com/bFuyN6p.png", "http://i.imgur.com/xnVu4sa.png"];
 
-		this.sabushaEmojis = ["http://i.imgur.com/zasOI.png","http://i.imgur.com/H0WtZ.png","http://i.imgur.com/hKZYR.png","http://i.imgur.com/phTBJ.png","http://i.imgur.com/f4jHb.png","http://i.imgur.com/9iPlg.png","http://i.imgur.com/Pp6uv.png","http://i.imgur.com/CEZEQ.png","http://i.imgur.com/aWiDs.png","http://i.imgur.com/PoXpX.png","http://i.imgur.com/Wb3Qx.png","http://i.imgur.com/U6dt6.png"];
-
+		this.emojis = {
+			tfmEmojis: {
+				emojiList: ["http://i.imgur.com/UWRr0GJ.png", "http://i.imgur.com/8vcM6SC.png", "http://i.imgur.com/1W100Wq.png", "http://i.imgur.com/p6AInvY.png", "http://i.imgur.com/aTwU9Kt.png", "http://i.imgur.com/cQh0ouT.png", "http://i.imgur.com/bFuyN6p.png", "http://i.imgur.com/xnVu4sa.png"],
+				tabName: "Default"
+			},
+			sabushaEmojis: {
+				emojiList: ["http://i.imgur.com/zasOI.png", "http://i.imgur.com/H0WtZ.png", "http://i.imgur.com/hKZYR.png", "http://i.imgur.com/phTBJ.png", "http://i.imgur.com/f4jHb.png", "http://i.imgur.com/9iPlg.png", "http://i.imgur.com/Pp6uv.png", "http://i.imgur.com/CEZEQ.png", "http://i.imgur.com/aWiDs.png", "http://i.imgur.com/PoXpX.png", "http://i.imgur.com/Wb3Qx.png", "http://i.imgur.com/U6dt6.png"],
+				tabName: "Sabusha"
+			}
+		}
 		this.getExtensionFile = function (file) {
 			return chrome.extension.getURL(file);
 		}
 
-		this.generateEmojisBodyContent = function(emojisList){
+		this.generateEmojisBodyContent = function (emojisList) {
 			var tableContent = "";
 			for (var x in emojisList) {
 				if (x == 0) tableContent += "<tr>"
@@ -23,21 +29,38 @@
 			tableContent = tableContent + "<td></td>".repeat(3 - (emojisList.length % 3)) + "</tr>";
 			return tableContent
 		}
-		
+
 		this.generateEmojisTable = function (emojisList) {
-			var tableContent = this.generateEmojisBodyContent(this.tfmEmojis);
-			tableContent = tableContent + this.generateEmojisBodyContent(this.sabushaEmojis);
-			return "<table><tbody>" + tableContent + "</tbody></table>";
+			return "<table><tbody>" + this.generateEmojisBodyContent(emojisList) + "</tbody></table>";
 		}
 
-		this.generateDropdown = function(){
-			
+		this.generateTab = function (tabHash, tabTitle) {
+			return "<li><a data-toggle='tab' href='#" + tabHash + "'>" + tabTitle + "</a></li>"
+		}
+		
+		this.generateTabBody =  function(tabId, emojiList){
+			return "<div id='" + tabId + "' class='tab-pane fade'>" + this.generateEmojisTable(emojiList) + "</div>"
+		}
+
+		this.generateDropdown = function () {
+			var dropDownBody = "<ul class='dropdown-menu pull-right label-message emojisDropdown'>";
+			var tabs = "";
+			var tabsBody = ""
+			for (var x in this.emojis) {
+				if (this.emojis.hasOwnProperty(x)) {
+					tabs += this.generateTab(x, this.emojis[x].tabName);
+					tabsBody += this.generateTabBody(x, this.emojis[x].emojiList);
+				}
+			}
+			tabs = "<ul class='nav nav-tabs'>" + tabs + "</ul>";
+			tabsBody = "<div class='tab-content'>" + tabsBody + "</div>";
+			dropDownBody += tabs+tabsBody + "<div class='emojiFooter'>Provided by Frankusky</div></ul></div>";
+			return dropDownBody;
 		}
 
 		this.insertBtn = function () {
 			var emojiIconUrl = this.getExtensionFile("assets/img/webInterfaceIcons/emojiIcon.png");
-//			var btnDom = "<div class='btn-group groupe-boutons-barre-outils'> <button class='btn dropdown-toggle btn-reduit emojiBtn'><img src='" + emojiIconUrl + "'> <span class='caret'></span> </button><ul class='dropdown-menu pull-right label-message emojisDropdown'><ul class='nav nav-tabs'><li class='active'><a data-toggle='tab' href='#emojiDefault'>Default</a></li></ul><div class='tab-content'><div id='emojiDefault' class='tab-pane fade in active'>" + this.generateEmojisTable() + "</div></div><div class='emojiFooter'>Provided by Frankusky</div></ul></div>";
-			var btnDom = "<div class='btn-group groupe-boutons-barre-outils'> <button class='btn dropdown-toggle btn-reduit emojiBtn'><img src='" + emojiIconUrl + "'> <span class='caret'></span> </button><ul class='dropdown-menu pull-right label-message emojisDropdown'><ul class='nav nav-tabs'><li class='active'><a data-toggle='tab' href='#emojiDefault'>Default</a></li></ul><div class='tab-content'><div id='emojiDefault' class='tab-pane fade in active'>" + this.generateEmojisTable() + "</div></div><div class='emojiFooter'>Provided by Frankusky</div></ul></div>";
+			var btnDom = "<div class='btn-group groupe-boutons-barre-outils'> <button class='btn dropdown-toggle btn-reduit emojiBtn'><img src='" + emojiIconUrl + "'> <span class='caret'></span> </button>" + this.generateDropdown();
 			$("#outils_message_reponse").append(btnDom);
 			return this;
 		}
@@ -53,6 +76,7 @@
 
 		this.toggleDropDown = function () {
 			$('.emojiBtn').on('click', function (event) {
+				event.stopPropagation();
 				$(this).parent().toggleClass('open');
 			});
 			return this
@@ -79,6 +103,12 @@
 			});
 			return that
 		}
+
+		this.setActiveClasses = function () {
+			$(".emojisDropdown .nav-tabs li:first-child").addClass("active");
+			$(".emojisDropdown .tab-content .tab-pane:first-child").addClass("in active");
+			return this
+		}
 	};
 
 
@@ -87,6 +117,6 @@
 	}
 	if (hasResponseBar()) {
 		var newSession = new tfmForum;
-		newSession.insertBtn().toggleDropDown().emojiBtnImageClickListener().textareaCursorPositionListener().dropDownCloserListener();
+		newSession.insertBtn().setActiveClasses().toggleDropDown().emojiBtnImageClickListener().textareaCursorPositionListener().dropDownCloserListener();
 	}
 })()
