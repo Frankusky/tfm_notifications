@@ -32,15 +32,12 @@
 			for (var x in emojisList) {
 				if (x == 0) tableContent += "<tr>"
 				if (x != 0 && x % 3 == 0) tableContent += "</tr><tr>"
-//				tableContent += "<td class='cellule-dropdown'><li><img src='" + emojisList[x] + "' alt='' /></li></td>"
 				tableContent += "<div class='emojisDropdownItems'><img src='" + emojisList[x] + "' alt='' /></div>"
 			}
-//			tableContent = tableContent + "<td></td>".repeat(3 - (emojisList.length % 3)) + "</tr>";
 			return tableContent
 		}
 
 		this.generateEmojisTable = function (emojisList) {
-//			return "<table><tbody>" + this.generateEmojisBodyContent(emojisList) + "</tbody></table>";
 			return "<div class='emojisDropdownContainer'>" + this.generateEmojisBodyContent(emojisList) + "</div>";
 		}
 
