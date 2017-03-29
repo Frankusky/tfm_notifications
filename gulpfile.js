@@ -6,7 +6,8 @@ var gulp = require("gulp"),
 	cleanCSS = require("gulp-clean-css"),
 	uglify = require("gulp-uglify"),
 	zip = require("gulp-zip"),
-	plumber = require("gulp-plumber");
+	plumber = require("gulp-plumber"),
+	del = require("del");
 
 var paths = {
 	html : ["popup.html", "background.html"],
@@ -71,10 +72,15 @@ gulp.task("firstBuild", allTasks, function(){
 	gulp.watch(paths.libs, ["gen-libs"]);
 	gulp.watch(paths.manifest, ["gen-manifest"]);
 });
-/*Delete last zip build*/
-//gulp.task("delete_zip", function(){
-//	return del(["dist/tfm_notifications.zip"])
-//})
+/*Delete everything in order to have a clean build*/
+gulp.task("delete", function(){
+	console.log("Removing dist");
+	return del("dist")
+})
+/*Generetes a clean build*/
+gulp.task("build", ["delete"], function(){
+	gulp.start("gen-zip")
+});
 /*Generate zip file*/
 gulp.task("gen-zip", allTasks,function(){
 	return gulp.src(["dist/**", "!dist/tfm_notifications.zip"])

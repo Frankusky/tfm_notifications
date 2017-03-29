@@ -4,6 +4,7 @@
   "description": "Transformice Thread Notification Extension for Chrome",
   "main": "package.json",
   "dependencies": {
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.3.2",
     "gulp-delete-file": "^1.0.2",
@@ -15,7 +16,9 @@
     "gulp-util": "^3.0.8",
     "gulp-zip": "^4.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "del": "^2.2.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

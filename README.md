@@ -9,6 +9,7 @@ Changelog:
 - Version 5.1 28/03/2017:
 	- Added two missing default emojis
 	- Added emoji button for all text areas in the forum
+	- Modified gulp task to delete the dist folder before generating the zip file
 
 - Version 5 26/03/2017:
 	- Added emoji functionality
