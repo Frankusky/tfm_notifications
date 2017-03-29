@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 5.2 28/03/2017
+	- Reverted fix to apply emoji button in all text areas, brokes functionality
+
 - Version 5.1 28/03/2017:
 	- Added two missing default emojis
 	- Added emoji button for all text areas in the forum

@@ -71,7 +71,7 @@
 		this.insertBtn = function () {
 			var emojiIconUrl = this.getExtensionFile("assets/img/webInterfaceIcons/emojiIcon.png");
 			var btnDom = "<div class='btn-group groupe-boutons-barre-outils'> <button class='btn dropdown-toggle btn-reduit emojiBtn'><img src='" + emojiIconUrl + "'> <span class='caret'></span> </button>" + this.generateDropdown();
-			$(".input-message").prev().append(btnDom);
+			$("#outils_message_reponse").append(btnDom);
 			this.customEmojis();
 			return this;
 		}
