@@ -7,7 +7,7 @@
 
 		this.emojis = {
 			tfmEmojis: {
-				emojiList: ["http://i.imgur.com/UWRr0GJ.png", "http://i.imgur.com/8vcM6SC.png", "http://i.imgur.com/1W100Wq.png", "http://i.imgur.com/p6AInvY.png", "http://i.imgur.com/aTwU9Kt.png", "http://i.imgur.com/cQh0ouT.png", "http://i.imgur.com/bFuyN6p.png", "http://i.imgur.com/xnVu4sa.png"],
+				emojiList: ["http://img.atelier801.com/37a4f143.png","http://img.atelier801.com/3724f143.png","http://img.atelier801.com/36a4f143.png","http://img.atelier801.com/3624f143.png","http://img.atelier801.com/35a4f143.png","http://img.atelier801.com/3524f143.png","http://img.atelier801.com/34a4f143.png","http://img.atelier801.com/3424f143.png","http://img.atelier801.com/cba4f143.png","http://img.atelier801.com/cb24f143.png"],
 				tabName: "Default"
 			},
 			sabushaEmojis: {
@@ -71,7 +71,7 @@
 		this.insertBtn = function () {
 			var emojiIconUrl = this.getExtensionFile("assets/img/webInterfaceIcons/emojiIcon.png");
 			var btnDom = "<div class='btn-group groupe-boutons-barre-outils'> <button class='btn dropdown-toggle btn-reduit emojiBtn'><img src='" + emojiIconUrl + "'> <span class='caret'></span> </button>" + this.generateDropdown();
-			$("#outils_message_reponse").append(btnDom);
+			$(".input-message").prev().append(btnDom);
 			this.customEmojis();
 			return this;
 		}
