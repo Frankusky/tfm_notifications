@@ -1,10 +1,5 @@
 (function () {
 	var tfmForum = function () {
-		this.textAreaCursorPosition = {
-			start: 0,
-			end: 0
-		};
-
 		this.emojis = {
 			tfmEmojis: {
 				emojiList: ["http://img.atelier801.com/37a4f143.png","http://img.atelier801.com/3724f143.png","http://img.atelier801.com/36a4f143.png","http://img.atelier801.com/3624f143.png","http://img.atelier801.com/35a4f143.png","http://img.atelier801.com/3524f143.png","http://img.atelier801.com/34a4f143.png","http://img.atelier801.com/3424f143.png","http://img.atelier801.com/cba4f143.png","http://img.atelier801.com/cb24f143.png"],
@@ -48,18 +43,19 @@
 		this.generateTabBody =  function(tabId, emojiList){
 			return "<div id='" + tabId + "' class='tab-pane fade'>" + this.generateEmojisTable(emojiList) + "</div>"
 		}
-		this.customEmojis = function(){
-			$("#customEmojis").html("<img src='"+this.getExtensionFile("assets/img/webInterfaceIcons/inprogress.png")+"' style='height: auto;width: 100px;text-align: center;display: block;margin: 0 auto;'><div style='text-align:center;color:#6FD6FC'>In progress</div>")
+		this.customEmojis = function(textAreaID){
+			$("#customEmojis"+textAreaID).html("<img src='"+this.getExtensionFile("assets/img/webInterfaceIcons/inprogress.png")+"' style='height: auto;width: 100px;text-align: center;display: block;margin: 0 auto;'><div style='text-align:center;color:#6FD6FC'>In progress</div>")
 			return this
 		}
-		this.generateDropdown = function () {
+		this.generateDropdown = function (textAreaID) {
 			var dropDownBody = "<ul class='dropdown-menu pull-right label-message emojisDropdown'>";
 			var tabs = "";
 			var tabsBody = ""
 			for (var x in this.emojis) {
 				if (this.emojis.hasOwnProperty(x)) {
-					tabs += this.generateTab(x, this.emojis[x].tabName);
-					tabsBody += this.generateTabBody(x, this.emojis[x].emojiList);
+					var idHash = x + textAreaID;
+					tabs += this.generateTab(idHash, this.emojis[x].tabName);
+					tabsBody += this.generateTabBody(idHash, this.emojis[x].emojiList);
 				}
 			}
 			tabs = "<ul class='nav nav-tabs'>" + tabs + "</ul>";
@@ -69,22 +65,16 @@
 		}
 
 		this.insertBtn = function () {
-			var emojiIconUrl = this.getExtensionFile("assets/img/webInterfaceIcons/emojiIcon.png");
-			var btnDom = "<div class='btn-group groupe-boutons-barre-outils'> <button class='btn dropdown-toggle btn-reduit emojiBtn'><img src='" + emojiIconUrl + "'> <span class='caret'></span> </button>" + this.generateDropdown();
-			$("#outils_message_reponse").append(btnDom);
-			this.customEmojis();
-			return this;
-		}
-
-		this.textareaCursorPositionListener = function () {
 			var that = this;
-			$("#message_reponse").focusout(function () {
-				that.textAreaCursorPosition.start = this.selectionStart;
-				that.textAreaCursorPosition.end = this.selectionEnd;
+			var emojiIconUrl = that.getExtensionFile("assets/img/webInterfaceIcons/emojiIcon.png");
+			$(".input-message").prev().each(function(){
+				var textAreaID = this.id.replace(/[\D]/g,"");
+				var btnDom = "<div class='btn-group groupe-boutons-barre-outils'> <button class='btn dropdown-toggle btn-reduit emojiBtn'><img src='" + emojiIconUrl + "'> <span class='caret'></span> </button>" + that.generateDropdown(textAreaID);
+				this.innerHTML = this.innerHTML+btnDom;
+				that.customEmojis(textAreaID);
 			});
-			return that
+			return that;
 		}
-
 		this.toggleDropDown = function () {
 			$('.emojiBtn').on('click', function (event) {
 				event.stopPropagation();
@@ -108,11 +98,12 @@
 			var that = this;
 			$(".emojisDropdownItems img").click(function (ev) {
 				var bbCode = "[img]" + this.src + "[/img]";
-				var actualText = $("#message_reponse").val();
-				var finalMessage = actualText.substring(0, that.textAreaCursorPosition.start) + bbCode + actualText.substring(that.textAreaCursorPosition.end, actualText.length);
-				$("#message_reponse").val(finalMessage);
-				that.textAreaCursorPosition.start = that.textAreaCursorPosition.start + bbCode.length;
-				that.textAreaCursorPosition.end = that.textAreaCursorPosition.start;
+				var actualTextArea = $(this).parents(".controls.ltr").children("textarea")[0];
+				var actualText = actualTextArea.value;
+				var finalMessage = actualText.substring(0, actualTextArea.selectionStart) + bbCode + actualText.substring(actualTextArea.selectionEnd, actualText.length);
+				var newCursorPostion = actualTextArea.selectionStart + bbCode.length;
+				actualTextArea.value = finalMessage;
+				actualTextArea.setSelectionRange(newCursorPostion,newCursorPostion);
 			});
 			return that
 		}
@@ -126,10 +117,10 @@
 
 
 	function hasResponseBar() {
-		return $("#outils_message_reponse").length > 0
+		return $(".input-message").length > 0
 	}
 	if (hasResponseBar()) {
 		var newSession = new tfmForum;
-		newSession.insertBtn().setActiveClasses().toggleDropDown().emojiBtnImageClickListener().textareaCursorPositionListener().dropDownCloserListener();
+		newSession.insertBtn().setActiveClasses().toggleDropDown().emojiBtnImageClickListener().dropDownCloserListener();
 	}
 })()
