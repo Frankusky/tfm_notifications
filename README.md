@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 5.3 29/03/2017
+	- Emoji button works for all text areas
+
 - Version 5.2 28/03/2017
 	- Reverted fix to apply emoji button in all text areas, brokes functionality
 
