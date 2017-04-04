@@ -1,3 +1,4 @@
+/*********************EMOJIS*************************/
 .emojisDropdown{
 	width:250px;
 }
@@ -42,4 +43,25 @@
 .emojisDropdown .emojiFooter{
 	font-size: 10px;
 	text-align: center;
+}
+/****************************PAYPAL*********************/
+.pandaSalute{
+	cursor: pointer;
+	padding-bottom: 40px;
+	margin-top: -40px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+.paypalModalTitle{
+	text-align: center;
+	display: block;
+	font-size: 18px;
+}
+#paypalDonateBtn{
+	display: inline-block;
+	margin-left: 15px;
+}
+.racoonImg{
+	
 }

@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 5.4 03/04/2017
+	- Added paypal donations
+
 - Version 5.3 29/03/2017
 	- Emoji button works for all text areas
 

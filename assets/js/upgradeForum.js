@@ -1,5 +1,9 @@
 (function () {
 	var tfmForum = function () {
+		/*JSON with the default emoticons
+		* @type Array emojiList array with the list of url images
+		* @type String tabName the name of the tab
+		*/
 		this.emojis = {
 			tfmEmojis: {
 				emojiList: ["http://img.atelier801.com/37a4f143.png","http://img.atelier801.com/3724f143.png","http://img.atelier801.com/36a4f143.png","http://img.atelier801.com/3624f143.png","http://img.atelier801.com/35a4f143.png","http://img.atelier801.com/3524f143.png","http://img.atelier801.com/34a4f143.png","http://img.atelier801.com/3424f143.png","http://img.atelier801.com/cba4f143.png","http://img.atelier801.com/cb24f143.png"],
@@ -18,35 +22,55 @@
 				tabName: "Custom"
 			}
 		}
+		/*Returns the url for certain file relative to the extension
+		* @type String file The url path of the file
+		* @return chrome extension file absolute path
+		*/
 		this.getExtensionFile = function (file) {
 			return chrome.extension.getURL(file);
 		}
-
+		/*Generates the tab content
+		* @type Array emojisList List of emojis urls
+		* @return divs with images
+		*/
 		this.generateEmojisBodyContent = function (emojisList) {
-			var tableContent = "";
+			var bodyContent = "";
 			for (var x in emojisList) {
-				if (x == 0) tableContent += "<tr>"
-				if (x != 0 && x % 3 == 0) tableContent += "</tr><tr>"
-				tableContent += "<div class='emojisDropdownItems'><img src='" + emojisList[x] + "' alt='' /></div>"
+				bodyContent += "<div class='emojisDropdownItems'><img src='" + emojisList[x] + "' alt='' /></div>"
 			}
-			return tableContent
+			return bodyContent
 		}
-
+		/*Creates a div that will contain the emojis
+		* @type Array emojisList List of emojis urls that will be sent to generateEmojisBodyContent to generate the body
+		* @return the div of the emoji body container
+		*/
 		this.generateEmojisTable = function (emojisList) {
 			return "<div class='emojisDropdownContainer'>" + this.generateEmojisBodyContent(emojisList) + "</div>";
 		}
-
+		/* Generates the tabs for each emoji list
+		* @type String tabHash the id of the tab that will be refered on click
+		* @type String tabTitle the title name of the tab
+		* @return the li element for the tab
+		*/
 		this.generateTab = function (tabHash, tabTitle) {
 			return "<li><a data-toggle='tab' href='#" + tabHash + "'>" + tabTitle + "</a></li>"
 		}
-		
+		/* Generates the tabs container
+		* @type String tabId the id of the tab that will be showed
+		* @type Array emojiList list of the emojis
+		* @return the tab body
+		*/
 		this.generateTabBody =  function(tabId, emojiList){
 			return "<div id='" + tabId + "' class='tab-pane fade'>" + this.generateEmojisTable(emojiList) + "</div>"
 		}
+		/* Generates the custom tab
+		* @type String textAreaId the id of the textarea that is referred to
+		*/
 		this.customEmojis = function(textAreaID){
 			$("#customEmojis"+textAreaID).html("<img src='"+this.getExtensionFile("assets/img/webInterfaceIcons/inprogress.png")+"' style='height: auto;width: 100px;text-align: center;display: block;margin: 0 auto;'><div style='text-align:center;color:#6FD6FC'>In progress</div>")
 			return this
 		}
+
 		this.generateDropdown = function (textAreaID) {
 			var dropDownBody = "<ul class='dropdown-menu pull-right label-message emojisDropdown'>";
 			var tabs = "";
@@ -113,6 +137,74 @@
 			$(".emojisDropdown .tab-content .tab-pane:first-child").addClass("in active");
 			return this
 		}
+		/********************************Paypal****************************/
+		this.paypalPanda = function(){
+			var pandaImg = document.createElement("img");
+			pandaImg.src = this.getExtensionFile("assets/img/webInterfaceIcons/pandasalute.gif");
+			pandaImg.setAttribute("data-toggle", "modal");
+			pandaImg.setAttribute("data-target", "#paypalModal");
+			pandaImg.setAttribute("class","pandaSalute");
+			document.getElementById("corps").parentNode.insertBefore(pandaImg,document.getElementById("corps").nextSibling);
+			return this
+		}
+		this.modalDom = function(){
+			var userName = document.querySelectorAll(".nav.pull-right.ltr .dropdown-toggle")[0].innerText;
+			var modalHTML = document.createElement("div");
+			modalHTML.innerHTML = '<div class="modal fade" id="paypalModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: block;"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-body"><div class="paypalModalTitle">Hi '+userName+'!<div><img src="'+this.getExtensionFile("assets/img/webInterfaceIcons/cutey-raccoon-emoticon.gif")+'" alt="" class="racoonImg"/></div></div><div>I\'m Frankusky, the developer of TFM notifier extension for chrome. I just want to say thank you for using my extension, I hope you like it so much as I like it develop it! Its has been a looong way through, with many headaches, frustations and time spent on it, but after all, a lot of fun and learning!<br/><br/>May I ask you a favor?<br/><br/>If you can, please consider making me a donation, doesn\'t matter the amount, every cent is welcome, if you can\'t, don\'t worry, you can also help me recommending my extension to your friends, sending suggestions or cheering me. <br/><br/>Thanks for using my extension and let me know your opinion about it :)</div><br/><div>PD: dont worry, the extension will still free :P</div></div></div></div><div class="modal-footer"><button type="button" class="btn btn-default closePaypalModal" data-dismiss="modal">Close</button><div id="paypalDonateBtn" ></div></div></div>';
+			return modalHTML
+		}
+		this.insertPaypalModal = function(){
+			document.getElementsByTagName("body")[0].appendChild(this.modalDom());
+			return this;
+		}
+		this.racoonListeners = function(){
+			var that = this;
+			$("#paypalDonateBtn").mouseenter(function(){
+				$(".racoonImg").attr("src", that.getExtensionFile("assets/img/webInterfaceIcons/cute-cry-raccoon-emoticon.gif"));
+			}).mouseleave(function(){
+				$(".racoonImg").attr("src", that.getExtensionFile("assets/img/webInterfaceIcons/cutey-raccoon-emoticon.gif"));
+			});
+			$(".closePaypalModal").mouseenter(function(){
+				$(".racoonImg").attr("src", that.getExtensionFile("assets/img/webInterfaceIcons/no-raccoon-emoticon.gif"));
+			}).mouseleave(function(){
+				$(".racoonImg").attr("src", that.getExtensionFile("assets/img/webInterfaceIcons/cutey-raccoon-emoticon.gif"));
+			});
+			
+			return this
+		}
+		this.insertPaypalBtn = function(){
+			var paypalForm = document.createElement("form");
+			paypalForm.action = "https://www.paypal.com/cgi-bin/webscr";
+			paypalForm.method = "post";
+			paypalForm.target = "_blank";
+			var inputCMD = document.createElement("input");
+			inputCMD.type = "hidden";
+			inputCMD.name = "cmd";
+			inputCMD.value = "_s-xclick";
+			var inputHostedBtnId = document.createElement("input");
+			inputHostedBtnId.type = "hidden";
+			inputHostedBtnId.value = "8R7YZCA74HXXW";
+			inputHostedBtnId.name = "hosted_button_id";
+			var inputImg = document.createElement("input");
+			inputImg.type = "image";
+			inputImg.src = "https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif";
+			inputImg.border = "0";
+			inputImg.name = "submit";
+			inputImg.alt = "PayPal - The safer, easier way to pay online!";
+			var paypalImg = document.createElement("img");
+			paypalImg.alt = "";
+			paypalImg.border = "0";
+			paypalImg.src = "https://www.paypalobjects.com/en_US/i/scr/pixel.gif";
+			paypalImg.width = "1"
+			paypalImg.height = "1";
+			paypalForm.appendChild(inputCMD);
+			paypalForm.appendChild(inputHostedBtnId);
+			paypalForm.appendChild(inputImg);
+			paypalForm.appendChild(paypalImg);
+			document.getElementById("paypalDonateBtn").appendChild(paypalForm);
+
+			return this
+		}
 	};
 
 
@@ -121,6 +213,6 @@
 	}
 	if (hasResponseBar()) {
 		var newSession = new tfmForum;
-		newSession.insertBtn().setActiveClasses().toggleDropDown().emojiBtnImageClickListener().dropDownCloserListener();
+		newSession.insertBtn().setActiveClasses().toggleDropDown().emojiBtnImageClickListener().dropDownCloserListener().paypalPanda().insertPaypalModal().insertPaypalBtn().racoonListeners();
 	}
 })()
