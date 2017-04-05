@@ -53,6 +53,9 @@
 	margin-right: auto;
 	display: block;
 }
+#paypalModal{
+	display: none
+}
 .paypalModalTitle{
 	text-align: center;
 	display: block;

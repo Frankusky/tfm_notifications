@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 5.5 04/04/2017}
+	- Fixed modal getting over content at first load
+
 - Version 5.4 03/04/2017
 	- Added paypal donations
 
