@@ -107,6 +107,10 @@ $(document).ready(function () {
 	})
 
 	$(document).on("click", ".privateMsgs", function(){
+		bg.userData.privateMsgsNumber = "0";
+		var newsAmmount = $(".newActivity .newActivityItem").length;
+		bg.updateNotification(newsAmmount, false);
+		bg.saveData(bg.userData);
 		openWindow("conversations");
 	});
 	function renderView() {

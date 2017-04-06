@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 5.6 05/04/2017
+	- Fixed clicking on messages button doesn't rest messages ammount
+
 - Version 5.5 04/04/2017}
 	- Fixed modal getting over content at first load
 
