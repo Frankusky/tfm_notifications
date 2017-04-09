@@ -36,9 +36,9 @@ $(document).ready(function () {
 	}
 	/*Event listener*/
 	chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-		bg.userData.tfm_notify_data = message.tfm_notify_data;
-		bg.saveData(bg.userData);
-		showUserPosts();
+		if(message.method==="checkFavorites"){
+			showUserPosts();
+		}
 	});
 
 	/*Gets configuration data for the first time*/
