@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 5.7 17/04/2017
+	- Typo fix
+
 - Version 5.6 05/04/2017
 	- Fixed clicking on messages button doesn't rest messages ammount
 
