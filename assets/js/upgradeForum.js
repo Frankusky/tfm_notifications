@@ -67,7 +67,7 @@
 		 * @type String textAreaId the id of the textarea that is referred to
 		 */
 		this.customEmojis = function (textAreaID) {
-			$("#customEmojis" + textAreaID).html("<img src='" + this.getExtensionFile("assets/img/webInterfaceIcons/inprogress.png") + "' style='height: auto;width: 100px;text-align: center;display: block;margin: 0 auto;'><div style='text-align:center;color:#6FD6FC'>In progress</div>")
+			$("#customEmojis" + textAreaID).html('<div class="loadingContainer"><div class="sk-circle"><div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div><div class="loadingText">Loading, please wait...</div></div>');
 			return this
 		}
 		/* Generate dropdown (both body and tabs)
