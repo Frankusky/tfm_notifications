@@ -22,6 +22,8 @@
 				tabName: "Custom"
 			}
 		}
+		/*Flag to know when userData from background has been loaded*/
+		this.userDataIsLoaded = false;
 		/*Returns the url for certain file relative to the extension
 		 * @type String file The url path of the file
 		 * @return chrome extension file absolute path
@@ -44,7 +46,7 @@
 		 * @type Array emojisList List of emojis urls that will be sent to generateEmojisBodyContent to generate the body
 		 * @return the div of the emoji body container
 		 */
-		this.generateEmojisTable = function (emojisList) {
+		this.generateEmojisDiv = function (emojisList) {
 			return "<div class='emojisDropdownContainer'>" + this.generateEmojisBodyContent(emojisList) + "</div>";
 		}
 		/* Generates the tabs for each emoji list
@@ -61,13 +63,101 @@
 		 * @return the tab body
 		 */
 		this.generateTabBody = function (tabId, emojiList) {
-			return "<div id='" + tabId + "' class='tab-pane fade'>" + this.generateEmojisTable(emojiList) + "</div>"
+			var className = tabId.replace(/\d/g,"");
+			return "<div id='" + tabId + "' class='"+className+" tab-pane fade'>" + this.generateEmojisDiv(emojiList) + "</div>"
+		}
+		/*Sets the inital loading message*/
+		this.insertLoadingMessageInCustomTab = function (textAreaID) {
+			$("#customEmojis" + textAreaID).html('<div class="loadingContainer"><div class="sk-circle"><div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div><div class="loadingText">Loading, please wait...</div></div>');
+		}
+		/*Sends message to chrome extension (both browser and background)
+		 * @type Object data Object 
+		 */
+		this.sendMessageToExtension = function (data, callback) {
+			chrome.runtime.sendMessage(data, callback);
+		}
+		/*Sends request to background page to retrieve user emojis*/
+		this.getUserEmojis = function () {
+			var that = this;
+			this.sendMessageToExtension({method: "getEmojiData"}, function (data) {
+				that.emojis.customEmojis.emojiList = data;
+			})
+			return this
+		}
+		/*Kinda promise that checks if emoji data is available*/
+		this.userDataExtensionPromise = function(textAreaId){
+			var that = this;
+			var userDataIntervalCheck = 0;
+			userDataIntervalCheck = setInterval(function(){
+				if(that.userData!==false){
+					that.loadCustomEmojis(textAreaId);
+					clearInterval(userDataIntervalCheck);
+				}
+			},100);
+		}
+		/*Loads glyphiicon font*/
+		this.insertGlyphiIconFont = function(){
+			var fa = document.createElement('style');
+			fa.type = 'text/css';
+			fa.textContent = '@font-face { font-family: Glyphicons Halflings; src: url("'
+				+ chrome.extension.getURL('assets/libs/fonts/glyphicons-halflings-regular.woff2')
+				+ '"); }';
+			document.head.appendChild(fa);
+			return this
+		}
+		/*Images url validation
+		* @type String urls Only one url or a bunch of urls delimited by comma
+		* @type return array with only the images that has past the regex validation
+		*/
+		this.validImages = function(urls){
+			var arrayOfImages = urls.split(",");
+			return arrayOfImages.filter(function(item){
+				return /(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?/.test(item)
+			});
+		}
+		/*Removes duplicated urls*/
+		this.removeDuplicatedUrls = function(arrayOfImageUrls){
+			var that = this;
+			arrayOfImageUrls = arrayOfImageUrls.reduce(function(pre,cur, pos){
+				if(pre.indexOf(cur)===-1) pre.push(cur)
+				return pre
+			},[]);
+			arrayOfImageUrls = arrayOfImageUrls.reduce(function(pre,cur){
+				if(that.emojis.customEmojis.emojiList.indexOf(cur)===-1) pre.push(cur)
+				console.log("pre",pre);
+				return pre
+			},[]);
+			return arrayOfImageUrls
+		}
+		/*Inserts event listeners for input and buttons*/
+		this.insertCustomEmojisEventListener = function(){
+			var that = this;
+			$(".customEmojiInput").keypress(function(ev){
+				if(ev.keyCode === 13){
+					ev.stopPropagation();
+					ev.stopImmediatePropagation();
+					ev.preventDefault();
+					var imagesArray = that.validImages(this.value);
+					imagesArray = that.removeDuplicatedUrls(imagesArray);
+					that.emojis.customEmojis.emojiList = that.emojis.customEmojis.emojiList.concat(imagesArray);
+					that.sendMessageToExtension({method: "saveEmojiData", emojisData: that.emojis.customEmojis.emojiList}, function (data) {
+					})
+				};
+			});
+		}
+		/*Inserts input and buttons in custom tab*/
+		this.loadCustomEmojis = function(textAreaId){
+			var customEmojisInputAndButtons = '<div class="customEmojisFunctionalities"><input type="text" class="customEmojiInput" placeholder="Insert image url"><button title="Save Emojis" type="button" class="btn btn-reduit saveCustomEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-floppy-save"></span></button><button title="Import Emojis" type="button" class="btn btn-reduit importCustomsEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-log-in"></span></button><button title="Export Emojis" type="button" class="btn btn-reduit exportCustomsEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-log-out"></span></button></div>';
+			var customEmojisDiv =  this.generateEmojisDiv(this.emojis.customEmojis.emojiList);
+			$("#customEmojis"+textAreaId).html(customEmojisInputAndButtons+customEmojisDiv);
+			this.insertCustomEmojisEventListener();
 		}
 		/* Generates the custom tab
 		 * @type String textAreaId the id of the textarea that is referred to
 		 */
-		this.customEmojis = function (textAreaID) {
-			$("#customEmojis" + textAreaID).html('<div class="loadingContainer"><div class="sk-circle"><div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div><div class="loadingText">Loading, please wait...</div></div>');
+		this.customEmojisTab = function (textAreaID) {
+			this.insertLoadingMessageInCustomTab(textAreaID);
+			this.userDataExtensionPromise(textAreaID);
 			return this
 		}
 		/* Generate dropdown (both body and tabs)
@@ -99,7 +189,7 @@
 				var textAreaID = this.id.replace(/[\D]/g, "");
 				var btnDom = "<div class='btn-group groupe-boutons-barre-outils'> <button class='btn dropdown-toggle btn-reduit emojiBtn'><img src='" + emojiIconUrl + "'> <span class='caret'></span> </button>" + that.generateDropdown(textAreaID);
 				this.innerHTML = this.innerHTML + btnDom;
-				that.customEmojis(textAreaID);
+				that.customEmojisTab(textAreaID);
 			});
 			return that;
 		}
@@ -129,7 +219,7 @@
 		 */
 		this.emojiBtnImageClickListener = function () {
 			var that = this;
-			$(".emojisDropdownItems img").click(function (ev) {
+			$(document).on("click",".emojisDropdownItems img",function (ev) {
 				var bbCode = "[img]" + this.src + "[/img]";
 				var actualTextArea = $(this).parents(".controls.ltr").children("textarea")[0];
 				var actualText = actualTextArea.value;
@@ -142,7 +232,7 @@
 		}
 
 		/* Set classes to the first tab
-		*/
+		 */
 		this.setActiveClasses = function () {
 			$(".emojisDropdown .nav-tabs li:first-child").addClass("active");
 			$(".emojisDropdown .tab-content .tab-pane:first-child").addClass("in active");
@@ -224,6 +314,8 @@
 	if (hasResponseBar()) {
 		var newSession = new tfmForum;
 		newSession
+			.insertGlyphiIconFont()
+			.getUserEmojis()
 			.insertBtn()
 			.setActiveClasses()
 			.toggleDropDown()

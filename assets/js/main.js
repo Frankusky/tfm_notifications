@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 	/*Displays the new posts*/
 	function showUserPosts() {
-		renderView();
+		renderView(bg.userData.tfm_notify_data.language);
 		if (bg.userData.tfm_notify_data["hasError"] == true) {
 			$(".application, .configSection").addClass("hiddenElement");
 			$(".errorMessage").removeClass("hiddenElement")
@@ -49,6 +49,8 @@ $(document).ready(function () {
 	$(document).on("change", "#refreshTime", function () {
 		var refreshTime = $("#refreshTime option:selected").val();
 		bg.userData.tfm_notify_data.refreshTime = refreshTime;
+		bg.method = "refreshTime";
+		bg.refreshUpdate(refreshTime);
 		bg.saveData(bg.userData);
 	});
 
@@ -57,7 +59,7 @@ $(document).ready(function () {
 		var language = $("#language option:selected").val();
 		bg.userData.tfm_notify_data.language = language;
 		bg.saveData(bg.userData);
-		renderView()
+		renderView(language)
 	});
 	/*************UX THINGS HERE******************/
 	$(document).on("click", ".alreadySaw", function () {
@@ -113,9 +115,9 @@ $(document).ready(function () {
 		bg.saveData(bg.userData);
 		openWindow("conversations");
 	});
-	function renderView() {
+	function renderView(language) {
 		var template = $("#template").html();
-		var mustacheData = bg.userData.languageData;
+		var mustacheData = languages[language];
 		mustacheData["threadData"] = bg.userData.tfm_notify_data.forumActivity;
 		mustacheData["privateMsgsNumber"] = bg.userData.privateMsgsNumber;
 		var render = Mustache.render(template, mustacheData)

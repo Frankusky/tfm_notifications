@@ -6,8 +6,8 @@ var userData = userData ? userData : {
 		forumActivity: [],
 		language: "en"
 	},
-	languageData: {},
-	privateMsgsNumber: "0"
+	privateMsgsNumber: "0",
+	customEmojis: ["http://i.imgur.com/t91LB.png"]
 };
 /*Creates a base element in order to read atelier forum favorites section*/
 var baseEl = document.createElement("base");
@@ -16,7 +16,6 @@ document.getElementsByTagName("head")[0].appendChild(baseEl);
 /*Gets the local storage data*/
 function loadData() {
 	chrome.storage.local.get("tfm_notify_data", function (data) {
-
 		try {
 			if (typeof (data.tfm_notify_data) !== "undefined") {
 				userData = {};
@@ -31,9 +30,10 @@ function loadData() {
 				}
 			}
 		} catch (err) {}
-		userData.languageData = languages[userData.tfm_notify_data.language];
+		userData.method = "loadData";
 		updateNotification(userData.tfm_notify_data.forumActivity.length, false);
 		saveData(userData);
+		checkFavorites();
 	});
 }
 /*Saves the data in the local storage*/
@@ -119,6 +119,7 @@ function checkFavorites() {
 				updateNotification("", false);
 			}
 		}
+		userData.method = "checkFavorites";
 		refreshUpdate(userData.tfm_notify_data.refreshTime)
 		saveData(userData);
 	})
@@ -135,13 +136,17 @@ function refreshUpdate(time) {
 }
 /*Add event listener that listens if the storage data has changed*/
 chrome.storage.onChanged.addListener(function (variableChange, storageArea) {
-	refreshUpdate(userData.tfm_notify_data.refreshTime);
-	userData.languageData = languages[userData.tfm_notify_data.language];
-	saveData(userData);
 	chrome.runtime.sendMessage(userData);
 });
-
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+	if (message.method==="getEmojiData") {
+		sendResponse(userData.customEmojis);
+	}
+	if (message.method==="saveEmojiData") {
+		userData.customEmojis = message.emojisData;
+		saveData(userData);
+	}
+})
 
 /*First time execution*/
 loadData();
-checkFavorites();
