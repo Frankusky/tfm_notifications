@@ -171,15 +171,27 @@
 				$(".customEmojis [src='"+imageSrc+"']").parent().remove();
 			})
 		}
+		/*Event listener for the import btn at custom tab*/
+		this.customEmojiExportBtnEventListener = function(){
+			var that = this;
+			$(".exportCustomsEmoji").click(function(){
+				var thisInput = $(this).siblings(".customEmojiInput")[0];
+				thisInput.value = that.emojis.customEmojis.emojiList.join(",");
+				thisInput.select();
+				document.execCommand("copy");
+				window.getSelection().empty();
+			});
+		}
 		/*Inserts event listeners for input and buttons at custom tab*/
 		this.insertCustomEmojisEventListener = function(){
 			this.customEmojiInputEventListener();
 			this.customEmojiSaveBtnEventListener();
 			this.customEmojiRemoveBtnEventListener();
+			this.customEmojiExportBtnEventListener();
 		}
 		/*Inserts input and buttons in custom tab*/
 		this.loadCustomEmojis = function(textAreaId){
-			var customEmojisInputAndButtons = '<div class="customEmojisFunctionalities"><input type="text" class="customEmojiInput" placeholder="Insert image url"><button title="Save Emojis" type="button" class="btn btn-reduit saveCustomEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-floppy-save"></span></button><button title="Import Emojis" type="button" class="btn btn-reduit importCustomsEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-log-in"></span></button><button title="Export Emojis" type="button" class="btn btn-reduit exportCustomsEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-log-out"></span></button></div>';
+			var customEmojisInputAndButtons = '<div class="customEmojisFunctionalities"><input type="text" class="customEmojiInput" placeholder="Insert image url"><button title="Save Emojis" type="button" class="btn btn-reduit saveCustomEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-floppy-save"></span></button><button title="Export Emojis" type="button" class="btn btn-reduit exportCustomsEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-export"></span></button></div>';
 			var customEmojisDiv =  this.generateEmojisDiv(this.emojis.customEmojis.emojiList, true);
 			$("#customEmojis"+textAreaId).html(customEmojisInputAndButtons+customEmojisDiv);
 			this.insertCustomEmojisEventListener();
