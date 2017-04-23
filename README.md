@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 6.1 23/04/2017
+	- Added paypal donate button on popup.html
+
 - Version 6 23/04/2017
 	- Added custom emojis functionality: save, export and remove.
 
