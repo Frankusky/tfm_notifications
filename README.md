@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 6 23/04/2017
+	- Added custom emojis functionality: save, export and remove.
+
 - Version 5.7 17/04/2017
 	- Typo fix
 
