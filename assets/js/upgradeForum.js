@@ -114,7 +114,7 @@
 		this.validImages = function(urls){
 			var arrayOfImages = urls.split(",");
 			return arrayOfImages.filter(function(item){
-				return /(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?/.test(item)
+				return /(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?/.test(item) && !/\[|\]/g.test(item)
 			});
 		}
 		/*Removes duplicated urls*/
