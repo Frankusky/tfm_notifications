@@ -35,10 +35,12 @@
 		 * @type Array emojisList List of emojis urls
 		 * @return divs with images
 		 */
-		this.generateEmojisBodyContent = function (emojisList) {
+		this.generateEmojisBodyContent = function (emojisList, isCustomEmojis) {
 			var bodyContent = "";
 			for (var x in emojisList) {
-				bodyContent += "<div class='emojisDropdownItems'><img src='" + emojisList[x] + "' alt='' /></div>"
+				var removeBtn = ""
+				if(isCustomEmojis && emojisList.length>0){removeBtn = '<div class="removeEmoji glyphicon glyphicon-remove"></div>'};
+				bodyContent += "<div class='emojisDropdownItems'><img src='" + emojisList[x] + "' alt='' />"+removeBtn+"</div>"
 			}
 			return bodyContent
 		}
@@ -46,8 +48,8 @@
 		 * @type Array emojisList List of emojis urls that will be sent to generateEmojisBodyContent to generate the body
 		 * @return the div of the emoji body container
 		 */
-		this.generateEmojisDiv = function (emojisList) {
-			return "<div class='emojisDropdownContainer'>" + this.generateEmojisBodyContent(emojisList) + "</div>";
+		this.generateEmojisDiv = function (emojisList, isCustomEmojis) {
+			return "<div class='emojisDropdownContainer'>" + this.generateEmojisBodyContent(emojisList, isCustomEmojis) + "</div>";
 		}
 		/* Generates the tabs for each emoji list
 		 * @type String tabHash the id of the tab that will be refered on click
@@ -119,36 +121,66 @@
 		this.removeDuplicatedUrls = function(arrayOfImageUrls){
 			var that = this;
 			arrayOfImageUrls = arrayOfImageUrls.reduce(function(pre,cur, pos){
-				if(pre.indexOf(cur)===-1) pre.push(cur)
-				return pre
-			},[]);
-			arrayOfImageUrls = arrayOfImageUrls.reduce(function(pre,cur){
-				if(that.emojis.customEmojis.emojiList.indexOf(cur)===-1) pre.push(cur)
-				console.log("pre",pre);
+				if(pre.indexOf(cur)===-1 && that.emojis.customEmojis.emojiList.indexOf(cur)===-1) pre.push(cur)
 				return pre
 			},[]);
 			return arrayOfImageUrls
 		}
-		/*Inserts event listeners for input and buttons*/
-		this.insertCustomEmojisEventListener = function(){
+		/*Inserts custom emojis*/
+		this.insertCustomEmojis = function(inputValue){
+			var imagesArray = this.validImages(inputValue.replace(/ /g,""));
+			imagesArray = this.removeDuplicatedUrls(imagesArray);
+			this.emojis.customEmojis.emojiList = this.emojis.customEmojis.emojiList.concat(imagesArray);
+			this.sendMessageToExtension({method: "saveEmojiData", emojisData: this.emojis.customEmojis.emojiList}, function (data) {})
+			var customEmojisBodyDiv =  this.generateEmojisBodyContent(this.emojis.customEmojis.emojiList, true);
+			$(".customEmojis .emojisDropdownContainer").html(customEmojisBodyDiv);
+		}
+		/*Event listener for the input at custom tab*/
+		this.customEmojiInputEventListener = function(){
 			var that = this;
 			$(".customEmojiInput").keypress(function(ev){
 				if(ev.keyCode === 13){
 					ev.stopPropagation();
 					ev.stopImmediatePropagation();
 					ev.preventDefault();
-					var imagesArray = that.validImages(this.value);
-					imagesArray = that.removeDuplicatedUrls(imagesArray);
-					that.emojis.customEmojis.emojiList = that.emojis.customEmojis.emojiList.concat(imagesArray);
-					that.sendMessageToExtension({method: "saveEmojiData", emojisData: that.emojis.customEmojis.emojiList}, function (data) {
-					})
+					that.insertCustomEmojis(this.value);
+					this.value = "";
 				};
 			});
+		}
+		/*Event listener for the save button at custom tab*/
+		this.customEmojiSaveBtnEventListener = function(){
+			var that = this;
+			$(".saveCustomEmoji").click(function(){
+				var customEmojisInput = $(this).siblings(".customEmojiInput")[0];
+				that.insertCustomEmojis(customEmojisInput.value);
+				customEmojisInput.value = "";
+			});
+		}
+		/*Event listener for the remove emoji btn at custom tab*/
+		this.customEmojiRemoveBtnEventListener = function(){
+			var that = this;
+			$(document).on("click", ".removeEmoji", function(){
+				var emojiContainer = $(this).parent();
+				var imageSrc = emojiContainer.children("img").attr("src");
+				var index = that.emojis.customEmojis.emojiList.indexOf(imageSrc);
+				if(index!==-1){
+					that.emojis.customEmojis.emojiList.slice(index,1);
+					that.sendMessageToExtension({method: "saveEmojiData", emojisData: that.emojis.customEmojis.emojiList}, function (data) {})
+				};
+				$(".customEmojis [src='"+imageSrc+"']").parent().remove();
+			})
+		}
+		/*Inserts event listeners for input and buttons at custom tab*/
+		this.insertCustomEmojisEventListener = function(){
+			this.customEmojiInputEventListener();
+			this.customEmojiSaveBtnEventListener();
+			this.customEmojiRemoveBtnEventListener();
 		}
 		/*Inserts input and buttons in custom tab*/
 		this.loadCustomEmojis = function(textAreaId){
 			var customEmojisInputAndButtons = '<div class="customEmojisFunctionalities"><input type="text" class="customEmojiInput" placeholder="Insert image url"><button title="Save Emojis" type="button" class="btn btn-reduit saveCustomEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-floppy-save"></span></button><button title="Import Emojis" type="button" class="btn btn-reduit importCustomsEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-log-in"></span></button><button title="Export Emojis" type="button" class="btn btn-reduit exportCustomsEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-log-out"></span></button></div>';
-			var customEmojisDiv =  this.generateEmojisDiv(this.emojis.customEmojis.emojiList);
+			var customEmojisDiv =  this.generateEmojisDiv(this.emojis.customEmojis.emojiList, true);
 			$("#customEmojis"+textAreaId).html(customEmojisInputAndButtons+customEmojisDiv);
 			this.insertCustomEmojisEventListener();
 		}

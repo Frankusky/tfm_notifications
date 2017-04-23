@@ -7,7 +7,7 @@ var userData = userData ? userData : {
 		language: "en"
 	},
 	privateMsgsNumber: "0",
-	customEmojis: ["http://i.imgur.com/t91LB.png"]
+	customEmojis: []
 };
 /*Creates a base element in order to read atelier forum favorites section*/
 var baseEl = document.createElement("base");
@@ -28,9 +28,14 @@ function loadData() {
 				if (typeof (data.privateMsgsNumber) === "undefined") {
 					userData.privateMsgsNumber = "0";
 				}
+				/*Updates old user stored data that doesnt have customEmojis array*/
+				if (typeof (data.customEmojis) === "undefined") {
+					userData.customEmojis = [];
+				}
 			}
 		} catch (err) {}
 		userData.method = "loadData";
+//		userData.customEmojis = ["http://i.imgur.com/t91LB.png"];
 		updateNotification(userData.tfm_notify_data.forumActivity.length, false);
 		saveData(userData);
 		checkFavorites();

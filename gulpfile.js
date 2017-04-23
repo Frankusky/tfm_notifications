@@ -25,17 +25,22 @@ var paths = {
 
 var allTasks = ["gen-css", "gen-js", "gen-html", "gen-libs", "gen-manifest", "gen-imgs"];
 
+var plumberErrorHandler = {
+	errorHandler: function(){
+		gutil.beep();
+	}
+}
 /*MODIFYING CSS TASK*/
 gulp.task("gen-css",function(){
 	return gulp.src(paths.css)
-		.pipe(plumber())
+		.pipe(plumber(plumberErrorHandler))
 		.pipe(cleanCSS())
 		.pipe(gulp.dest(paths.distProdCss))
 })
 /*MODIFYING JS TASK*/
 gulp.task("gen-js", function(){
 	return gulp.src(paths.js)
-		.pipe(plumber())
+		.pipe(plumber(plumberErrorHandler))
 		.pipe(uglify().on("error", function(errorLog){console.log(errorLog)}))
 		.pipe(rename({suffix:".min"}))
 		.pipe(gulp.dest(paths.distProdJs));
@@ -43,7 +48,7 @@ gulp.task("gen-js", function(){
 /*MODIFYING HTML TASK*/
 gulp.task("gen-html", function(){
 	return gulp.src(paths.html)
-		.pipe(plumber())
+		.pipe(plumber(plumberErrorHandler))
 		.pipe(htmlclean())
 		.pipe(htmlmin({collapseWhitespace: true}))
 		.pipe(gulp.dest(paths.distProdRoot))
