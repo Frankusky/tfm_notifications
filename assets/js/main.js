@@ -134,11 +134,4 @@ $(document).ready(function () {
 		$("body").css("background-image", "none")
 		$(".thankYouMsg").css("display", "none")
 	})
-	/*Clicking heart icon*/
-	$(document).on("click", ".specialThanksIcon", function(){
-		$(".specialThanks").fadeIn();
-		setTimeout(function(){
-			$(".specialThanks").fadeOut();
-		},5000)
-	})
 });

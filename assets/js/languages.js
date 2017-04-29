@@ -14,8 +14,7 @@ var languages = {
 		configuration: "Configuraciones",
 		updateTime: "Revisar actualizaciones cada:",
 		minutes: "Minutos",
-		thankYouMsg: "Gracias por descargar mi extension <3",
-		specialThanks: "Un agradecimiento especial para:"
+		thankYouMsg: "Gracias por descargar mi extension <3"
 	},
 	en: {
 		selectLanguage: "Choose your language:",
@@ -32,8 +31,7 @@ var languages = {
 		configuration: "Configurations",
 		updateTime: "Check updates every:",
 		minutes: "Minutes",
-		thankYouMsg: "Thank you for downloading my extension <3",
-		specialThanks: "Special thanks to:"
+		thankYouMsg: "Thank you for downloading my extension <3"
 	},
 	ro: {
 		selectLanguage: "Alege-ți limba:",
@@ -50,8 +48,7 @@ var languages = {
 		configuration: "Configurații",
 		updateTime: "Verifică actualizările la fiecare:",
 		minutes: "Minute",
-		thankYouMsg: "Mulțumesc pentru downloadarea extensiei mele <3",
-		specialThanks: "Mulțumiri speciale pentru:"
+		thankYouMsg: "Mulțumesc pentru downloadarea extensiei mele <3"
 	},
 	ru: {
 		selectLanguage: "Выберите ваш язык:",
@@ -68,8 +65,7 @@ var languages = {
 		configuration: "Настройки",
 		updateTime: "Проверять обновления каждые:",
 		minutes: "Минут(ы)",
-		thankYouMsg: "Благодарю за скачивание моего расширения <3",
-		specialThanks: "Особая благодарность:"
+		thankYouMsg: "Благодарю за скачивание моего расширения <3"
 	},
 	pt: {
 		selectLanguage: "Selecione o seu idioma",
@@ -86,8 +82,7 @@ var languages = {
 		configuration: "Configurações",
 		updateTime: "Verificar as atualizações em:",
 		minutes: "Minutos",
-		thankYouMsg: "Obrigado por baixar a minha extensão <3",
-		specialThanks: "Um agradecimento especial para:"
+		thankYouMsg: "Obrigado por baixar a minha extensão <3"
 	},
 	lv: {
 		selectLanguage: "Izvēlēties valodu:",
@@ -104,8 +99,7 @@ var languages = {
 		configuration: "Konfigurācija",
 		updateTime: "Pārbaudīt atjauninājumus katras:",
 		minutes: "Minūtes",
-		thankYouMsg: "Paldies, ka lejupielādēji manu paplašinājumu! <3",
-		specialThanks: "Īpaša pateicība šiem spēlētājiem:"
+		thankYouMsg: "Paldies, ka lejupielādēji manu paplašinājumu! <3"
 	}
 }
 
@@ -125,7 +119,6 @@ reload:				"",
 configuration:		"",
 updateTime:			"",
 minutes: 			"",
-thankYouMsg: 		"",
-specialThanks:		""
+thankYouMsg: 		""
 }
 */

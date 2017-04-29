@@ -67,11 +67,6 @@ label {
 	left: 90%;
 }
 
-.specialThanksIcon span{
-	animation: heartbeat 1s infinite;
-	color: #e21414;
-}
-
 .title {
 	font-size: 16px;
 	font-family: "Verdana";
@@ -179,76 +174,12 @@ label {
 	background-color: white
 }
 
-/*Special thanks to section*/
-.specialThanks{
-	position:absolute;
-	height: 100%;
-	width:100%;
-	top:0;
-	padding:10px;
-	background:white;
-	display: none;
-}
-
-.specialThanksTitle{
-	font-size: 16px
-}
-
-.specialThanksUsers{
-	text-align: center;
-	margin:0 auto;
-	font-size: 14px;
-	position: absolute;
-	top:25%;
-	width:100%;
-}
-
-.clapping{
-	top:25%;
-	position:absolute;
-	width:100%
-}
-
-.clappingGifLeft, .clappingGifRight{
-	width:50px;
-	height: auto;
-	position: absolute;
-}
-.clappingGifRight{
-	right:10px;
-}
-.clappingGifLeft img, .clappingGifRight img{
-	width: 100%
-}
-
 /*Animations*/
 
 .standarAnimation {
 	transition-timing-function: ease-out;
 	transition: all 0.5s;
 }
-
-@keyframes heartbeat {
-	0% {
-		transform: scale( .75);
-	}
-	20% {
-		transform: scale( 1);
-	}
-	40% {
-		transform: scale( .75);
-	}
-	60% {
-		transform: scale( 1);
-	}
-	80% {
-		transform: scale( .75);
-	}
-	100% {
-		transform: scale( .75);
-	}
-}
-
 @keyframes spin {
 	from {
 		transform:rotate(0deg);
