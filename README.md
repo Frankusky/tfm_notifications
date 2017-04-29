@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 6.2 23/04/2017
+	- Removed special thanks to section
+
 - Version 6.1 23/04/2017
 	- Added paypal donate button on popup.html
 
