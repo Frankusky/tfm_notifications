@@ -20,6 +20,10 @@
 			customEmojis: {
 				emojiList: [],
 				tabName: "Custom"
+			},
+			giphy: { /*Shouldn't set this here, but im lazzy to generate the tab manually*/
+				emojiList: [],
+				tabName: "Giphy"
 			}
 		}
 		/*Flag to know when userData from background has been loaded*/
@@ -71,8 +75,8 @@
 			return "<div id='" + tabId + "' class='" + className + " tab-pane fade'>" + this.generateEmojisDiv(emojiList) + "</div>"
 		}
 		/*Sets the inital loading message*/
-		this.insertLoadingMessageInCustomTab = function (textAreaID) {
-			$("#customEmojis" + textAreaID).html('<div class="loadingContainer"><div class="sk-circle"><div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div><div class="loadingText">Loading, please wait...</div></div>');
+		this.insertLoadingMessageInGiphyTab = function (domElement) {
+			domElement.html('<div class="loadingContainer"><div class="sk-circle"><div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div><div class="loadingText">Loading, please wait...</div></div>');
 		}
 		/*Sends message to chrome extension (both browser and background)
 		 * @type Object data Object 
@@ -118,7 +122,7 @@
 		this.validImages = function (urls) {
 			var arrayOfImages = urls.split(",");
 			return arrayOfImages.filter(function (item) {
-				return /(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?/.test(item) && !/\[|\]/g.test(item)
+				return /(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?/.test(item) && !/\[|\]/g.test(item) && item.length > 0;
 			});
 		}
 		/*Removes duplicated urls*/
@@ -201,7 +205,7 @@
 		}
 		/*Inserts input and buttons in custom tab*/
 		this.loadCustomEmojis = function (textAreaId) {
-			var customEmojisInputAndButtons = '<div class="customEmojisFunctionalities"><input type="text" class="customEmojiInput" placeholder="Insert image url"><button title="Save Emojis" type="button" class="btn btn-reduit saveCustomEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-floppy-save"></span></button><button title="Export Emojis" type="button" class="btn btn-reduit exportCustomsEmoji"><span class="customEmojiBtnImage glyphicon glyphicon-export"></span></button></div>';
+			var customEmojisInputAndButtons = '<div class="customEmojisFunctionalities"><input type="text" class="customEmojiInput" placeholder="Insert image url"><button title="Save Emojis" type="button" class="btn btn-reduit saveCustomEmoji"><span class="extensionBtnImage glyphicon glyphicon-floppy-save"></span></button><button title="Export Emojis" type="button" class="btn btn-reduit exportCustomsEmoji"><span class="extensionBtnImage glyphicon glyphicon-export"></span></button></div>';
 			var customEmojisDiv = this.generateEmojisDiv(this.emojis.customEmojis.emojiList, true);
 			$("#customEmojis" + textAreaId).html(customEmojisInputAndButtons + customEmojisDiv);
 			this.insertCustomEmojisEventListener();
@@ -210,7 +214,6 @@
 		 * @type String textAreaId the id of the textarea that is referred to
 		 */
 		this.customEmojisTab = function (textAreaID) {
-			this.insertLoadingMessageInCustomTab(textAreaID);
 			this.userDataExtensionPromise(textAreaID);
 			return this
 		}
@@ -273,14 +276,18 @@
 		 */
 		this.emojiBtnImageClickListener = function () {
 			var that = this;
-			$(document).on("click", ".emojisDropdownItems img", function (ev) {
-				var bbCode = "[img]" + this.src + "[/img]";
-				var actualTextArea = $(this).parents(".controls.ltr").children("textarea")[0];
-				var actualText = actualTextArea.value;
-				var finalMessage = actualText.substring(0, actualTextArea.selectionStart) + bbCode + actualText.substring(actualTextArea.selectionEnd, actualText.length);
-				var newCursorPostion = actualTextArea.selectionStart + bbCode.length;
-				actualTextArea.value = finalMessage;
-				actualTextArea.setSelectionRange(newCursorPostion, newCursorPostion);
+			$(document).on("click", ".emojisDropdownItems", function (ev) {
+				var thisTargetClasses = ev.target.className.split(" ")
+				if (thisTargetClasses.indexOf("removeEmoji") === -1 && thisTargetClasses.indexOf("addEmojiToCustom") === -1) {
+					var imageUrl = this.src ? this.src : $(this).find("img").attr("src");
+					var bbCode = "[img]" + imageUrl + "[/img]";
+					var actualTextArea = $(this).parents(".controls.ltr").children("textarea")[0];
+					var actualText = actualTextArea.value;
+					var finalMessage = actualText.substring(0, actualTextArea.selectionStart) + bbCode + actualText.substring(actualTextArea.selectionEnd, actualText.length);
+					var newCursorPostion = actualTextArea.selectionStart + bbCode.length;
+					actualTextArea.value = finalMessage;
+					actualTextArea.setSelectionRange(newCursorPostion, newCursorPostion);
+				}
 			});
 			return that
 		}
@@ -290,6 +297,72 @@
 		this.setActiveClasses = function () {
 			$(".emojisDropdown .nav-tabs li:first-child").addClass("active");
 			$(".emojisDropdown .tab-content .tab-pane:first-child").addClass("in active");
+			return this
+		}
+
+		this.getGifsFromGiphy = function (searchTags, giphyEmojiContainer) {
+			$.ajax({
+				url: "http://api.giphy.com/v1/gifs/search?q=" + searchTags + "&api_key=dc6zaTOxFJmzC&limit=100",
+				success: function (response) {
+					giphyEmojiContainer.html("");
+					var imagesArray = response.data.reduce(function (previous, current) {
+						previous.push(current.images.original.url);
+						return previous
+					}, [])
+					for (var i = 0, imagesLength = imagesArray.length; i < imagesLength; i++) {
+						if (i < 15) {
+							giphyEmojiContainer.append('<div class="emojisDropdownItems"><div class="addEmojiToCustom glyphicon glyphicon-plus"></div><img src="' + imagesArray[i] + '" alt=""/></div>')
+						} else {
+							giphyEmojiContainer.append('<div class="emojisDropdownItems hiddenEmoji"><div class="addEmojiToCustom glyphicon glyphicon-plus"></div><img imgurl="' + imagesArray[i] + '" alt=""/></div>')
+						}
+					}
+					if (imagesArray.length > 15) {
+						giphyEmojiContainer.siblings(".seeMoreGiphyGifs").removeClass("hideSeeMoreText")
+					} else {
+						giphyEmojiContainer.siblings(".seeMoreGiphyGifs").addClass("hideSeeMoreText")
+					}
+				}
+			});
+		}
+
+		this.insertSearchInputGiphyEventListener = function () {
+			var that = this;
+			$(".giphyFunctionalities .giphyInput").keypress(function (ev) {
+				var inputValue = this.value;
+				if (ev.keyCode === 13 && inputValue.length > 0) {
+					ev.stopPropagation();
+					ev.stopImmediatePropagation();
+					ev.preventDefault();
+					var giphyEmojisContainer = $(this).parents(".giphy").find(".emojisDropdownContainer");
+					$(this).parents(".giphy").find(".seeMoreGiphyGifs").addClass("hideSeeMoreText");
+					that.insertLoadingMessageInGiphyTab(giphyEmojisContainer);
+					that.getGifsFromGiphy(inputValue, giphyEmojisContainer);
+					this.value = "";
+				};
+			});
+			return this
+		}
+		
+		this.seeMoreEventListener = function(){
+			$(".seeMoreGiphyGifs").click(function () {
+				$(this).siblings(".emojisDropdownContainer").find(".emojisDropdownItems.hiddenEmoji:lt(10)").each(function () {
+					var actualEmojiItem = $(this);
+					actualEmojiItem.removeClass("hiddenEmoji");
+					var imgElement = actualEmojiItem.find("img");
+					var imageUrlValue = imgElement.attr("imgurl");
+					imgElement.attr("src", imageUrlValue);
+				})
+				var numberOfHiddenEmojis = $(this).siblings(".emojisDropdownContainer").find(".emojisDropdownItems.hiddenEmoji:lt(10)").length;
+				if(numberOfHiddenEmojis === 0) $(this).addClass("hideSeeMoreText");
+			});
+			return this
+		}
+		this.insertGiphyTabContent = function () {
+			$(".giphy").prepend('<div class="giphyFunctionalities"><input placeholder="Type some tags" type="text" class="giphyInput"/><button title="Search Gifs in Giphy" type="button" class="btn btn-reduit giphySearchGifBtn"><span class="glyphicon glyphicon-search extensionBtnImage"></span></button></div>');
+			$(".giphy").append('<div class="seeMoreGiphyGifs hideSeeMoreText">See more</div><div class="poweredByGiphy"><img src="' + this.getExtensionFile("assets/img/webInterfaceIcons/poweredByGiphy.png") + '"/></div>');
+			
+			this.insertSearchInputGiphyEventListener()
+				.seeMoreEventListener()
 			return this
 		}
 	}
@@ -303,13 +376,10 @@
 			.insertGlyphiIconFont()
 			.getUserEmojis()
 			.insertBtn()
+			.insertGiphyTabContent()
 			.setActiveClasses()
 			.toggleDropDown()
 			.emojiBtnImageClickListener()
 			.dropDownCloserListener()
-		//			.paypalPanda()
-		//			.insertPaypalModal()
-		//			.insertPaypalBtn()
-		//			.racoonListeners();
 	}
 })()
