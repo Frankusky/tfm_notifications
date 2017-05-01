@@ -335,6 +335,9 @@
 					ev.preventDefault();
 					var giphyEmojisContainer = $(this).parents(".giphy").find(".emojisDropdownContainer");
 					$(this).parents(".giphy").find(".seeMoreGiphyGifs").addClass("hideSeeMoreText");
+					giphyEmojisContainer.find("img").each(function(){
+						this.src = "";
+					})
 					that.insertLoadingMessageInGiphyTab(giphyEmojisContainer);
 					that.getGifsFromGiphy(inputValue, giphyEmojisContainer);
 					this.value = "";
@@ -342,10 +345,11 @@
 			});
 			return this
 		}
-		
-		this.seeMoreEventListener = function(){
+
+		this.seeMoreEventListener = function () {
 			$(".seeMoreGiphyGifs").click(function () {
-				$(this).siblings(".emojisDropdownContainer").find(".emojisDropdownItems.hiddenEmoji:lt(10)").each(function () {
+				var thisEmojiDropdownContainer = $(this).siblings(".emojisDropdownContainer");
+				thisEmojiDropdownContainer.find(".emojisDropdownItems.hiddenEmoji:lt(10)").each(function () {
 					var actualEmojiItem = $(this);
 					actualEmojiItem.removeClass("hiddenEmoji");
 					var imgElement = actualEmojiItem.find("img");
@@ -353,16 +357,43 @@
 					imgElement.attr("src", imageUrlValue);
 				})
 				var numberOfHiddenEmojis = $(this).siblings(".emojisDropdownContainer").find(".emojisDropdownItems.hiddenEmoji:lt(10)").length;
-				if(numberOfHiddenEmojis === 0) $(this).addClass("hideSeeMoreText");
+				if (numberOfHiddenEmojis === 0) $(this).addClass("hideSeeMoreText");
+				console.log(thisEmojiDropdownContainer[0].scrollHeight);
+				thisEmojiDropdownContainer.animate({
+					scrollTop: thisEmojiDropdownContainer[0].scrollHeight - 100
+				}, 2000);
 			});
 			return this
 		}
+
+		this.addToCustomsEmojis = function () {
+			var that = this;
+			$(document).on("click", ".giphy .addEmojiToCustom", function () {
+				var imgUrl = $(this).siblings("img").attr("src");
+				that.insertCustomEmojis(imgUrl);
+			})
+			return this
+		}
+
+		this.insertSearchBtnGiphyEventListener = function(){
+			var that = this;
+			$(".giphySearchGifBtn").click(function(){
+				var inputValue = $(this).siblings(".giphyInput").val()
+				var giphyEmojisContainer = $(this).parents(".giphy").find(".emojisDropdownContainer");
+				$(this).parents(".giphy").find(".seeMoreGiphyGifs").addClass("hideSeeMoreText");
+				that.insertLoadingMessageInGiphyTab(giphyEmojisContainer);
+				that.getGifsFromGiphy(inputValue, giphyEmojisContainer);
+			});
+			return this
+		}
+		
 		this.insertGiphyTabContent = function () {
 			$(".giphy").prepend('<div class="giphyFunctionalities"><input placeholder="Type some tags" type="text" class="giphyInput"/><button title="Search Gifs in Giphy" type="button" class="btn btn-reduit giphySearchGifBtn"><span class="glyphicon glyphicon-search extensionBtnImage"></span></button></div>');
 			$(".giphy").append('<div class="seeMoreGiphyGifs hideSeeMoreText">See more</div><div class="poweredByGiphy"><img src="' + this.getExtensionFile("assets/img/webInterfaceIcons/poweredByGiphy.png") + '"/></div>');
-			
 			this.insertSearchInputGiphyEventListener()
+				.insertSearchBtnGiphyEventListener()
 				.seeMoreEventListener()
+				.addToCustomsEmojis()
 			return this
 		}
 	}
