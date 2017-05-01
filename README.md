@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 6.5 01/05/2017
+	- Fix viewing only one thread doesn't reduce counter
+
 - Version 6.4 01/05/2017
 	- Added giphy addon
 

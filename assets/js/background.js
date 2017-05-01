@@ -72,6 +72,7 @@ function hasUpdates(newActivity, lastActivity) {
 	var xi = 0,
 		newActivityLength = newActivity.length,
 		lastActivityLength = lastActivity ? lastActivity.length : 0;
+	
 	for (var i = 0; i < newActivityLength; i++) {
 		for (var x = 0; x < lastActivityLength; x++) {
 			if ((newActivity[i].lastPostUser == lastActivity[x].lastPostUser) && (newActivity[i].postUrl == lastActivity[x].postUrl)) {
@@ -81,7 +82,7 @@ function hasUpdates(newActivity, lastActivity) {
 	}
 	if (newActivityLength == 0) {
 		return "none"
-	} else if (xi == newActivity.length) {
+	} else if (xi == newActivity.length && newActivityLength === lastActivityLength) {
 		return false
 	}
 	return true
@@ -111,9 +112,11 @@ function checkFavorites() {
 					});
 				}
 			});
+			console.log("tempData", tempData);
 			var messagesAmmount = $(result).find(".nav.pull-right.ltr>li>a[href='/conversations']").text().trim();
 			messagesAmmount = messagesAmmount != "" ? messagesAmmount : 0;
 			var userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity) || userData.privateMsgsNumber != messagesAmmount;
+			console.log("userUpdateStatus",userUpdateStatus);
 			if (userUpdateStatus === true) {
 				userData.tfm_notify_data.forumActivity = tempData;
 				userData.privateMsgsNumber = messagesAmmount;

@@ -1,4 +1,14 @@
 (function () {
+	/*ADDING JQUERY SPECIAL EVENTS*/
+	(function($){
+		$.event.special.destroyed = {
+			remove: function(o) {
+				if (o.handler) {
+					o.handler()
+				}
+			}
+		}
+	})(jQuery)
 	var tfmForum = function () {
 		/*JSON with the default emoticons
 		 * @type Array emojiList array with the list of url images
@@ -413,4 +423,6 @@
 			.emojiBtnImageClickListener()
 			.dropDownCloserListener()
 	}
+	
+	
 })()
