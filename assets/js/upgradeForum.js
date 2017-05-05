@@ -232,11 +232,11 @@
 		 */
 		this.getGifsFromGiphy = function (searchTags, giphyEmojiContainer) {
 			$.ajax({
-				url: "http://api.giphy.com/v1/gifs/search?q=" + searchTags + "&api_key=dc6zaTOxFJmzC&limit=100&offset=1000",
+				url: "http://api.giphy.com/v1/gifs/search?q=" + searchTags + "&api_key=dc6zaTOxFJmzC&limit=100",
 				success: function (response) {
 					giphyEmojiContainer.html("");
 					var imagesArray = response.data.reduce(function (previous, current) {
-						previous.push(current.images.original.url);
+						previous.push(current.images.fixed_height.url);
 						return previous
 					}, [])
 					for (var i = 0, imagesLength = imagesArray.length; i < imagesLength; i++) {
