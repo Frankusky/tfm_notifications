@@ -1,15 +1,12 @@
 (function () {
-	/*ADDING JQUERY SPECIAL EVENTS*/
-	(function($){
-		$.event.special.destroyed = {
-			remove: function(o) {
-				if (o.handler) {
-					o.handler()
-				}
-			}
-		}
-	})(jQuery)
 	var tfmForum = function () {
+		//██████╗ ███████╗███████╗ █████╗ ██╗   ██╗██╗  ████████╗    ██████╗  █████╗ ████████╗ █████╗ 
+		//██╔══██╗██╔════╝██╔════╝██╔══██╗██║   ██║██║  ╚══██╔══╝    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
+		//██║  ██║█████╗  █████╗  ███████║██║   ██║██║     ██║       ██║  ██║███████║   ██║   ███████║
+		//██║  ██║██╔══╝  ██╔══╝  ██╔══██║██║   ██║██║     ██║       ██║  ██║██╔══██║   ██║   ██╔══██║
+		//██████╔╝███████╗██║     ██║  ██║╚██████╔╝███████╗██║       ██████╔╝██║  ██║   ██║   ██║  ██║
+		//╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝       ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+
 		/*JSON with the default emoticons
 		 * @type Array emojiList array with the list of url images
 		 * @type String tabName the name of the tab
@@ -38,12 +35,47 @@
 		}
 		/*Flag to know when userData from background has been loaded*/
 		this.userDataIsLoaded = false;
+		/*JQUERY DOM elements where I should set the emojiBtn*/
+		this.placeHolders = [];
+		// ██████╗██╗  ██╗██████╗  ██████╗ ███╗   ███╗███████╗    ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
+		//██╔════╝██║  ██║██╔══██╗██╔═══██╗████╗ ████║██╔════╝    ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
+		//██║     ███████║██████╔╝██║   ██║██╔████╔██║█████╗      ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
+		//██║     ██╔══██║██╔══██╗██║   ██║██║╚██╔╝██║██╔══╝      ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
+		//╚██████╗██║  ██║██║  ██║╚██████╔╝██║ ╚═╝ ██║███████╗    ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
+		// ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝    ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
 		/*Returns the url for certain file relative to the extension
 		 * @type String file The url path of the file
 		 * @return chrome extension file absolute path
 		 */
 		this.getExtensionFile = function (file) {
 			return chrome.extension.getURL(file);
+		}
+		/*Sends message to chrome extension (both browser and background)
+		 * @type Object data Object 
+		 */
+		this.sendMessageToExtension = function (data, callback) {
+			chrome.runtime.sendMessage(data, callback);
+		}
+		// ██████╗ ███████╗███╗   ██╗███████╗██████╗ ██╗ ██████╗    ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
+		//██╔════╝ ██╔════╝████╗  ██║██╔════╝██╔══██╗██║██╔════╝    ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
+		//██║  ███╗█████╗  ██╔██╗ ██║█████╗  ██████╔╝██║██║         ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
+		//██║   ██║██╔══╝  ██║╚██╗██║██╔══╝  ██╔══██╗██║██║         ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
+		//╚██████╔╝███████╗██║ ╚████║███████╗██║  ██║██║╚██████╗    ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
+		// ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝    ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+		/*Generates the DOM for the emoji button*/
+		this.generateButtonDom = function () {
+			var emojiIconUrl = this.getExtensionFile("assets/img/webInterfaceIcons/emojiIcon.png");
+			return '<div class="btn-group groupe-boutons-barre-outils"><button class="btn dropdown-toggle btn-reduit emojiBtn"><img src="' + emojiIconUrl + '"><span class="caret"></span> </button>'
+		}
+		/*Images url validation
+		 * @type String urls Only one url or a bunch of urls delimited by comma
+		 * @type return array with only the images that has past the regex validation
+		 */
+		this.validImages = function (urls) {
+			var arrayOfImages = urls.split(",");
+			return arrayOfImages.filter(function (item) {
+				return /(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?/.test(item) && !/\[|\]/g.test(item) && item.length > 0;
+			});
 		}
 		/*Generates the tab content
 		 * @type Array emojisList List of emojis urls
@@ -67,14 +99,6 @@
 		this.generateEmojisDiv = function (emojisList, isCustomEmojis) {
 			return "<div class='emojisDropdownContainer'>" + this.generateEmojisBodyContent(emojisList, isCustomEmojis) + "</div>";
 		}
-		/* Generates the tabs for each emoji list
-		 * @type String tabHash the id of the tab that will be refered on click
-		 * @type String tabTitle the title name of the tab
-		 * @return the li element for the tab
-		 */
-		this.generateTab = function (tabHash, tabTitle) {
-			return "<li><a data-toggle='tab' href='#" + tabHash + "'>" + tabTitle + "</a></li>"
-		}
 		/* Generates the tabs container
 		 * @type String tabId the id of the tab that will be showed
 		 * @type Array emojiList list of the emojis
@@ -84,58 +108,38 @@
 			var className = tabId.replace(/\d/g, "");
 			return "<div id='" + tabId + "' class='" + className + " tab-pane fade'>" + this.generateEmojisDiv(emojiList) + "</div>"
 		}
-		/*Sets the inital loading message*/
-		this.insertLoadingMessageInGiphyTab = function (domElement) {
-			domElement.html('<div class="loadingContainer"><div class="sk-circle"><div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div><div class="loadingText">Loading, please wait...</div></div>');
-		}
-		/*Sends message to chrome extension (both browser and background)
-		 * @type Object data Object 
+		/* Generates the tabs for each emoji list
+		 * @type String tabHash the id of the tab that will be refered on click
+		 * @type String tabTitle the title name of the tab
+		 * @return the li element for the tab
 		 */
-		this.sendMessageToExtension = function (data, callback) {
-			chrome.runtime.sendMessage(data, callback);
+		this.generateTab = function (tabHash, tabTitle) {
+			return "<li><a data-toggle='tab' href='#" + tabHash + "'>" + tabTitle + "</a></li>"
 		}
-		/*Sends request to background page to retrieve user emojis*/
-		this.getUserEmojis = function () {
-			var that = this;
-			this.sendMessageToExtension({
-				method: "getEmojiData"
-			}, function (data) {
-				that.emojis.customEmojis.emojiList = data;
-			})
-			return this
-		}
-		/*Kinda promise that checks if emoji data is available*/
-		this.userDataExtensionPromise = function (textAreaId) {
-			var that = this;
-			var userDataIntervalCheck = 0;
-			userDataIntervalCheck = setInterval(function () {
-				if (that.userData !== false) {
-					that.loadCustomEmojis(textAreaId);
-					clearInterval(userDataIntervalCheck);
+		/* Generate dropdown (both body and tabs)
+		 * @type String textAreaID the id of the textarea that is referred to
+		 * @return String of the dropdown dom element
+		 */
+		this.generateDropdown = function (textAreaID) {
+			var dropDownBody = "<ul class='dropdown-menu pull-right label-message emojisDropdown'>";
+			var tabs = "";
+			var tabsBody = ""
+			for (var x in this.emojis) {
+				if (this.emojis.hasOwnProperty(x)) {
+					var idHash = x + textAreaID;
+					tabs += this.generateTab(idHash, this.emojis[x].tabName);
+					tabsBody += this.generateTabBody(idHash, this.emojis[x].emojiList);
 				}
-			}, 100);
+			}
+			tabs = "<ul class='nav nav-tabs'>" + tabs + "</ul>";
+			tabsBody = "<div class='tab-content'>" + tabsBody + "</div>";
+			dropDownBody += tabs + tabsBody + "<div class='emojiFooter'>Provided by Frankusky</div></ul></div>";
+			return dropDownBody;
 		}
-		/*Loads glyphiicon font*/
-		this.insertGlyphiIconFont = function () {
-			var fa = document.createElement('style');
-			fa.type = 'text/css';
-			fa.textContent = '@font-face { font-family: Glyphicons Halflings; src: url("' +
-				chrome.extension.getURL('assets/libs/fonts/glyphicons-halflings-regular.woff2') +
-				'"); }';
-			document.head.appendChild(fa);
-			return this
-		}
-		/*Images url validation
-		 * @type String urls Only one url or a bunch of urls delimited by comma
-		 * @type return array with only the images that has past the regex validation
+		/*Removes duplicated urls
+		 *@type Array arrayOfImageUrls Array of urls that the user has provided in the input
+		 *@return Array New array without duplicated values
 		 */
-		this.validImages = function (urls) {
-			var arrayOfImages = urls.split(",");
-			return arrayOfImages.filter(function (item) {
-				return /(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?/.test(item) && !/\[|\]/g.test(item) && item.length > 0;
-			});
-		}
-		/*Removes duplicated urls*/
 		this.removeDuplicatedUrls = function (arrayOfImageUrls) {
 			var that = this;
 			arrayOfImageUrls = arrayOfImageUrls.reduce(function (pre, cur, pos) {
@@ -144,7 +148,9 @@
 			}, []);
 			return arrayOfImageUrls
 		}
-		/*Inserts custom emojis*/
+		/*Inserts custom emojis
+		 * @type String inputValue The value of the nearest input
+		 */
 		this.insertCustomEmojis = function (inputValue) {
 			var imagesArray = this.validImages(inputValue.replace(/ /g, ""));
 			imagesArray = this.removeDuplicatedUrls(imagesArray);
@@ -159,7 +165,7 @@
 		/*Event listener for the input at custom tab*/
 		this.customEmojiInputEventListener = function () {
 			var that = this;
-			$(".customEmojiInput").keypress(function (ev) {
+			$(document).on("keypress", ".customEmojiInput", function (ev) {
 				if (ev.keyCode === 13) {
 					ev.stopPropagation();
 					ev.stopImmediatePropagation();
@@ -172,7 +178,7 @@
 		/*Event listener for the save button at custom tab*/
 		this.customEmojiSaveBtnEventListener = function () {
 			var that = this;
-			$(".saveCustomEmoji").click(function () {
+			$(document).on("click", ".saveCustomEmoji", function () {
 				var customEmojisInput = $(this).siblings(".customEmojiInput")[0];
 				that.insertCustomEmojis(customEmojisInput.value);
 				customEmojisInput.value = "";
@@ -198,7 +204,7 @@
 		/*Event listener for the import btn at custom tab*/
 		this.customEmojiExportBtnEventListener = function () {
 			var that = this;
-			$(".exportCustomsEmoji").click(function () {
+			$(document).on("click", ".exportCustomsEmoji", function () {
 				var thisInput = $(this).siblings(".customEmojiInput")[0];
 				thisInput.value = that.emojis.customEmojis.emojiList.join(",");
 				thisInput.select();
@@ -214,105 +220,19 @@
 			this.customEmojiExportBtnEventListener();
 		}
 		/*Inserts input and buttons in custom tab*/
-		this.loadCustomEmojis = function (textAreaId) {
+		this.customEmojisTab = function () {
 			var customEmojisInputAndButtons = '<div class="customEmojisFunctionalities"><input type="text" class="customEmojiInput" placeholder="Insert image url"><button title="Save Emojis" type="button" class="btn btn-reduit saveCustomEmoji"><span class="extensionBtnImage glyphicon glyphicon-floppy-save"></span></button><button title="Export Emojis" type="button" class="btn btn-reduit exportCustomsEmoji"><span class="extensionBtnImage glyphicon glyphicon-export"></span></button></div>';
 			var customEmojisDiv = this.generateEmojisDiv(this.emojis.customEmojis.emojiList, true);
-			$("#customEmojis" + textAreaId).html(customEmojisInputAndButtons + customEmojisDiv);
+			$(".customEmojis").html(customEmojisInputAndButtons + customEmojisDiv);
 			this.insertCustomEmojisEventListener();
 		}
-		/* Generates the custom tab
-		 * @type String textAreaId the id of the textarea that is referred to
+		/*Creates an ajax call to the giphy server with the specified tags
+		 * @type String searchTags The tags that the user introduced
+		 * @type DOM giphyEmojiContainer DOM element where will be inserted the results
 		 */
-		this.customEmojisTab = function (textAreaID) {
-			this.userDataExtensionPromise(textAreaID);
-			return this
-		}
-		/* Generate dropdown (both body and tabs)
-		 * @type String textAreaID the id of the textarea that is referred to
-		 * @return String of the dropdown dom element
-		 */
-		this.generateDropdown = function (textAreaID) {
-			var dropDownBody = "<ul class='dropdown-menu pull-right label-message emojisDropdown'>";
-			var tabs = "";
-			var tabsBody = ""
-			for (var x in this.emojis) {
-				if (this.emojis.hasOwnProperty(x)) {
-					var idHash = x + textAreaID;
-					tabs += this.generateTab(idHash, this.emojis[x].tabName);
-					tabsBody += this.generateTabBody(idHash, this.emojis[x].emojiList);
-				}
-			}
-			tabs = "<ul class='nav nav-tabs'>" + tabs + "</ul>";
-			tabsBody = "<div class='tab-content'>" + tabsBody + "</div>";
-			dropDownBody += tabs + tabsBody + "<div class='emojiFooter'>Provided by Frankusky</div></ul></div>";
-			return dropDownBody;
-		}
-		/* Inserts emoji button in the input-message class
-		 */
-		this.insertBtn = function () {
-			var that = this;
-			var emojiIconUrl = that.getExtensionFile("assets/img/webInterfaceIcons/emojiIcon.png");
-			$(".input-message").prev().each(function () {
-				var textAreaID = this.id.replace(/[\D]/g, "");
-				var btnDom = "<div class='btn-group groupe-boutons-barre-outils'> <button class='btn dropdown-toggle btn-reduit emojiBtn'><img src='" + emojiIconUrl + "'> <span class='caret'></span> </button>" + that.generateDropdown(textAreaID);
-				this.innerHTML = this.innerHTML + btnDom;
-				that.customEmojisTab(textAreaID);
-			});
-			return that;
-		}
-		/* Adds a click event listener on emoji button
-		 */
-		this.toggleDropDown = function () {
-			$('.emojiBtn').on('click', function (event) {
-				event.stopPropagation();
-				event.stopImmediatePropagation();
-				event.preventDefault();
-				$(this).parent().toggleClass('open');
-			});
-			return this
-		}
-		/* Adds a click event on document to close emoji button
-		 */
-		this.dropDownCloserListener = function () {
-			$("body").click(function (ev) {
-				if (!$(".emojiBtn").parent().is(ev.target) && $(".emojiBtn").has(ev.target).length === 0 && $(".open").has(ev.target).length === 0) {
-					$(".emojiBtn").parent().removeClass("open");
-				}
-			});
-			return this
-		}
-
-		/* Event click listener for the images inside the dropdown
-		 */
-		this.emojiBtnImageClickListener = function () {
-			var that = this;
-			$(document).on("click", ".emojisDropdownItems", function (ev) {
-				var thisTargetClasses = ev.target.className.split(" ")
-				if (thisTargetClasses.indexOf("removeEmoji") === -1 && thisTargetClasses.indexOf("addEmojiToCustom") === -1) {
-					var imageUrl = this.src ? this.src : $(this).find("img").attr("src");
-					var bbCode = "[img]" + imageUrl + "[/img]";
-					var actualTextArea = $(this).parents(".controls.ltr").children("textarea")[0];
-					var actualText = actualTextArea.value;
-					var finalMessage = actualText.substring(0, actualTextArea.selectionStart) + bbCode + actualText.substring(actualTextArea.selectionEnd, actualText.length);
-					var newCursorPostion = actualTextArea.selectionStart + bbCode.length;
-					actualTextArea.value = finalMessage;
-					actualTextArea.setSelectionRange(newCursorPostion, newCursorPostion);
-				}
-			});
-			return that
-		}
-
-		/* Set classes to the first tab
-		 */
-		this.setActiveClasses = function () {
-			$(".emojisDropdown .nav-tabs li:first-child").addClass("active");
-			$(".emojisDropdown .tab-content .tab-pane:first-child").addClass("in active");
-			return this
-		}
-
 		this.getGifsFromGiphy = function (searchTags, giphyEmojiContainer) {
 			$.ajax({
-				url: "http://api.giphy.com/v1/gifs/search?q=" + searchTags + "&api_key=dc6zaTOxFJmzC&limit=100",
+				url: "http://api.giphy.com/v1/gifs/search?q=" + searchTags + "&api_key=dc6zaTOxFJmzC&limit=100&offset=1000",
 				success: function (response) {
 					giphyEmojiContainer.html("");
 					var imagesArray = response.data.reduce(function (previous, current) {
@@ -334,10 +254,102 @@
 				}
 			});
 		}
-
+		/*Sets the inital loading message
+		 *@type DOM domElement Recieves a dom element which will be overwritted his content to set a loading message
+		 */
+		this.insertLoadingMessageInGiphyTab = function (domElement) {
+			domElement.html('<div class="loadingContainer"><div class="sk-circle"><div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div><div class="loadingText">Loading, please wait...</div></div>');
+		}
+		// ██████╗██╗  ██╗ █████╗ ██╗███╗   ██╗ █████╗ ██████╗ ██╗     ███████╗    ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
+		//██╔════╝██║  ██║██╔══██╗██║████╗  ██║██╔══██╗██╔══██╗██║     ██╔════╝    ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
+		//██║     ███████║███████║██║██╔██╗ ██║███████║██████╔╝██║     █████╗      ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
+		//██║     ██╔══██║██╔══██║██║██║╚██╗██║██╔══██║██╔══██╗██║     ██╔══╝      ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
+		//╚██████╗██║  ██║██║  ██║██║██║ ╚████║██║  ██║██████╔╝███████╗███████╗    ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
+		// ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝    ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+		/*Loads bootstrap gliphiicons font*/
+		this.insertGlyphiIconFont = function () {
+			var fa = document.createElement('style');
+			fa.type = 'text/css';
+			fa.textContent = '@font-face { font-family: Glyphicons Halflings; src: url("' +
+				chrome.extension.getURL('assets/libs/fonts/glyphicons-halflings-regular.woff2') +
+				'"); }';
+			document.head.appendChild(fa);
+			return this
+		}
+		/* Searchs in the dom all the edit messages tools and stores it on placeHolders global variable*/
+		this.getAllPlaceHolders = function () {
+			this.placeHolders = $(".input-message:not(:has(.emojiBtn))").prev();
+			return this;
+		}
+		/*Inserts the emoji button*/
+		this.insertEmojiBtn = function () {
+			var that = this;
+			this.placeHolders.each(function () {
+				var textAreaID = this.id.replace(/[\D]/g, "");
+				var btnDom = that.generateButtonDom();
+				var dropDownDom = that.generateDropdown(textAreaID);
+				this.innerHTML = this.innerHTML + btnDom + dropDownDom;
+			});
+			return this;
+		}
+		/*Sends request to background page to retrieve user emojis*/
+		this.getUserEmojis = function () {
+			var that = this;
+			this.sendMessageToExtension({
+				method: "getEmojiData"
+			}, function (data) {
+				that.emojis.customEmojis.emojiList = data;
+				that.customEmojisTab();
+			})
+			return this
+		}
+		/* Adds a click event listener on emoji button*/
+		this.toggleDropDown = function () {
+			this.placeHolders.find('.emojiBtn').on('click', function (event) {
+				event.stopPropagation();
+				event.stopImmediatePropagation();
+				event.preventDefault();
+				$(this).parent().toggleClass('open');
+			});
+			return this
+		}
+		/* Set classes to the first tab*/
+		this.setActiveClasses = function () {
+			this.placeHolders.find(".emojisDropdown .nav-tabs li:first-child").addClass("active");
+			this.placeHolders.find(".emojisDropdown .tab-content .tab-pane:first-child").addClass("in active");
+			return this
+		}
+		/* Adds a click event on document to close emoji button*/
+		this.dropDownCloserListener = function () {
+			$(document).on("click", function (ev) {
+				if (!$(".emojiBtn").parent().is(ev.target) && $(".emojiBtn").has(ev.target).length === 0 && $(".open").has(ev.target).length === 0) {
+					$(".emojiBtn").parent().removeClass("open");
+				}
+			});
+			return this
+		}
+		/* Event click listener for the images inside the dropdown*/
+		this.emojiBtnImageClickListener = function () {
+			var that = this;
+			$(document).on("click", ".emojisDropdownItems", function (ev) {
+				var thisTargetClasses = ev.target.className.split(" ")
+				if (thisTargetClasses.indexOf("removeEmoji") === -1 && thisTargetClasses.indexOf("addEmojiToCustom") === -1) {
+					var imageUrl = this.src ? this.src : $(this).find("img").attr("src");
+					var bbCode = "[img]" + imageUrl + "[/img]";
+					var actualTextArea = $(this).parents(".controls.ltr").children("textarea")[0];
+					var actualText = actualTextArea.value;
+					var finalMessage = actualText.substring(0, actualTextArea.selectionStart) + bbCode + actualText.substring(actualTextArea.selectionEnd, actualText.length);
+					var newCursorPostion = actualTextArea.selectionStart + bbCode.length;
+					actualTextArea.value = finalMessage;
+					actualTextArea.setSelectionRange(newCursorPostion, newCursorPostion);
+				}
+			});
+			return that
+		}
+		/*Inserts keypress listener for all giphy inputs*/
 		this.insertSearchInputGiphyEventListener = function () {
 			var that = this;
-			$(".giphyFunctionalities .giphyInput").keypress(function (ev) {
+			$(document).on("keypress", ".giphyFunctionalities .giphyInput", function (ev) {
 				var inputValue = this.value;
 				if (ev.keyCode === 13 && inputValue.length > 0) {
 					ev.stopPropagation();
@@ -345,7 +357,7 @@
 					ev.preventDefault();
 					var giphyEmojisContainer = $(this).parents(".giphy").find(".emojisDropdownContainer");
 					$(this).parents(".giphy").find(".seeMoreGiphyGifs").addClass("hideSeeMoreText");
-					giphyEmojisContainer.find("img").each(function(){
+					giphyEmojisContainer.find("img").each(function () {
 						this.src = "";
 					})
 					that.insertLoadingMessageInGiphyTab(giphyEmojisContainer);
@@ -355,9 +367,20 @@
 			});
 			return this
 		}
-
+		/*Inserts the basic DOM structre for the giphy tab*/
+		this.insertGiphyTabContent = function () {
+			var giphyLogo = this.getExtensionFile("assets/img/webInterfaceIcons/poweredByGiphy.png");
+			this.placeHolders.find(".giphy").prepend('<div class="giphyFunctionalities"><input placeholder="Type some tags" type="text" class="giphyInput"/><button title="Search Gifs in Giphy" type="button" class="btn btn-reduit giphySearchGifBtn"><span class="glyphicon glyphicon-search extensionBtnImage"></span></button></div>');
+			this.placeHolders.find(".giphy").append('<div class="seeMoreGiphyGifs hideSeeMoreText">See more</div><div class="poweredByGiphy"><img src="' + giphyLogo + '"/></div>');
+			this.insertSearchInputGiphyEventListener()
+				.insertSearchBtnGiphyEventListener()
+				.seeMoreEventListener()
+				.addToCustomsEmojis()
+			return this
+		}
+		/*Inserts event listener on the see more text*/
 		this.seeMoreEventListener = function () {
-			$(".seeMoreGiphyGifs").click(function () {
+			$(document).on("click", ".seeMoreGiphyGifs", function () {
 				var thisEmojiDropdownContainer = $(this).siblings(".emojisDropdownContainer");
 				thisEmojiDropdownContainer.find(".emojisDropdownItems.hiddenEmoji:lt(10)").each(function () {
 					var actualEmojiItem = $(this);
@@ -368,14 +391,13 @@
 				})
 				var numberOfHiddenEmojis = $(this).siblings(".emojisDropdownContainer").find(".emojisDropdownItems.hiddenEmoji:lt(10)").length;
 				if (numberOfHiddenEmojis === 0) $(this).addClass("hideSeeMoreText");
-				console.log(thisEmojiDropdownContainer[0].scrollHeight);
 				thisEmojiDropdownContainer.animate({
 					scrollTop: thisEmojiDropdownContainer[0].scrollHeight - 100
 				}, 2000);
 			});
 			return this
 		}
-
+		/*Inserts event listener on the plus icon to add the gif to the custom list*/
 		this.addToCustomsEmojis = function () {
 			var that = this;
 			$(document).on("click", ".giphy .addEmojiToCustom", function () {
@@ -384,10 +406,10 @@
 			})
 			return this
 		}
-
-		this.insertSearchBtnGiphyEventListener = function(){
+		/*Inserts event listener on the search button that is located on the giphy tab*/
+		this.insertSearchBtnGiphyEventListener = function () {
 			var that = this;
-			$(".giphySearchGifBtn").click(function(){
+			$(document).on("click", ".giphySearchGifBtn", function () {
 				var inputValue = $(this).siblings(".giphyInput").val()
 				var giphyEmojisContainer = $(this).parents(".giphy").find(".emojisDropdownContainer");
 				$(this).parents(".giphy").find(".seeMoreGiphyGifs").addClass("hideSeeMoreText");
@@ -396,33 +418,23 @@
 			});
 			return this
 		}
-		
-		this.insertGiphyTabContent = function () {
-			$(".giphy").prepend('<div class="giphyFunctionalities"><input placeholder="Type some tags" type="text" class="giphyInput"/><button title="Search Gifs in Giphy" type="button" class="btn btn-reduit giphySearchGifBtn"><span class="glyphicon glyphicon-search extensionBtnImage"></span></button></div>');
-			$(".giphy").append('<div class="seeMoreGiphyGifs hideSeeMoreText">See more</div><div class="poweredByGiphy"><img src="' + this.getExtensionFile("assets/img/webInterfaceIcons/poweredByGiphy.png") + '"/></div>');
-			this.insertSearchInputGiphyEventListener()
-				.insertSearchBtnGiphyEventListener()
-				.seeMoreEventListener()
-				.addToCustomsEmojis()
-			return this
-		}
 	}
 
 	function hasResponseBar() {
 		return $(".input-message").length > 0
 	}
+
 	if (hasResponseBar()) {
 		var newSession = new tfmForum;
 		newSession
-			.insertGlyphiIconFont()
 			.getUserEmojis()
-			.insertBtn()
+			.insertGlyphiIconFont()
+			.getAllPlaceHolders()
+			.insertEmojiBtn()
 			.insertGiphyTabContent()
-			.setActiveClasses()
-			.toggleDropDown()
 			.emojiBtnImageClickListener()
+			.toggleDropDown()
+			.setActiveClasses()
 			.dropDownCloserListener()
 	}
-	
-	
 })()

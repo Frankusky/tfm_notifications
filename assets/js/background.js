@@ -112,11 +112,9 @@ function checkFavorites() {
 					});
 				}
 			});
-			console.log("tempData", tempData);
 			var messagesAmmount = $(result).find(".nav.pull-right.ltr>li>a[href='/conversations']").text().trim();
 			messagesAmmount = messagesAmmount != "" ? messagesAmmount : 0;
 			var userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity) || userData.privateMsgsNumber != messagesAmmount;
-			console.log("userUpdateStatus",userUpdateStatus);
 			if (userUpdateStatus === true) {
 				userData.tfm_notify_data.forumActivity = tempData;
 				userData.privateMsgsNumber = messagesAmmount;
