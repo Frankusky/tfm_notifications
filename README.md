@@ -6,7 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
-- Version 6.7 04/05/2017
+- Version 6.8 02/08/2017
+	- Fix private message only detecting for the first time
+
+- Version 6.7 02/08/2017
 	- Fix private message not being detected
 
 - Version 6.6 04/05/2017
