@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 6.7 04/05/2017
+	- Fix private message not being detected
+
 - Version 6.6 04/05/2017
 	- Fix giphy image size
 

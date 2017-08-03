@@ -80,9 +80,7 @@ function hasUpdates(newActivity, lastActivity) {
 			}
 		}
 	}
-	if (newActivityLength == 0) {
-		return "none"
-	} else if (xi == newActivity.length && newActivityLength === lastActivityLength) {
+	if ((newActivityLength == 0) || (xi == newActivity.length && newActivityLength === lastActivityLength)) {
 		return false
 	}
 	return true
@@ -120,7 +118,7 @@ function checkFavorites() {
 				userData.privateMsgsNumber = messagesAmmount;
 				var newsAmmount = Number(userData.tfm_notify_data["forumActivity"].length) + Number(userData.privateMsgsNumber);
 				updateNotification(newsAmmount.toString(), userData.tfm_notify_data.hasError);
-			} else if (userUpdateStatus === "none") {
+			} else {
 				userData.tfm_notify_data.forumActivity = [];
 				updateNotification("", false);
 			}
