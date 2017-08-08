@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 6.9 07/08/2017
+	- Fix not detecting threads activity
+
 - Version 6.8 02/08/2017
 	- Fix private message only detecting for the first time
 

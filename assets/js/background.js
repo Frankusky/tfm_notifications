@@ -72,7 +72,10 @@ function hasUpdates(newActivity, lastActivity) {
 	var xi = 0,
 		newActivityLength = newActivity.length,
 		lastActivityLength = lastActivity ? lastActivity.length : 0;
-	
+	/*No new activity at all*/
+	if (newActivityLength == 0) {
+		return "none"
+	}
 	for (var i = 0; i < newActivityLength; i++) {
 		for (var x = 0; x < lastActivityLength; x++) {
 			if ((newActivity[i].lastPostUser == lastActivity[x].lastPostUser) && (newActivity[i].postUrl == lastActivity[x].postUrl)) {
@@ -80,9 +83,10 @@ function hasUpdates(newActivity, lastActivity) {
 			}
 		}
 	}
-	if ((newActivityLength == 0) || (xi == newActivity.length && newActivityLength === lastActivityLength)) {
+	if (xi == newActivity.length && newActivityLength === lastActivityLength) { /*No new activity related to the last status*/
 		return false
 	}
+	/*Has new threads*/
 	return true
 }
 /*Loads favorite topics section and checks for activity*/
@@ -112,15 +116,26 @@ function checkFavorites() {
 			});
 			var messagesAmmount = $(result).find(".nav.pull-right.ltr>li>a[href='/conversations']").text().trim();
 			messagesAmmount = messagesAmmount != "" ? messagesAmmount : 0;
-			var userUpdateStatus = hasUpdates(tempData, userData.tfm_notify_data.forumActivity) || messagesAmmount!=0;
-			if (userUpdateStatus === true) {
-				userData.tfm_notify_data.forumActivity = tempData;
+			var hasThreadsUpdate = hasUpdates(tempData, userData.tfm_notify_data.forumActivity),
+				hasMessagesUpdate= messagesAmmount!==0;
+			if(hasMessagesUpdate===true){
 				userData.privateMsgsNumber = messagesAmmount;
-				var newsAmmount = Number(userData.tfm_notify_data["forumActivity"].length) + Number(userData.privateMsgsNumber);
+				if(hasThreadsUpdate===true){
+					userData.tfm_notify_data.forumActivity = tempData;
+				}else if(hasThreadsUpdate==="none"){
+					userData.tfm_notify_data.forumActivity = "";
+				}
+				var newsAmmount = Number(userData.privateMsgsNumber) + Number(userData.tfm_notify_data["forumActivity"].length);
 				updateNotification(newsAmmount.toString(), userData.tfm_notify_data.hasError);
-			} else {
-				userData.tfm_notify_data.forumActivity = [];
-				updateNotification("", false);
+			}else{
+				userData.privateMsgsNumber = messagesAmmount;
+				if(hasThreadsUpdate===true){
+					userData.tfm_notify_data.forumActivity = tempData;
+					updateNotification(userData.tfm_notify_data.forumActivity.length.toString(), userData.tfm_notify_data.hasError);
+				}else if(hasThreadsUpdate==="none"){
+					userData.tfm_notify_data.forumActivity = "";
+					updateNotification("", false);
+				}
 			}
 		}
 		userData.method = "checkFavorites";
