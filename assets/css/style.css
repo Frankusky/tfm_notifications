@@ -165,6 +165,10 @@ label {
 	color: crimson;
 }
 
+.configContainer{
+	margin: 0px 10px;
+}
+
 #refreshTime {
 	margin-left: 5px
 }
@@ -187,4 +191,22 @@ label {
 	to {
 		transform:rotate(90deg);
 	}
+}
+
+/*Arabic fixes*/
+.arabicFixes .configContainer{
+	text-align: right;
+	clear:both
+}
+.arabicFixes form select,.arabicFixes form label{
+	float:right
+}
+.arabicFixes form select{
+	margin-right: 10px;
+}
+.arabicFixes .errorMessage ul{
+	direction: rtl;
+}
+.arabicFixes .text-left{
+	text-align: right
 }

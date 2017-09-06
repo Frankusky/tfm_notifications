@@ -114,12 +114,16 @@ function checkFavorites() {
 					});
 				}
 			});
+			var hasThreadsUpdate = hasUpdates(tempData, userData.tfm_notify_data.forumActivity),
+				hasMessagesUpdate= false;
 			var messagesAmmount = $(result).find(".nav.pull-right.ltr>li>a[href='/conversations']").text().trim();
 			messagesAmmount = messagesAmmount != "" ? messagesAmmount : 0;
-			var hasThreadsUpdate = hasUpdates(tempData, userData.tfm_notify_data.forumActivity),
-				hasMessagesUpdate= messagesAmmount!==0;
+			if(messagesAmmount!==userData.privateMsgsNumber || messagesAmmount>0){
+				hasMessagesUpdate = true;
+			}
+			
+			userData.privateMsgsNumber = messagesAmmount;
 			if(hasMessagesUpdate===true){
-				userData.privateMsgsNumber = messagesAmmount;
 				if(hasThreadsUpdate===true){
 					userData.tfm_notify_data.forumActivity = tempData;
 				}else if(hasThreadsUpdate==="none"){
@@ -128,7 +132,6 @@ function checkFavorites() {
 				var newsAmmount = Number(userData.privateMsgsNumber) + Number(userData.tfm_notify_data["forumActivity"].length);
 				updateNotification(newsAmmount.toString(), userData.tfm_notify_data.hasError);
 			}else{
-				userData.privateMsgsNumber = messagesAmmount;
 				if(hasThreadsUpdate===true){
 					userData.tfm_notify_data.forumActivity = tempData;
 					updateNotification(userData.tfm_notify_data.forumActivity.length.toString(), userData.tfm_notify_data.hasError);

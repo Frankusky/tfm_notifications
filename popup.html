@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<div id="tfmNotifierArea"></div>
+	<div id="tfmNotifierArea" class="arabicFixes"></div>
 
 	<script type="text/html" id="template">
 		<div class="container application">
@@ -81,27 +81,33 @@
 			</div>
 			<div>
 				<form action="">
-					<label for="refreshTime">{{updateTime}}</label>
-					<select name="" id="refreshTime">
+					<div class="configContainer">
+						<label for="refreshTime">{{updateTime}}</label>
+						<select name="" id="refreshTime">
 <!--						<option value="10000">10 seconds</option>-->
 						<option value="300000">5 {{minutes}}</option>
 						<option value="900000">15 {{minutes}}</option>
 						<option value="1800000">30 {{minutes}}</option>
 					</select>
+					</div>
 					<!--
 <br>
 <input type="checkbox" id="soundNotification">
 <label for="soundNotification">Habilitar notificaciones por sonido</label>-->
 					<br>
-					<label for="language">{{selectLanguage}}</label>
-					<select name="" id="language">
-						<option value="es">Español</option>
-						<option value="en">English</option>
-						<option value="ro">Română</option>
-						<option value="ru">русский</option>
-						<option value="pt">Português</option>
-						<option value="lv">Latviešu</option>
-					</select>
+					<div class="configContainer">
+						<label for="language">{{selectLanguage}}</label>
+						<select name="" id="language">
+							<option value="es">Español</option>
+							<option value="en">English</option>
+							<option value="ro">Română</option>
+							<option value="ru">русский</option>
+							<option value="pt">Português</option>
+							<option value="lv">Latviešu</option>
+							<option value="ar">العربية</option>
+							<option value="fr">Français</option>
+						</select>
+					</div>
 				</form>
 			</div>
 		</div>

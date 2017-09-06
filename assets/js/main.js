@@ -116,6 +116,11 @@ $(document).ready(function () {
 		openWindow("conversations");
 	});
 	function renderView(language) {
+		if(language==="ar"){
+			$("#tfmNotifierArea").addClass("arabicFixes")
+		}else{
+			$("#tfmNotifierArea").removeClass("arabicFixes")
+		}
 		var template = $("#template").html();
 		var mustacheData = languages[language];
 		mustacheData["threadData"] = bg.userData.tfm_notify_data.forumActivity;

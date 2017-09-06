@@ -14,7 +14,7 @@ var languages = {
 		configuration: "Configuraciones",
 		updateTime: "Revisar actualizaciones cada:",
 		minutes: "Minutos",
-		thankYouMsg: "Gracias por descargar mi extension <3"
+		thankYouMsg: "Gracias por descargar mi extension ♥"
 	},
 	en: {
 		selectLanguage: "Choose your language:",
@@ -31,7 +31,7 @@ var languages = {
 		configuration: "Configurations",
 		updateTime: "Check updates every:",
 		minutes: "Minutes",
-		thankYouMsg: "Thank you for downloading my extension <3"
+		thankYouMsg: "Thank you for downloading my extension ♥"
 	},
 	ro: {
 		selectLanguage: "Alege-ți limba:",
@@ -48,7 +48,7 @@ var languages = {
 		configuration: "Configurații",
 		updateTime: "Verifică actualizările la fiecare:",
 		minutes: "Minute",
-		thankYouMsg: "Mulțumesc pentru downloadarea extensiei mele <3"
+		thankYouMsg: "Mulțumesc pentru downloadarea extensiei mele ♥"
 	},
 	ru: {
 		selectLanguage: "Выберите ваш язык:",
@@ -65,7 +65,7 @@ var languages = {
 		configuration: "Настройки",
 		updateTime: "Проверять обновления каждые:",
 		minutes: "Минут(ы)",
-		thankYouMsg: "Благодарю за скачивание моего расширения <3"
+		thankYouMsg: "Благодарю за скачивание моего расширения ♥"
 	},
 	pt: {
 		selectLanguage: "Selecione o seu idioma",
@@ -82,7 +82,7 @@ var languages = {
 		configuration: "Configurações",
 		updateTime: "Verificar as atualizações em:",
 		minutes: "Minutos",
-		thankYouMsg: "Obrigado por baixar a minha extensão <3"
+		thankYouMsg: "Obrigado por baixar a minha extensão ♥"
 	},
 	lv: {
 		selectLanguage: "Izvēlēties valodu:",
@@ -99,7 +99,41 @@ var languages = {
 		configuration: "Konfigurācija",
 		updateTime: "Pārbaudīt atjauninājumus katras:",
 		minutes: "Minūtes",
-		thankYouMsg: "Paldies, ka lejupielādēji manu paplašinājumu! <3"
+		thankYouMsg: "Paldies, ka lejupielādēji manu paplašinājumu! ♥"
+	},
+	ar: {
+		selectLanguage: "اختر لغتك ",
+		title: "TFM منبه البريد الخاص ب",
+		subtitle: "Frankusky قُدِّمَ من طرف",
+		threadTitle: "عنوان التعليق",
+		lastCommentBy: "تعليقات جديدة من طرف ",
+		viewed: "شوهد",
+		errorTitle: "!حدث خطأ ما",
+		pleaseCheck: ":يرجى التحقق مما يلي",
+		errorTips: ["لقد قمت بتسجيل الدخول إلى منتدى ترانسفورميس.", "لديك اتصال بالإنترنت."],
+		goToAtelier: "Atelier801 انتقل إلى",
+		reload: "اعد التحميل",
+		configuration: "تكوينات",
+		updateTime: ":التحقق من التحديثات كل",
+		minutes: "دقائق",
+		thankYouMsg: "♥ شكرا لك على تنزيل الإكسطنشن الخاص بي"
+	},
+	fr: {
+		selectLanguage: "Choisissez votre langue:",
+		title: "TFM Post Notifiant",
+		subtitle: "Par Frankusky",
+		threadTitle: "Titre du post ",
+		lastCommentBy: "Nouveaux commentaires par",
+		viewed: "Vu",
+		errorTitle: "Une erreur est survenue!",
+		pleaseCheck: "Vérifiez ça :",
+		errorTips: ["Vous êtes connecté au forum de Transformice.", "Vous disposez d'une connexion Internet."],
+		goToAtelier: "Aller à Atelier801",
+		reload: "Recharger",
+		configuration: "Configurations",
+		updateTime: "Vérifiez les mises à jour chaque :",
+		minutes: "Minutes",
+		thankYouMsg: "Merci pour le téléchargement de mon extension ♥"
 	}
 }
 
