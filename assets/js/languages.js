@@ -134,10 +134,28 @@ var languages = {
 		updateTime: "Vérifiez les mises à jour chaque :",
 		minutes: "Minutes",
 		thankYouMsg: "Merci pour le téléchargement de mon extension ♥"
+	},
+	pl: {
+		selectLanguage: "Wybierz język:",
+		title: "Powiadamiacz Postów TFM",
+		subtitle: "Przez Frankusky",
+		threadTitle: "Tytuł Postu",
+		lastCommentBy: "Nowy komentarz od",
+		viewed: "Zobaczone",
+		errorTitle: "Wystąpił błąd!",
+		pleaseCheck: "Proszę sprawdź czy:",
+		errorTips: ["Zalogowałeś się do Forum Transformice", "Masz połączenie internetowe"],
+		goToAtelier: "Przejdź do Atelier801",
+		reload: "Przeładuj",
+		configuration: "Konfiguracje",
+		updateTime: "Sprawdzaj nowości co:",
+		minutes: "Minut",
+		thankYouMsg: "Dziękuje Ci za pobranie mojego rozszerzenia ♥"
 	}
 }
 
 /*
+https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 {
 selectLanguage: 	"",
 title:				"",

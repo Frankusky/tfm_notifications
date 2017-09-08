@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 6.11 07/09/2017
+	- Added Polish translation
+
 - Version 6.10 05/09/2017
 	- Added arabic and french translations
 	- Fixed not updating alert count after read private message
