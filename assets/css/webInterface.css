@@ -3,6 +3,9 @@
 	overflow-x: initial !important;
 }
 /*********************EMOJIS*************************/
+.emojiBtn>img{
+	margin-right: 5px;
+}
 
 .emojisDropdown {
 	width: 300px;

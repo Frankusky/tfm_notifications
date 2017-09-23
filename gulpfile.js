@@ -7,7 +7,9 @@ var gulp = require("gulp"),
 	uglify = require("gulp-uglify"),
 	zip = require("gulp-zip"),
 	plumber = require("gulp-plumber"),
-	del = require("del");
+	del = require("del"),
+	es6transpiler = require('gulp-es6-transpiler');
+;
 
 var paths = {
 	html : ["popup.html", "background.html"],
@@ -41,6 +43,7 @@ gulp.task("gen-css",function(){
 gulp.task("gen-js", function(){
 	return gulp.src(paths.js)
 		.pipe(plumber(plumberErrorHandler))
+		.pipe(es6transpiler())
 		.pipe(uglify().on("error", function(errorLog){console.log(errorLog)}))
 		.pipe(rename({suffix:".min"}))
 		.pipe(gulp.dest(paths.distProdJs));
