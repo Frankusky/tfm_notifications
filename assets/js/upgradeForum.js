@@ -65,7 +65,7 @@
 		/*Generates the DOM for the emoji button*/
 		this.generateButtonDom = function () {
 			var emojiIconUrl = this.getExtensionFile("assets/img/webInterfaceIcons/emojiIcon.png");
-			return '<div class="btn-group groupe-boutons-barre-outils"><button class="btn dropdown-toggle btn-reduit emojiBtn"><img src="' + emojiIconUrl + '"><span class="caret"></span> </button>'
+			return '<div class="btn-group groupe-boutons-barre-outils"><button class="btn dropdown-toggle btn-reduit emojiBtn tfmExtension"><img src="' + emojiIconUrl + '"><span class="caret"></span> </button>'
 		}
 		/*Images url validation
 		 * @type String urls Only one url or a bunch of urls delimited by comma
@@ -276,9 +276,16 @@
 			document.head.appendChild(fa);
 			return this
 		}
+
+		//███████╗███╗   ███╗ ██████╗      ██╗██╗    ███████╗███████╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗
+		//██╔════╝████╗ ████║██╔═══██╗     ██║██║    ██╔════╝██╔════╝██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║
+		//█████╗  ██╔████╔██║██║   ██║     ██║██║    ███████╗█████╗  ██║        ██║   ██║██║   ██║██╔██╗ ██║
+		//██╔══╝  ██║╚██╔╝██║██║   ██║██   ██║██║    ╚════██║██╔══╝  ██║        ██║   ██║██║   ██║██║╚██╗██║
+		//███████╗██║ ╚═╝ ██║╚██████╔╝╚█████╔╝██║    ███████║███████╗╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║
+		//╚══════╝╚═╝     ╚═╝ ╚═════╝  ╚════╝ ╚═╝    ╚══════╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
 		/* Searchs in the dom all the edit messages tools and stores it on placeHolders global variable*/
 		this.getAllPlaceHolders = function () {
-			this.placeHolders = $(".input-message:not(:has(.emojiBtn))").prev();
+			this.placeHolders = $(".input-message:not(:has(.tfmExtension))").prev();
 			return this;
 		}
 		/*Inserts the emoji button*/
@@ -305,7 +312,8 @@
 		}
 		/* Adds a click event listener on emoji button*/
 		this.toggleDropDown = function () {
-			this.placeHolders.find('.emojiBtn').on('click', function (event) {
+			this.placeHolders.find('.tfmExtension').on('click', function (event) {
+				$(".open").removeClass("open");
 				event.stopPropagation();
 				event.stopImmediatePropagation();
 				event.preventDefault();
@@ -324,6 +332,9 @@
 			$(document).on("click", function (ev) {
 				if (!$(".emojiBtn").parent().is(ev.target) && $(".emojiBtn").has(ev.target).length === 0 && $(".open").has(ev.target).length === 0) {
 					$(".emojiBtn").parent().removeClass("open");
+				}
+				if (!$(".gradientBtn").parent().is(ev.target) && $(".gradientBtn").has(ev.target).length === 0 && $(".open").has(ev.target).length === 0) {
+					$(".gradientBtn").parent().removeClass("open");
 				}
 			});
 			return this
@@ -418,6 +429,167 @@
 			});
 			return this
 		}
+
+		// ██████╗ ██████╗  █████╗ ██████╗ ██╗███████╗███╗   ██╗████████╗    ███████╗███████╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗
+		//██╔════╝ ██╔══██╗██╔══██╗██╔══██╗██║██╔════╝████╗  ██║╚══██╔══╝    ██╔════╝██╔════╝██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║
+		//██║  ███╗██████╔╝███████║██║  ██║██║█████╗  ██╔██╗ ██║   ██║       ███████╗█████╗  ██║        ██║   ██║██║   ██║██╔██╗ ██║
+		//██║   ██║██╔══██╗██╔══██║██║  ██║██║██╔══╝  ██║╚██╗██║   ██║       ╚════██║██╔══╝  ██║        ██║   ██║██║   ██║██║╚██╗██║
+		//╚██████╔╝██║  ██║██║  ██║██████╔╝██║███████╗██║ ╚████║   ██║       ███████║███████╗╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║
+		//╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝       ╚══════╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+
+		/*Inserts the gradient button next to the emoji button*/
+		this.insertGradientButton = function () {
+			var gradientIconUrl = this.getExtensionFile("assets/img/webInterfaceIcons/gradientIcon.png");
+			this.placeHolders.each(function () {
+				this.innerHTML += `
+					<div class="btn-group groupe-boutons-barre-outils">
+						<button class="btn dropdown-toggle btn-reduit gradientBtn tfmExtension"><img src="${gradientIconUrl}"><span class="caret"></span> </button>
+							<ul class="dropdown-menu pull-right label-message gradientDropdown"> 
+								<input type="text" class="gradientText" placeholder="Put your text here" value="This is a demo">
+								<button type="button" class="btn btn-reduit insertGradientText">
+									<span class="glyphicon glyphicon-ok extensionBtnImage"></span>
+								</button>
+							<div id="colorInput">
+								<label for="startColor">Start color:</label>
+								<input type="color" class="startColor" value="#FF0000"/>
+								<input type="text" class="startColorHex" maxlength="7" placeholder="Hex Color" value="#FF0000"/>
+								<br>
+								<label for="endColor">End color:</label>
+								<input type="color" class="endColor" value="#FFFFFF"/>
+								<input type="text" class="endColorHex" maxlength="7" placeholder="Hex Color" value="#FFFFFF"/>
+								<div>Preview:<div>
+								<div class="gradientPreview"></div>
+							</div>
+						</ul>
+					</div>
+				`
+			})
+			return this
+		}
+		
+		this.hexToR = function(h) {
+			return parseInt(h.substring(0, 2), 16)
+		}
+
+		this.hexToG = function(h) {
+			return parseInt(h.substring(2, 4), 16)
+		}
+
+		this.hexToB = function(h) {
+			return parseInt(h.substring(4, 6), 16)
+		}
+
+		this.rgbToHex = function(R, G, B) {
+			return this.toHex(R) + this.toHex(G) + this.toHex(B)
+		}
+
+		this.toHex = function(n) {
+			n = parseInt(n, 10);
+			if (isNaN(n)) return "00";
+			n = Math.max(0, Math.min(n, 255));
+			return "0123456789ABCDEF".charAt((n - n % 16) / 16) +
+				"0123456789ABCDEF".charAt(n % 16);
+		}
+		
+		this.textcolorizer_handle = function(text, startColor, endColor, type) {
+			var str_html = "",
+				str_bbcode = "",
+				str_style = "";
+
+			startColor = startColor.replace(/\#/g,"")
+			endColor = endColor.replace(/\#/g,"")
+
+			var a, r, g, b, rinc, ginc, binc, ccol;
+			r=this.hexToR(startColor)
+			g=this.hexToG(startColor)
+			b=this.hexToB(startColor)
+			rinc=(this.hexToR(endColor)-r)/text.length
+			ginc=(this.hexToG(endColor)-g)/text.length
+			binc=(this.hexToB(endColor)-b)/text.length
+			for (a=0; a<text.length; a++) {
+				ccol=this.rgbToHex(r,g,b);
+				if (text.charAt(a)==" ") {
+					str_html+=" ";
+					str_bbcode+=" ";
+				} else {
+					str_html+="<span style='color:#"+ccol+";'>"+text.charAt(a)+"</span>";
+					str_bbcode+='[color=#'+ccol+']'+text.charAt(a)+"[/color]";
+				}
+				r+=rinc;
+				g+=ginc;
+				b+=binc;
+			}
+			if(type==="bbcode"){
+				return str_bbcode
+			}else if(type==="html"){
+				return str_html
+			}
+		}
+		
+		this.insertGradientListeners = function(){
+			var that = this;
+			$(document).on("keyup",".gradientText", function () {
+				var gradientText = this.value,
+					gradientStartColor = $(this).parent().find(".startColor").val(),
+					gradientEndColor = $(this).parent().find(".endColor").val(),
+					gradientResult = that.textcolorizer_handle(gradientText, gradientStartColor, gradientEndColor, "html");
+				$(this).parent().find(".gradientPreview").html(gradientResult)
+			})
+			$(document).on("change", ".startColor, .endColor",function(){
+				$("."+this.className.match(/(start|end)color/gi)[0]+"Hex").val(this.value);
+				var gradientText = $(this).parents(".gradientDropdown").find(".gradientText").val(),
+					gradientStartColor = $(this).parent().find(".startColor").val(),
+					gradientEndColor = $(this).parent().find(".endColor").val(),
+					gradientResult = that.textcolorizer_handle(gradientText, gradientStartColor, gradientEndColor, "html");
+				$(this).parent().find(".gradientPreview").html(gradientResult)
+			})
+			$(document).on("keydown", ".startColorHex, .endColorHex",function(ev){
+				if(!ev.ctrlKey && !ev.shiftKey&& "0123456789ABCDEF".indexOf(ev.key.toUpperCase())===-1 && ev.key.match(/backspace|arrow|delete|control|alt|shift|end|home/gi)===null){
+					return false
+				}
+			}).on("paste", ".startColorHex, .endColorHex",function(ev){
+				var pasteValue = ev.originalEvent.clipboardData.getData('Text').replace(/\#/gi,"");
+				if(pasteValue.match(/[^#\da-f]+/gi)!==null){ 
+					return false
+				}
+			}).on("keyup", ".startColorHex, .endColorHex",function(){
+				var value = this.value.replace(/\#/g,"");
+				if(value.length===6){
+					var colorInputClassName = "."+this.className.match(/(start|end)ColorHex/gi)[0].replace("Hex","");
+					$(this).parent().find(colorInputClassName).val(this.value);
+					var gradientText = $(this).parents(".gradientDropdown").find(".gradientText").val(),
+						gradientStartColor = $(this).parent().find(".startColor").val(),
+						gradientEndColor = $(this).parent().find(".endColor").val(),
+						gradientResult = that.textcolorizer_handle(gradientText, gradientStartColor, gradientEndColor, "html");
+					$(this).parent().find(".gradientPreview").html(gradientResult)
+				}
+			})
+			
+			$(".gradientText").each(function(){
+				var gradientText = this.value,
+					gradientStartColor = $(this).parent().find(".startColor").val(),
+					gradientEndColor = $(this).parent().find(".endColor").val(),
+					gradientResult = that.textcolorizer_handle(gradientText, gradientStartColor, gradientEndColor,"html");
+				$(this).parent().find(".gradientPreview").html(gradientResult)
+			})
+			
+			$(document).on("click", ".insertGradientText", function(){
+				var gradientText = $(this).parent().find(".gradientText").val(),
+					gradientStartColor = $(this).parent().find(".startColor").val(),
+					gradientEndColor = $(this).parent().find(".endColor").val(),
+					gradientResult = that.textcolorizer_handle(gradientText, gradientStartColor, gradientEndColor, "bbcode"),
+					actualTextArea = $(this).parents(".controls.ltr").children("textarea")[0],
+					actualText = actualTextArea.value,
+					finalMessage = actualText.substring(0, actualTextArea.selectionStart) + gradientResult + actualText.substring(actualTextArea.selectionEnd, actualText.length),
+					newCursorPostion = actualTextArea.selectionStart + gradientResult.length;
+					actualTextArea.value = finalMessage;
+					actualTextArea.setSelectionRange(newCursorPostion, newCursorPostion);
+					$(".open").removeClass("open");
+					$(actualTextArea).focus()
+			})
+			return this
+		}
+
 	}
 
 	function hasResponseBar() {
@@ -431,10 +603,12 @@
 			.insertGlyphiIconFont()
 			.getAllPlaceHolders()
 			.insertEmojiBtn()
+			.insertGradientButton()
 			.insertGiphyTabContent()
 			.emojiBtnImageClickListener()
 			.toggleDropDown()
 			.setActiveClasses()
 			.dropDownCloserListener()
+			.insertGradientListeners()
 	}
 })()

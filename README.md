@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 7 23/09/2017
+	- Added gradient functionality
+
 - Version 6.11 07/09/2017
 	- Added Polish translation
 

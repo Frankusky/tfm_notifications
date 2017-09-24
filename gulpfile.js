@@ -28,7 +28,8 @@ var paths = {
 var allTasks = ["gen-css", "gen-js", "gen-html", "gen-libs", "gen-manifest", "gen-imgs"];
 
 var plumberErrorHandler = {
-	errorHandler: function(){
+	errorHandler: function(err){
+		console.log(err)
 		gutil.beep();
 	}
 }
@@ -43,7 +44,7 @@ gulp.task("gen-css",function(){
 gulp.task("gen-js", function(){
 	return gulp.src(paths.js)
 		.pipe(plumber(plumberErrorHandler))
-		.pipe(es6transpiler())
+		.pipe(es6transpiler({globals:{$:true, chrome:true, languages:true, Mustache: true}}))
 		.pipe(uglify().on("error", function(errorLog){console.log(errorLog)}))
 		.pipe(rename({suffix:".min"}))
 		.pipe(gulp.dest(paths.distProdJs));
