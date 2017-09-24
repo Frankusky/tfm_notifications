@@ -133,7 +133,7 @@
 			}
 			tabs = "<ul class='nav nav-tabs'>" + tabs + "</ul>";
 			tabsBody = "<div class='tab-content'>" + tabsBody + "</div>";
-			dropDownBody += tabs + tabsBody + "<div class='emojiFooter'>Provided by Frankusky</div></ul></div>";
+			dropDownBody += tabs + tabsBody + "<div class='tfmExtensionFooter'>Provided by Frankusky</div></ul></div>";
 			return dropDownBody;
 		}
 		/*Removes duplicated urls
@@ -313,11 +313,16 @@
 		/* Adds a click event listener on emoji button*/
 		this.toggleDropDown = function () {
 			this.placeHolders.find('.tfmExtension').on('click', function (event) {
-				$(".open").removeClass("open");
 				event.stopPropagation();
 				event.stopImmediatePropagation();
 				event.preventDefault();
 				$(this).parent().toggleClass('open');
+				if($(".open").length>1){
+					$(".open").each(function(){
+						if($(event.target).parents(".open")[0]!==this) $(this).removeClass("open")
+					})
+				}
+				
 			});
 			return this
 		}
@@ -449,18 +454,19 @@
 								<button type="button" class="btn btn-reduit insertGradientText">
 									<span class="glyphicon glyphicon-ok extensionBtnImage"></span>
 								</button>
-							<div id="colorInput">
-								<label for="startColor">Start color:</label>
-								<input type="color" class="startColor" value="#FF0000"/>
-								<input type="text" class="startColorHex" maxlength="7" placeholder="Hex Color" value="#FF0000"/>
-								<br>
-								<label for="endColor">End color:</label>
-								<input type="color" class="endColor" value="#FFFFFF"/>
-								<input type="text" class="endColorHex" maxlength="7" placeholder="Hex Color" value="#FFFFFF"/>
-								<div>Preview:<div>
-								<div class="gradientPreview"></div>
-							</div>
-						</ul>
+								<div id="colorInput">
+									<label for="startColor">Start color:</label>
+									<input type="color" class="startColor" value="#FF0000"/>
+									<input type="text" class="startColorHex" maxlength="7" placeholder="Hex Color" value="#FF0000"/>
+									<br>
+									<label for="endColor">End color:</label>
+									<input type="color" class="endColor" value="#FFFFFF"/>
+									<input type="text" class="endColorHex" maxlength="7" placeholder="Hex Color" value="#FFFFFF"/>
+									<div>Preview:<div>
+									<div class="gradientPreview"></div>
+								</div>
+								<div class='tfmExtensionFooter'>Provided by Frankusky</div>
+							</ul>
 					</div>
 				`
 			})

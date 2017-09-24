@@ -2,6 +2,12 @@
 .cadre-repondre{
 	overflow-x: initial !important;
 }
+/*********************General**********************/
+.tfmExtensionFooter {
+	font-size: 10px;
+	text-align: center;
+}
+
 /*********************EMOJIS*************************/
 .tfmExtension>img{
 	margin-right: 5px;
@@ -65,11 +71,6 @@
 	max-height: 50px;
 	max-width: 50px;
 	display: inline-block;
-}
-
-.emojisDropdown .emojiFooter {
-	font-size: 10px;
-	text-align: center;
 }
 
 .emojisDropdown .customEmojiInput {
@@ -366,7 +367,7 @@
 
 /********************Gradient*************************/
 .gradientDropdown{
-	padding:10px !important
+	padding:10px 10px 0 !important
 }
 
 #colorInput{
@@ -401,7 +402,8 @@
 }
 
 .gradientDropdown .gradientPreview{
-	overflow-x:auto
+	overflow-x:auto;
+	margin-bottom: 5px;
 }
 
 .gradientDropdown .extensionBtnImage {

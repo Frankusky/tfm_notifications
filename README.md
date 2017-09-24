@@ -6,6 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 7.1 24/09/2017
+	- Added footer for the gradient box
+	- Fixed not closing box when openning both extension buttons
+
 - Version 7 23/09/2017
 	- Added gradient functionality
 
