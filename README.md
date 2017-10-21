@@ -6,6 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 7.2 20/10/2017
+	- Added Turkish translation
+	- Replaced JQuery load method to get to prevent loading assets
+
 - Version 7.1 24/09/2017
 	- Added footer for the gradient box
 	- Fixed not closing box when openning both extension buttons
