@@ -232,7 +232,7 @@
 		 */
 		this.getGifsFromGiphy = function (searchTags, giphyEmojiContainer) {
 			$.ajax({
-				url: "http://api.giphy.com/v1/gifs/search?q=" + searchTags + "&api_key=dc6zaTOxFJmzC&limit=100",
+				url: "//api.giphy.com/v1/gifs/search?q=" + searchTags + "&api_key=dc6zaTOxFJmzC&limit=100",
 				success: function (response) {
 					giphyEmojiContainer.html("");
 					var imagesArray = response.data.reduce(function (previous, current) {

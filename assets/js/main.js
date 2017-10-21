@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 	/*Opens forum posts into a new tab*/
 	function openWindow(newURL) {
-		newURL = "http://atelier801.com/" + newURL
+		newURL = "//atelier801.com/" + newURL
 		chrome.tabs.create({
 			url: newURL
 		});
@@ -36,7 +36,7 @@ $(document).ready(function () {
 	}
 	/*Event listener*/
 	chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-		if(message.method==="checkFavorites"){
+		if (message.method === "checkFavorites") {
 			showUserPosts();
 		}
 	});
@@ -58,6 +58,7 @@ $(document).ready(function () {
 	$(document).on("change", "#language", function () {
 		var language = $("#language option:selected").val();
 		bg.userData.tfm_notify_data.language = language;
+		bg.userData.method = "changeLanguage";
 		bg.saveData(bg.userData);
 		renderView(language)
 	});
@@ -72,7 +73,7 @@ $(document).ready(function () {
 	$(document).on("click", ".goToForum", function () {
 		openWindow("");
 	});
-	
+
 	$(document).on("click", ".goToFavorites", function () {
 		openWindow("favorite-topics");
 	});
@@ -108,34 +109,38 @@ $(document).ready(function () {
 		openWindow(postUrl);
 	})
 
-	$(document).on("click", ".privateMsgs", function(){
+	$(document).on("click", ".privateMsgs", function () {
 		bg.userData.privateMsgsNumber = "0";
 		var newsAmmount = $(".newActivity .newActivityItem").length;
 		bg.updateNotification(newsAmmount, false);
 		bg.saveData(bg.userData);
 		openWindow("conversations");
 	});
+
 	function renderView(language) {
-		if(language==="ar"){
-			$("#tfmNotifierArea").addClass("arabicFixes")
-		}else{
-			$("#tfmNotifierArea").removeClass("arabicFixes")
-		}
+		$("#tfmNotifierArea").removeClass("arabicFixes");
+		$(".application .subtitle").insertAfter(".application .title");
 		var template = $("#template").html();
 		var mustacheData = languages[language];
 		mustacheData["threadData"] = bg.userData.tfm_notify_data.forumActivity;
 		mustacheData["privateMsgsNumber"] = bg.userData.privateMsgsNumber;
 		var render = Mustache.render(template, mustacheData)
 		$("#tfmNotifierArea").html(render);
+		if (language === "ar") {
+			$("#tfmNotifierArea").addClass("arabicFixes")
+		} else if (language === "tr") {
+			$(".application .title").insertAfter(".application .subtitle");
+			console.log("fired")
+		}
 		updateSelectsValue();
 	}
-	
+
 	/*Just for fun*/
 	/*Hover over my name :D*/
-	$(document).on("mouseenter", ".subtitle", function(){
+	$(document).on("mouseenter", ".subtitle", function () {
 		$("body").css("background-image", "url('assets/img/tumblr_m5mt77UO9E1qecngho1_500.gif')")
 		$(".thankYouMsg").css("display", "block")
-	}).on("mouseleave", ".subtitle", function(){
+	}).on("mouseleave", ".subtitle", function () {
 		$("body").css("background-image", "none")
 		$(".thankYouMsg").css("display", "none")
 	})

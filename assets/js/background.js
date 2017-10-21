@@ -35,7 +35,6 @@ function loadData() {
 			}
 		} catch (err) {}
 		userData.method = "loadData";
-//		userData.customEmojis = ["http://i.imgur.com/t91LB.png"];
 		updateNotification(userData.tfm_notify_data.forumActivity.length, false);
 		saveData(userData);
 		checkFavorites();
@@ -93,8 +92,9 @@ function hasUpdates(newActivity, lastActivity) {
 function checkFavorites() {
 	var result = document.createElement("div"),
 		tempData = [];
-
-	$(result).load("http://atelier801.com/favorite-topics", function (response, status, xhr) {
+	$.get("http://atelier801.com/favorite-topics", function (data, status) {
+		result.innerHTML = data.replace(/<\s*(script|iframe)[^>]*>(?:[^<]*<)*?\/\1>/g, "").replace(/(<(\b(img|style|head|link)\b)(([^>]*\/>)|([^\7]*(<\/\2[^>]*>)))|(<\bimg\b)[^>]*>|(\b(background|style)\b=\s*"[^"]*"))/g, "");
+		
 		if ((status != "success") || ($(result).find("#identification").length > 0)) {
 			userData.tfm_notify_data.hasError = true;
 			userData.tfm_notify_data.forumActivity = [];
@@ -115,27 +115,27 @@ function checkFavorites() {
 				}
 			});
 			var hasThreadsUpdate = hasUpdates(tempData, userData.tfm_notify_data.forumActivity),
-				hasMessagesUpdate= false;
+				hasMessagesUpdate = false;
 			var messagesAmmount = $(result).find(".nav.pull-right.ltr>li>a[href='/conversations']").text().trim();
 			messagesAmmount = messagesAmmount != "" ? messagesAmmount : 0;
-			if(messagesAmmount!==userData.privateMsgsNumber || messagesAmmount>0){
+			if (messagesAmmount !== userData.privateMsgsNumber || messagesAmmount > 0) {
 				hasMessagesUpdate = true;
 			}
-			
+
 			userData.privateMsgsNumber = messagesAmmount;
-			if(hasMessagesUpdate===true){
-				if(hasThreadsUpdate===true){
+			if (hasMessagesUpdate === true) {
+				if (hasThreadsUpdate === true) {
 					userData.tfm_notify_data.forumActivity = tempData;
-				}else if(hasThreadsUpdate==="none"){
+				} else if (hasThreadsUpdate === "none") {
 					userData.tfm_notify_data.forumActivity = "";
 				}
 				var newsAmmount = Number(userData.privateMsgsNumber) + Number(userData.tfm_notify_data["forumActivity"].length);
 				updateNotification(newsAmmount.toString(), userData.tfm_notify_data.hasError);
-			}else{
-				if(hasThreadsUpdate===true){
+			} else {
+				if (hasThreadsUpdate === true) {
 					userData.tfm_notify_data.forumActivity = tempData;
 					updateNotification(userData.tfm_notify_data.forumActivity.length.toString(), userData.tfm_notify_data.hasError);
-				}else if(hasThreadsUpdate==="none"){
+				} else if (hasThreadsUpdate === "none") {
 					userData.tfm_notify_data.forumActivity = "";
 					updateNotification("", false);
 				}
@@ -161,10 +161,10 @@ chrome.storage.onChanged.addListener(function (variableChange, storageArea) {
 	chrome.runtime.sendMessage(userData);
 });
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-	if (message.method==="getEmojiData") {
+	if (message.method === "getEmojiData") {
 		sendResponse(userData.customEmojis);
 	}
-	if (message.method==="saveEmojiData") {
+	if (message.method === "saveEmojiData") {
 		userData.customEmojis = message.emojisData;
 		saveData(userData);
 	}

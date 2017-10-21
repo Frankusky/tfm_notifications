@@ -151,6 +151,23 @@ var languages = {
 		updateTime: "Sprawdzaj nowości co:",
 		minutes: "Minut",
 		thankYouMsg: "Dziękuje Ci za pobranie mojego rozszerzenia ♥"
+	},
+	tr: {
+		selectLanguage: "Dilinizi seçin:",
+		title: "TFM Gönderi Bildirici",
+		subtitle: "Frankusky’den",
+		threadTitle: "Konu Başlığı",
+		lastCommentBy: "Yorumu Yapan",
+		viewed: "İncelendi",
+		errorTitle: "Bir hata meydana geldi!",
+		pleaseCheck: "Lütfen şunları gözden geçirin:",
+		errorTips: ["Transformice forumuna giriş yaptınız.", "İnternet bağlantınız var."],
+		goToAtelier: "Atelier 801’e Gidin",
+		reload: "Yeniden Yükleyin",
+		configuration: "Yapılandırmalar",
+		updateTime: "Şu sıklıkla güncellemeleri denetle:",
+		minutes: "dakikada bir",
+		thankYouMsg: "Uzantımı indirdiğiniz için teşekkürler! ♥"
 	}
 }
 
