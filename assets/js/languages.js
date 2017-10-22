@@ -157,7 +157,7 @@ var languages = {
 		title: "TFM Gönderi Bildirici",
 		subtitle: "Frankusky’den",
 		threadTitle: "Konu Başlığı",
-		lastCommentBy: "Yorumu Yapan",
+		lastCommentBy: "Mesajı Gönderen",
 		viewed: "İncelendi",
 		errorTitle: "Bir hata meydana geldi!",
 		pleaseCheck: "Lütfen şunları gözden geçirin:",

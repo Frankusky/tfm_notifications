@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 	/*Opens forum posts into a new tab*/
 	function openWindow(newURL) {
-		newURL = "//atelier801.com/" + newURL
+		newURL = "https://atelier801.com/" + newURL
 		chrome.tabs.create({
 			url: newURL
 		});
