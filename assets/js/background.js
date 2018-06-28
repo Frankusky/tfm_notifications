@@ -95,7 +95,7 @@ function checkFavorites() {
 	$.get("http://atelier801.com/favorite-topics", function (data, status) {
 		result.innerHTML = data.replace(/<\s*(script|iframe)[^>]*>(?:[^<]*<)*?\/\1>/g, "").replace(/(<(\b(img|style|head|link)\b)(([^>]*\/>)|([^\7]*(<\/\2[^>]*>)))|(<\bimg\b)[^>]*>|(\b(background|style)\b=\s*"[^"]*"))/g, "");
 		
-		if ((status != "success") || ($(result).find("#identification").length > 0)) {
+		if ((status != "success") || ($(result).find("form[action='/deconnexion']").length === 0)) {
 			userData.tfm_notify_data.hasError = true;
 			userData.tfm_notify_data.forumActivity = [];
 			updateNotification("", userData.tfm_notify_data.hasError);

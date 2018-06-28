@@ -130,7 +130,6 @@ $(document).ready(function () {
 			$("#tfmNotifierArea").addClass("arabicFixes")
 		} else if (language === "tr") {
 			$(".application .title").insertAfter(".application .subtitle");
-			console.log("fired")
 		}
 		updateSelectsValue();
 	}
