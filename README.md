@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 7.3 27/06/2018
+	- Fixed not detecting when user is or not logged in
+
 - Version 7.2 20/10/2017
 	- Added Turkish translation
 	- Replaced JQuery load method to get to prevent loading assets
