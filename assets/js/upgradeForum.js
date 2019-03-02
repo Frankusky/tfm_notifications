@@ -295,7 +295,7 @@
 				var textAreaID = this.id.replace(/[\D]/g, "");
 				var btnDom = that.generateButtonDom();
 				var dropDownDom = that.generateDropdown(textAreaID);
-				this.innerHTML = this.innerHTML + btnDom + dropDownDom;
+				$(this).append(btnDom + dropDownDom);
 			});
 			return this;
 		}
@@ -446,7 +446,7 @@
 		this.insertGradientButton = function () {
 			var gradientIconUrl = this.getExtensionFile("assets/img/webInterfaceIcons/gradientIcon.png");
 			this.placeHolders.each(function () {
-				this.innerHTML += `
+				$(this).append(`
 					<div class="btn-group groupe-boutons-barre-outils">
 						<button class="btn dropdown-toggle btn-reduit gradientBtn tfmExtension"><img src="${gradientIconUrl}"><span class="caret"></span> </button>
 							<ul class="dropdown-menu pull-right label-message gradientDropdown"> 
@@ -468,7 +468,7 @@
 								<div class='tfmExtensionFooter'>Provided by Frankusky</div>
 							</ul>
 					</div>
-				`
+				`)
 			})
 			return this
 		}

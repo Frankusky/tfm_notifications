@@ -6,6 +6,9 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
+- Version 7.4
+	- Fixed forum buttons not working
+
 - Version 7.3 27/06/2018
 	- Fixed not detecting when user is or not logged in
 
