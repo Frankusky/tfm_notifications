@@ -1,11 +1,13 @@
 (function () {
 	var tfmForum = function () {
-		//██████╗ ███████╗███████╗ █████╗ ██╗   ██╗██╗  ████████╗    ██████╗  █████╗ ████████╗ █████╗ 
-		//██╔══██╗██╔════╝██╔════╝██╔══██╗██║   ██║██║  ╚══██╔══╝    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
-		//██║  ██║█████╗  █████╗  ███████║██║   ██║██║     ██║       ██║  ██║███████║   ██║   ███████║
-		//██║  ██║██╔══╝  ██╔══╝  ██╔══██║██║   ██║██║     ██║       ██║  ██║██╔══██║   ██║   ██╔══██║
-		//██████╔╝███████╗██║     ██║  ██║╚██████╔╝███████╗██║       ██████╔╝██║  ██║   ██║   ██║  ██║
-		//╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝       ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+		/*		
+██████╗ ███████╗███████╗ █████╗ ██╗   ██╗██╗  ████████╗    ██████╗  █████╗ ████████╗ █████╗ 
+██╔══██╗██╔════╝██╔════╝██╔══██╗██║   ██║██║  ╚══██╔══╝    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
+██║  ██║█████╗  █████╗  ███████║██║   ██║██║     ██║       ██║  ██║███████║   ██║   ███████║
+██║  ██║██╔══╝  ██╔══╝  ██╔══██║██║   ██║██║     ██║       ██║  ██║██╔══██║   ██║   ██╔══██║
+██████╔╝███████╗██║     ██║  ██║╚██████╔╝███████╗██║       ██████╔╝██║  ██║   ██║   ██║  ██║
+╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝       ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+		*/
 
 		/*JSON with the default emoticons
 		 * @type Array emojiList array with the list of url images
@@ -28,7 +30,8 @@
 				emojiList: [],
 				tabName: "Custom"
 			},
-			giphy: { /*Shouldn't set this here, but im lazzy to generate the tab manually*/
+			giphy: {
+				/*Shouldn't set this here, but im lazzy to generate the tab manually*/
 				emojiList: [],
 				tabName: "Giphy"
 			}
@@ -37,12 +40,14 @@
 		this.userDataIsLoaded = false;
 		/*JQUERY DOM elements where I should set the emojiBtn*/
 		this.placeHolders = [];
-		// ██████╗██╗  ██╗██████╗  ██████╗ ███╗   ███╗███████╗    ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
-		//██╔════╝██║  ██║██╔══██╗██╔═══██╗████╗ ████║██╔════╝    ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
-		//██║     ███████║██████╔╝██║   ██║██╔████╔██║█████╗      ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
-		//██║     ██╔══██║██╔══██╗██║   ██║██║╚██╔╝██║██╔══╝      ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
-		//╚██████╗██║  ██║██║  ██║╚██████╔╝██║ ╚═╝ ██║███████╗    ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
-		// ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝    ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+		/*
+ ██████╗██╗  ██╗██████╗  ██████╗ ███╗   ███╗███████╗    ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
+██╔════╝██║  ██║██╔══██╗██╔═══██╗████╗ ████║██╔════╝    ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
+██║     ███████║██████╔╝██║   ██║██╔████╔██║█████╗      ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
+██║     ██╔══██║██╔══██╗██║   ██║██║╚██╔╝██║██╔══╝      ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
+╚██████╗██║  ██║██║  ██║╚██████╔╝██║ ╚═╝ ██║███████╗    ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
+ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝    ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+		*/
 		/*Returns the url for certain file relative to the extension
 		 * @type String file The url path of the file
 		 * @return chrome extension file absolute path
@@ -56,12 +61,14 @@
 		this.sendMessageToExtension = function (data, callback) {
 			chrome.runtime.sendMessage(data, callback);
 		}
-		// ██████╗ ███████╗███╗   ██╗███████╗██████╗ ██╗ ██████╗    ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
-		//██╔════╝ ██╔════╝████╗  ██║██╔════╝██╔══██╗██║██╔════╝    ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
-		//██║  ███╗█████╗  ██╔██╗ ██║█████╗  ██████╔╝██║██║         ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
-		//██║   ██║██╔══╝  ██║╚██╗██║██╔══╝  ██╔══██╗██║██║         ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
-		//╚██████╔╝███████╗██║ ╚████║███████╗██║  ██║██║╚██████╗    ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
-		// ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝    ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+		/*
+ ██████╗ ███████╗███╗   ██╗███████╗██████╗ ██╗ ██████╗    ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
+██╔════╝ ██╔════╝████╗  ██║██╔════╝██╔══██╗██║██╔════╝    ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
+██║  ███╗█████╗  ██╔██╗ ██║█████╗  ██████╔╝██║██║         ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
+██║   ██║██╔══╝  ██║╚██╗██║██╔══╝  ██╔══██╗██║██║         ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
+╚██████╔╝███████╗██║ ╚████║███████╗██║  ██║██║╚██████╗    ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
+ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝    ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+		 */
 		/*Generates the DOM for the emoji button*/
 		this.generateButtonDom = function () {
 			var emojiIconUrl = this.getExtensionFile("assets/img/webInterfaceIcons/emojiIcon.png");
@@ -260,12 +267,14 @@
 		this.insertLoadingMessageInGiphyTab = function (domElement) {
 			domElement.html('<div class="loadingContainer"><div class="sk-circle"><div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div><div class="loadingText">Loading, please wait...</div></div>');
 		}
-		// ██████╗██╗  ██╗ █████╗ ██╗███╗   ██╗ █████╗ ██████╗ ██╗     ███████╗    ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
-		//██╔════╝██║  ██║██╔══██╗██║████╗  ██║██╔══██╗██╔══██╗██║     ██╔════╝    ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
-		//██║     ███████║███████║██║██╔██╗ ██║███████║██████╔╝██║     █████╗      ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
-		//██║     ██╔══██║██╔══██║██║██║╚██╗██║██╔══██║██╔══██╗██║     ██╔══╝      ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
-		//╚██████╗██║  ██║██║  ██║██║██║ ╚████║██║  ██║██████╔╝███████╗███████╗    ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
-		// ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝    ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+		/*
+ ██████╗██╗  ██╗ █████╗ ██╗███╗   ██╗ █████╗ ██████╗ ██╗     ███████╗    ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
+██╔════╝██║  ██║██╔══██╗██║████╗  ██║██╔══██╗██╔══██╗██║     ██╔════╝    ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
+██║     ███████║███████║██║██╔██╗ ██║███████║██████╔╝██║     █████╗      ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
+██║     ██╔══██║██╔══██║██║██║╚██╗██║██╔══██║██╔══██╗██║     ██╔══╝      ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
+╚██████╗██║  ██║██║  ██║██║██║ ╚████║██║  ██║██████╔╝███████╗███████╗    ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
+ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝    ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+		 */
 		/*Loads bootstrap gliphiicons font*/
 		this.insertGlyphiIconFont = function () {
 			var fa = document.createElement('style');
@@ -276,13 +285,14 @@
 			document.head.appendChild(fa);
 			return this
 		}
-
-		//███████╗███╗   ███╗ ██████╗      ██╗██╗    ███████╗███████╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗
-		//██╔════╝████╗ ████║██╔═══██╗     ██║██║    ██╔════╝██╔════╝██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║
-		//█████╗  ██╔████╔██║██║   ██║     ██║██║    ███████╗█████╗  ██║        ██║   ██║██║   ██║██╔██╗ ██║
-		//██╔══╝  ██║╚██╔╝██║██║   ██║██   ██║██║    ╚════██║██╔══╝  ██║        ██║   ██║██║   ██║██║╚██╗██║
-		//███████╗██║ ╚═╝ ██║╚██████╔╝╚█████╔╝██║    ███████║███████╗╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║
-		//╚══════╝╚═╝     ╚═╝ ╚═════╝  ╚════╝ ╚═╝    ╚══════╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+		/*
+███████╗███╗   ███╗ ██████╗      ██╗██╗    ███████╗███████╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗
+██╔════╝████╗ ████║██╔═══██╗     ██║██║    ██╔════╝██╔════╝██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║
+█████╗  ██╔████╔██║██║   ██║     ██║██║    ███████╗█████╗  ██║        ██║   ██║██║   ██║██╔██╗ ██║
+██╔══╝  ██║╚██╔╝██║██║   ██║██   ██║██║    ╚════██║██╔══╝  ██║        ██║   ██║██║   ██║██║╚██╗██║
+███████╗██║ ╚═╝ ██║╚██████╔╝╚█████╔╝██║    ███████║███████╗╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║
+╚══════╝╚═╝     ╚═╝ ╚═════╝  ╚════╝ ╚═╝    ╚══════╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+		*/
 		/* Searchs in the dom all the edit messages tools and stores it on placeHolders global variable*/
 		this.getAllPlaceHolders = function () {
 			this.placeHolders = $(".input-message:not(:has(.tfmExtension))").prev();
@@ -317,12 +327,12 @@
 				event.stopImmediatePropagation();
 				event.preventDefault();
 				$(this).parent().toggleClass('open');
-				if($(".open").length>1){
-					$(".open").each(function(){
-						if($(event.target).parents(".open")[0]!==this) $(this).removeClass("open")
+				if ($(".open").length > 1) {
+					$(".open").each(function () {
+						if ($(event.target).parents(".open")[0] !== this) $(this).removeClass("open")
 					})
 				}
-				
+
 			});
 			return this
 		}
@@ -358,6 +368,7 @@
 					var newCursorPostion = actualTextArea.selectionStart + bbCode.length;
 					actualTextArea.value = finalMessage;
 					actualTextArea.setSelectionRange(newCursorPostion, newCursorPostion);
+					$(actualTextArea).change();
 				}
 			});
 			return that
@@ -434,13 +445,14 @@
 			});
 			return this
 		}
-
-		// ██████╗ ██████╗  █████╗ ██████╗ ██╗███████╗███╗   ██╗████████╗    ███████╗███████╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗
-		//██╔════╝ ██╔══██╗██╔══██╗██╔══██╗██║██╔════╝████╗  ██║╚══██╔══╝    ██╔════╝██╔════╝██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║
-		//██║  ███╗██████╔╝███████║██║  ██║██║█████╗  ██╔██╗ ██║   ██║       ███████╗█████╗  ██║        ██║   ██║██║   ██║██╔██╗ ██║
-		//██║   ██║██╔══██╗██╔══██║██║  ██║██║██╔══╝  ██║╚██╗██║   ██║       ╚════██║██╔══╝  ██║        ██║   ██║██║   ██║██║╚██╗██║
-		//╚██████╔╝██║  ██║██║  ██║██████╔╝██║███████╗██║ ╚████║   ██║       ███████║███████╗╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║
-		//╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝       ╚══════╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+		/*
+ ██████╗ ██████╗  █████╗ ██████╗ ██╗███████╗███╗   ██╗████████╗    ███████╗███████╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗
+██╔════╝ ██╔══██╗██╔══██╗██╔══██╗██║██╔════╝████╗  ██║╚══██╔══╝    ██╔════╝██╔════╝██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║
+██║  ███╗██████╔╝███████║██║  ██║██║█████╗  ██╔██╗ ██║   ██║       ███████╗█████╗  ██║        ██║   ██║██║   ██║██╔██╗ ██║
+██║   ██║██╔══██╗██╔══██║██║  ██║██║██╔══╝  ██║╚██╗██║   ██║       ╚════██║██╔══╝  ██║        ██║   ██║██║   ██║██║╚██╗██║
+╚██████╔╝██║  ██║██║  ██║██████╔╝██║███████╗██║ ╚████║   ██║       ███████║███████╗╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║
+╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝       ╚══════╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+		*/
 
 		/*Inserts the gradient button next to the emoji button*/
 		this.insertGradientButton = function () {
@@ -472,96 +484,96 @@
 			})
 			return this
 		}
-		
-		this.hexToR = function(h) {
+
+		this.hexToR = function (h) {
 			return parseInt(h.substring(0, 2), 16)
 		}
 
-		this.hexToG = function(h) {
+		this.hexToG = function (h) {
 			return parseInt(h.substring(2, 4), 16)
 		}
 
-		this.hexToB = function(h) {
+		this.hexToB = function (h) {
 			return parseInt(h.substring(4, 6), 16)
 		}
 
-		this.rgbToHex = function(R, G, B) {
+		this.rgbToHex = function (R, G, B) {
 			return this.toHex(R) + this.toHex(G) + this.toHex(B)
 		}
 
-		this.toHex = function(n) {
+		this.toHex = function (n) {
 			n = parseInt(n, 10);
 			if (isNaN(n)) return "00";
 			n = Math.max(0, Math.min(n, 255));
 			return "0123456789ABCDEF".charAt((n - n % 16) / 16) +
 				"0123456789ABCDEF".charAt(n % 16);
 		}
-		
-		this.textcolorizer_handle = function(text, startColor, endColor, type) {
+
+		this.textcolorizer_handle = function (text, startColor, endColor, type) {
 			var str_html = "",
 				str_bbcode = "",
 				str_style = "";
 
-			startColor = startColor.replace(/\#/g,"")
-			endColor = endColor.replace(/\#/g,"")
+			startColor = startColor.replace(/\#/g, "")
+			endColor = endColor.replace(/\#/g, "")
 
 			var a, r, g, b, rinc, ginc, binc, ccol;
-			r=this.hexToR(startColor)
-			g=this.hexToG(startColor)
-			b=this.hexToB(startColor)
-			rinc=(this.hexToR(endColor)-r)/text.length
-			ginc=(this.hexToG(endColor)-g)/text.length
-			binc=(this.hexToB(endColor)-b)/text.length
-			for (a=0; a<text.length; a++) {
-				ccol=this.rgbToHex(r,g,b);
-				if (text.charAt(a)==" ") {
-					str_html+=" ";
-					str_bbcode+=" ";
+			r = this.hexToR(startColor)
+			g = this.hexToG(startColor)
+			b = this.hexToB(startColor)
+			rinc = (this.hexToR(endColor) - r) / text.length
+			ginc = (this.hexToG(endColor) - g) / text.length
+			binc = (this.hexToB(endColor) - b) / text.length
+			for (a = 0; a < text.length; a++) {
+				ccol = this.rgbToHex(r, g, b);
+				if (text.charAt(a) == " ") {
+					str_html += " ";
+					str_bbcode += " ";
 				} else {
-					str_html+="<span style='color:#"+ccol+";'>"+text.charAt(a)+"</span>";
-					str_bbcode+='[color=#'+ccol+']'+text.charAt(a)+"[/color]";
+					str_html += "<span style='color:#" + ccol + ";'>" + text.charAt(a) + "</span>";
+					str_bbcode += '[color=#' + ccol + ']' + text.charAt(a) + "[/color]";
 				}
-				r+=rinc;
-				g+=ginc;
-				b+=binc;
+				r += rinc;
+				g += ginc;
+				b += binc;
 			}
-			if(type==="bbcode"){
+			if (type === "bbcode") {
 				return str_bbcode
-			}else if(type==="html"){
+			} else if (type === "html") {
 				return str_html
 			}
 		}
-		
-		this.insertGradientListeners = function(){
+
+		this.insertGradientListeners = function () {
 			var that = this;
-			$(document).on("keyup",".gradientText", function () {
+			$(document).on("keyup", ".gradientText", function () {
 				var gradientText = this.value,
 					gradientStartColor = $(this).parent().find(".startColor").val(),
 					gradientEndColor = $(this).parent().find(".endColor").val(),
 					gradientResult = that.textcolorizer_handle(gradientText, gradientStartColor, gradientEndColor, "html");
 				$(this).parent().find(".gradientPreview").html(gradientResult)
 			})
-			$(document).on("change", ".startColor, .endColor",function(){
-				$("."+this.className.match(/(start|end)color/gi)[0]+"Hex").val(this.value);
+			$(document).on("change", ".startColor, .endColor", function () {
+				$("." + this.className.match(/(start|end)color/gi)[0] + "Hex").val(this.value);
 				var gradientText = $(this).parents(".gradientDropdown").find(".gradientText").val(),
 					gradientStartColor = $(this).parent().find(".startColor").val(),
 					gradientEndColor = $(this).parent().find(".endColor").val(),
 					gradientResult = that.textcolorizer_handle(gradientText, gradientStartColor, gradientEndColor, "html");
 				$(this).parent().find(".gradientPreview").html(gradientResult)
 			})
-			$(document).on("keydown", ".startColorHex, .endColorHex",function(ev){
-				if(!ev.ctrlKey && !ev.shiftKey&& "0123456789ABCDEF".indexOf(ev.key.toUpperCase())===-1 && ev.key.match(/backspace|arrow|delete|control|alt|shift|end|home/gi)===null){
+			$(document).on("keydown", ".startColorHex, .endColorHex", function (ev) {
+				if (!ev.ctrlKey && !ev.shiftKey && "0123456789ABCDEF".indexOf(ev.key.toUpperCase()) === -1 && ev.key.match(/backspace|arrow|delete|control|alt|shift|end|home/gi) === null) {
 					return false
 				}
-			}).on("paste", ".startColorHex, .endColorHex",function(ev){
-				var pasteValue = ev.originalEvent.clipboardData.getData('Text').replace(/\#/gi,"");
-				if(pasteValue.match(/[^#\da-f]+/gi)!==null){ 
+			}).on("paste", ".startColorHex, .endColorHex", function (ev) {
+				var pasteValue = ev.originalEvent.clipboardData.getData('Text').replace(/\#/gi, "");
+				if (pasteValue.match(/[^#\da-f]+/gi) !== null) {
 					return false
 				}
-			}).on("keyup", ".startColorHex, .endColorHex",function(){
-				var value = this.value.replace(/\#/g,"");
-				if(value.length===6){
-					var colorInputClassName = "."+this.className.match(/(start|end)ColorHex/gi)[0].replace("Hex","");
+			}).on("keyup", ".startColorHex, .endColorHex", function () {
+				var value = this.value.replace(/\#/g, "");
+				if (value.length === 6) {
+					var colorInputClassName = "." + this.className.match(/(start|end)ColorHex/gi)[0].replace("Hex", "");
 					$(this).parent().find(colorInputClassName).val(this.value);
 					var gradientText = $(this).parents(".gradientDropdown").find(".gradientText").val(),
 						gradientStartColor = $(this).parent().find(".startColor").val(),
@@ -570,16 +582,16 @@
 					$(this).parent().find(".gradientPreview").html(gradientResult)
 				}
 			})
-			
-			$(".gradientText").each(function(){
+
+			$(".gradientText").each(function () {
 				var gradientText = this.value,
 					gradientStartColor = $(this).parent().find(".startColor").val(),
 					gradientEndColor = $(this).parent().find(".endColor").val(),
-					gradientResult = that.textcolorizer_handle(gradientText, gradientStartColor, gradientEndColor,"html");
+					gradientResult = that.textcolorizer_handle(gradientText, gradientStartColor, gradientEndColor, "html");
 				$(this).parent().find(".gradientPreview").html(gradientResult)
 			})
-			
-			$(document).on("click", ".insertGradientText", function(){
+
+			$(document).on("click", ".insertGradientText", function () {
 				var gradientText = $(this).parent().find(".gradientText").val(),
 					gradientStartColor = $(this).parent().find(".startColor").val(),
 					gradientEndColor = $(this).parent().find(".endColor").val(),
@@ -588,15 +600,217 @@
 					actualText = actualTextArea.value,
 					finalMessage = actualText.substring(0, actualTextArea.selectionStart) + gradientResult + actualText.substring(actualTextArea.selectionEnd, actualText.length),
 					newCursorPostion = actualTextArea.selectionStart + gradientResult.length;
-					actualTextArea.value = finalMessage;
-					actualTextArea.setSelectionRange(newCursorPostion, newCursorPostion);
-					$(".open").removeClass("open");
-					$(actualTextArea).focus()
+				actualTextArea.value = finalMessage;
+				actualTextArea.setSelectionRange(newCursorPostion, newCursorPostion);
+				$(".open").removeClass("open");
+				$(actualTextArea).focus()
 			})
 			return this
 		}
 
+
+		/*
+██╗     ██╗██╗   ██╗███████╗    ██████╗ ██████╗ ███████╗██╗   ██╗██╗███████╗██╗    ██╗
+██║     ██║██║   ██║██╔════╝    ██╔══██╗██╔══██╗██╔════╝██║   ██║██║██╔════╝██║    ██║
+██║     ██║██║   ██║█████╗      ██████╔╝██████╔╝█████╗  ██║   ██║██║█████╗  ██║ █╗ ██║
+██║     ██║╚██╗ ██╔╝██╔══╝      ██╔═══╝ ██╔══██╗██╔══╝  ╚██╗ ██╔╝██║██╔══╝  ██║███╗██║
+███████╗██║ ╚████╔╝ ███████╗    ██║     ██║  ██║███████╗ ╚████╔╝ ██║███████╗╚███╔███╔╝
+╚══════╝╚═╝  ╚═══╝  ╚══════╝    ╚═╝     ╚═╝  ╚═╝╚══════╝  ╚═══╝  ╚═╝╚══════╝ ╚══╝╚══╝ 	
+	*/
+		/*Displays a live preview of the input after each keyup event*/
+
+		var livePreviewer = function (inputText) {
+			this.result = inputText;
+			this.htmlStyleGenerator = function (styleProperty, styleValue) {
+				var htmlTag = `span`;
+				switch (styleProperty) {
+					case "size":
+						styleValue += "px";
+						break;
+					case "p":
+						htmlTag = "p";
+						break;
+					default:
+						break;
+				}
+				return {
+					openTag: `<${htmlTag} style="${this.bbcodeMappedValues[styleProperty]}${styleValue ? ":" + styleValue : ""};">`,
+					closeTag: `</${htmlTag}>`
+				}
+			}
+
+			this.bbcodeMappedValues = {
+				b: `font-weight:bold`,
+				i: `font-style:italic`,
+				u: `text-decoration:underline`,
+				s: `text-decoration:line-through`,
+				color: `color`,
+				size: `font-size`,
+				font: `font-family`,
+				p: `text-align`
+			}
+
+			this.getTags = function (text) {
+				var startTagRegex = new RegExp("\\[((\\w.*?)|\\*)\\]", "gi");
+				var endTagRegex = new RegExp("\\[\\\/((\\w.*?)|\\*)\\]", "gi");
+				this.startTags = text.match(startTagRegex) ? text.match(startTagRegex) : [];
+				this.endTags = text.match(endTagRegex) ? text.match(endTagRegex) : [];
+				return this
+			}
+
+			this.convertBBCodeToHtml = function () {
+				this.startTags.map(function (item, index) {
+					var bbcodeTag = {
+						text: item.replace(/(\[|\])/g, "").split("=")
+					};
+					bbcodeTag.property = bbcodeTag.text[0];
+					bbcodeTag.value = bbcodeTag.text[1];
+					if (this.bbcodeMappedValues[bbcodeTag.property]) {
+						var HTMLNode = this.htmlStyleGenerator(bbcodeTag.property, bbcodeTag.value);
+						var openTagRegex = new RegExp(`\\\[${bbcodeTag.property}${bbcodeTag.value?"="+bbcodeTag.value:""}\\\]`, "");
+						var closeTagRegex = new RegExp("\\\[\\\/" + bbcodeTag.property + "\\\]", "");
+						/*Font size validation*/
+						if (bbcodeTag.property == "size" && bbcodeTag.value > 59) {
+							return
+						}
+						this.result = this.result.replace(openTagRegex, HTMLNode.openTag).replace(closeTagRegex, HTMLNode.closeTag);
+					} else /*if (this.specialBehaviorBBCode[bbcodeTag.property])*/ {
+						/*Special replacements for special tags*/
+						var bbcode = "";
+						switch (bbcodeTag.property) {
+							case "hr":
+								this.result = this.result.replace(item, "<hr>");
+								break;
+								/*Table elements*/
+							case "table":
+								bbcode = this.result.match(/\[table.*?\/table\]/is)[0];
+								this.result = bbcode.replace(/\n/g, "");
+								this.result = this.result.replace("[table]", "<table><tbody>")
+								this.result = this.result.replace("[/table]", "</tbody></table>")
+								break;
+							case "row":
+								this.result = this.result.replace("[row]", "<tr>")
+								this.result = this.result.replace("[/row]", "</tr>")
+								break;
+							case "cel":
+								this.result = this.result.replace("[cel]", "<td>")
+								this.result = this.result.replace("[/cel]", "</td>")
+								break;
+								/*End table elements*/
+							case "img":
+							case "img align":
+								bbcode = this.result.match(/\[img.*?\/img\]/i)[0];
+								var imageUrl = bbcode.replace(/\[(\/)?img.*?\]/gi, "");
+								if (imageUrl.indexOf("http") == 0) this.result = this.result.replace(bbcode, `<img src="${imageUrl}" alt="${imageUrl}" class="inline-block img-ext" style="float:${bbcodeTag.value?bbcodeTag.value:""};">`);
+								break;
+							case "video":
+								bbcode = this.result.match(/\[video.*?video\]/i)[0];
+								var videoUrl = bbcode.replace(/\[(\/)?video\]/gi, "");
+								var htmlVideoNode = bbcode;
+								if (videoUrl.indexOf("youtube") != -1) {
+									var youtubeId = videoUrl.match(/.*youtube.com.*embed\/[a-z0-9\_\-]+(\/)?$/i);
+									if (youtubeId) {
+										youtubeId = youtubeId[0].match(/embed.*/i)[0].replace("embed/", "");
+										htmlVideoNode = `<iframe class="vid-ext" src="https://www.youtube.com/embed/${youtubeId}?autohide=1&controls=2" allowfullscreen=""></iframe>`
+									}
+								} else {
+									if (videoUrl.match(/http.*?((player\.vimeo\.com)|(dailymotion.com)).*?(video)\/[a-z0-9]+$/i) != null) {
+										htmlVideoNode = `<object class="vid-ext" type="text/html" data="${videoUrl}"></object>`;
+									} else {
+										htmlVideoNode = bbcode.replace("[", "&lsqb;")
+									}
+								}
+								this.result = this.result.replace(bbcode, htmlVideoNode)
+								break;
+							case "url":
+								bbcode = this.result.match(/\[url.*?url\]/i)[0];
+								var linkText = bbcode.replace(/\[(\/)?url(=.*?)?\]/gi, "");
+								if (bbcodeTag.value) {
+									if (bbcodeTag.value.match(/^http.*/i) != null) {
+										this.result = this.result.replace(bbcode, `<a href="${bbcodeTag.value}" target="_blank" rel="noopener" onclick="return verifierLienMemePageMessage(event);">${linkText}</a>`);
+									} else {
+										this.result = this.result.replace(bbcode, bbcode.replace("[", "&lsqb;"));
+									}
+								} else {
+									if (linkText.match(/^http.*/i) != null) {
+										this.result = this.result.replace(bbcode, `<a href="${linkText}" target="_blank" rel="noopener" onclick="return verifierLienMemePageMessage(event);">${linkText}</a>`)
+									} else {
+										this.result = this.result.replace(bbcode, bbcode.replace("[", "&lsqb;"));
+									}
+								}
+								break;
+							case "list":
+								var listCode = this.result.match(/\[list.*?\/list\]/s)[0];
+								this.result = this.result.replace(listCode, listCode.replace(/\n/g, ""));
+								this.result = this.result.replace("[list]", "<ul>");
+								this.result = this.result.replace("[/list]", "</ul>");
+								break;
+							case "*":
+								var listCode2 = this.result.match(/\<ul.*?\/ul\>/i)[0];
+								var htmlListNode = listCode2.replace(/\[\*\]/, "<li>").replace(/\[\/\*\]/, "</li>");
+								this.result = this.result.replace(listCode2, htmlListNode)
+								break;
+							case "quote":
+								var username = bbcodeTag.value ? bbcodeTag.value : "";
+								this.result = this.result.replace(/\[quote.*?\]/i, `<blockquote class="cadre cadre-quote"><small>${username} said:</small><div>`).replace(/\[\/quote\]/i, `</div></blockquote>`)
+								break;
+							case "spoiler":
+								var randomSpoilerId = Math.floor(Math.random() * 10000);
+								this.result = this.result.replace(/\[spoiler\]/i,
+									`<div class="cadre cadre-spoil"><button id="bouton_spoil_${randomSpoilerId}" class="btn btn-small btn-message" onclick="afficherSpoiler('${randomSpoilerId}');return false;">Spoiler</button><div id="div_spoil_${randomSpoilerId}" class="hidden">`).replace(/\[\/spoiler\]/i, `</div></div>`);
+								break;
+							default:
+								break;
+
+						}
+					}
+				})
+				return this.result
+			}
+
+			return this.getTags(inputText)
+				.convertBBCodeToHtml()
+		}
+
+		this.insertLivePreviewer = function () {
+			var messageResponseContainers = this.placeHolders.parent();
+			if (!messageResponseContainers.find(".tfmtoolLivePreview").length) {
+				messageResponseContainers.append(`<div class="tfmtoolLivePreview"><span>Live preview by Frankusky:</span><div class="tfmtoolLivePreviewResult cadre cadre-message cadre-previsualisation">&nbsp;</div><div class="livePreviewWarning"><ul><li>This preview is under development and may not be the same as the final result.</li><li>Tabs are currently not supported.</li><li>If you find any bug, please report it to me and send share the steps to replicate the bug</li></ul></div></div>`)
+			}
+			/*Load preview for defautl editor*/
+			var getQueryStringValue = new URLSearchParams(document.location.search);
+			var cachedTextAreaContent = localStorage.getItem(`sauv_message_reponse_forum_${getQueryStringValue.get("f")}_sujet_${getQueryStringValue.get("t")}`);
+			var htmlContent = livePreviewer(cachedTextAreaContent ? cachedTextAreaContent : "").replace(/\n/g, "<br>");
+			if (!htmlContent) htmlContent = "&nbsp;";
+			messageResponseContainers.last().parent().find(".tfmtoolLivePreviewResult").html(htmlContent);
+
+			/*Insert event listener to update each input*/
+			messageResponseContainers.find(".input-message").on("input change", function (ev) {
+				var htmlContent = livePreviewer(this.value).replace(/\n/g, "<br>");
+				if (!htmlContent) htmlContent = "&nbsp;";
+				$(this).parent().find(".tfmtoolLivePreviewResult").html(htmlContent);
+			}).on("focus", function (ev) {
+				ev.stopImmediatePropagation();
+				ev.stopPropagation();
+				setTimeout((function () {
+					var htmlContent = livePreviewer(this.value).replace(/\n/g, "<br>");
+					if (!htmlContent) htmlContent = "&nbsp;";
+					$(this).parent().find(".tfmtoolLivePreviewResult").html(htmlContent);
+				}).bind(this), 100)
+
+			})
+
+		}
 	}
+
+	/*
+██╗███╗   ██╗██╗████████╗██╗ █████╗ ██╗     ██╗███████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+██║████╗  ██║██║╚══██╔══╝██║██╔══██╗██║     ██║╚══███╔╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+██║██╔██╗ ██║██║   ██║   ██║███████║██║     ██║  ███╔╝ ███████║   ██║   ██║██║   ██║██╔██╗ ██║
+██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║ ███╔╝  ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+	*/
 
 	function hasResponseBar() {
 		return $(".input-message").length > 0
@@ -616,5 +830,6 @@
 			.setActiveClasses()
 			.dropDownCloserListener()
 			.insertGradientListeners()
+			.insertLivePreviewer()
 	}
 })()

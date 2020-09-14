@@ -1,7 +1,8 @@
 /**************OVER WRITING FORUM CSS****************/
-.cadre-repondre{
+.cadre-repondre {
 	overflow-x: initial !important;
 }
+
 /*********************General**********************/
 .tfmExtensionFooter {
 	font-size: 10px;
@@ -9,7 +10,7 @@
 }
 
 /*********************EMOJIS*************************/
-.tfmExtension>img{
+.tfmExtension > img {
 	margin-right: 5px;
 }
 
@@ -120,44 +121,44 @@
 	color: #62c462;
 	top: 0px;
 	border: 1px solid #867c7c;
-	padding-left:2px;
+	padding-left: 2px;
 }
 
-.emojisDropdown .giphy .hiddenEmoji{
+.emojisDropdown .giphy .hiddenEmoji {
 	display: none
 }
 
-.emojisDropdown .giphy .seeMoreGiphyGifs{
+.emojisDropdown .giphy .seeMoreGiphyGifs {
 	text-align: center;
 	font-size: 12px;
 }
 
-.emojisDropdown .giphy .seeMoreGiphyGifs:hover{
+.emojisDropdown .giphy .seeMoreGiphyGifs:hover {
 	cursor: pointer;
 	text-decoration: underline;
 	color: darkcyan;
 }
 
-.emojisDropdown .giphy .giphySearchGifBtn{
+.emojisDropdown .giphy .giphySearchGifBtn {
 	margin-left: 5px
 }
 
-.emojisDropdown .giphy .seeMoreGiphyGifs.hideSeeMoreText{
+.emojisDropdown .giphy .seeMoreGiphyGifs.hideSeeMoreText {
 	display: none
 }
 
-.emojisDropdown .giphy .poweredByGiphy{
+.emojisDropdown .giphy .poweredByGiphy {
 	text-align: right
 }
 
-.emojisDropdown .giphy .poweredByGiphy img{
+.emojisDropdown .giphy .poweredByGiphy img {
 	height: 14px;
 	width: auto;
 }
 
 /*********************LOADING MESSAGE************************/
-.loadingContainer{
-	margin:10px 0;
+.loadingContainer {
+	margin: 10px 0;
 }
 
 .loadingText {
@@ -313,12 +314,14 @@
 }
 
 @-webkit-keyframes sk-circleBounceDelay {
+
 	0%,
 	80%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	40% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -326,12 +329,14 @@
 }
 
 @keyframes sk-circleBounceDelay {
+
 	0%,
 	80%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	40% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -366,43 +371,44 @@
 }
 
 /********************Gradient*************************/
-.gradientDropdown{
-	padding:10px 10px 0 !important
+.gradientDropdown {
+	padding: 10px 10px 0 !important
 }
 
-#colorInput{
+#colorInput {
 	margin-top: 10px;
 	width: 250px;
 }
 
-.gradientDropdown #colorInput input[type="text"]{
-	max-width:50px;
+.gradientDropdown #colorInput input[type="text"] {
+	max-width: 50px;
 }
 
-.gradientDropdown label{
+.gradientDropdown label {
 	display: inline-block
 }
 
-.gradientDropdown .gradientText{
-	width:75%;
+.gradientDropdown .gradientText {
+	width: 75%;
 	margin-right: 5px;
 }
-.gradientDropdown input[type="color"]{
+
+.gradientDropdown input[type="color"] {
 	padding: 0;
 	background: transparent;
 	border: none;
-	width:15px;
+	width: 15px;
 	display: inline-block
 }
 
-.gradientDropdown input[type="text"]{
-	font-size:10px;
-	padding:0 5px;
+.gradientDropdown input[type="text"] {
+	font-size: 10px;
+	padding: 0 5px;
 	margin-left: 5px;
 }
 
-.gradientDropdown .gradientPreview{
-	overflow-x:auto;
+.gradientDropdown .gradientPreview {
+	overflow-x: auto;
 	margin-bottom: 5px;
 }
 
@@ -410,5 +416,23 @@
 	padding: 0;
 	margin: 0;
 	vertical-align: middle;
+	display: block;
+}
+
+/*Live preview styles*/
+.tfmtoolLivePreview {
+	padding: 10px 5px;
+	background: #3f3f3f;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+
+.tfmtoolLivePreview > span,
+.tfmtoolLivePreview .livePreviewWarning {
+	font-size: 12px;
+}
+
+.tfmToolLivePreview .tfmtoolLivePreviewResult {
+	padding: 5px;
 	display: block;
 }

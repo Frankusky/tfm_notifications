@@ -6,7 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
-- Version 7.4
+- Version 8
+	- Added live preview beta version. Note: tabs are not supported and minnor details are missing.
+	
+- Version 7.4 1/3/2019
 	- Fixed forum buttons not working
 
 - Version 7.3 27/06/2018
