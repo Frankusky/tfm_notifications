@@ -6,7 +6,10 @@ https://chrome.google.com/webstore/detail/transformice-favorites-th/pbeohchnfifa
 
 Changelog:
 ----------
-- Version 8
+- Version 8.1 24/09/2020
+	- Fix live preview parse user input html tags 
+
+- Version 8	13/09/2020
 	- Added live preview beta version. Note: tabs are not supported and minnor details are missing.
 	
 - Version 7.4 1/3/2019

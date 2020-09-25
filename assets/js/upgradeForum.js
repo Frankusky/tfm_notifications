@@ -620,7 +620,7 @@
 		/*Displays a live preview of the input after each keyup event*/
 
 		var livePreviewer = function (inputText) {
-			this.result = inputText;
+			this.result = inputText.replace(/\</g, "&lt;"); //fix preview converting this into html tags
 			this.htmlStyleGenerator = function (styleProperty, styleValue) {
 				var htmlTag = `span`;
 				switch (styleProperty) {
