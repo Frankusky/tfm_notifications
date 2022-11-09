@@ -5,7 +5,7 @@
   "main": "package.json",
   "dependencies": {
     "del": "^2.2.2",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-clean-css": "^2.3.2",
     "gulp-delete-file": "^1.0.2",
     "gulp-es6-transpiler": "^1.0.1",
